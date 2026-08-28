@@ -1,0 +1,263 @@
+% !TeX program = xelatex
+% 2026 数学建模论文标题骨架
+% 参照 2024 年 C 题模板，仅保留标题层级与必要排版设置，不填正文。
+
+\documentclass[12pt,a4paper]{ctexart}
+
+\usepackage{geometry}
+\usepackage{fontspec}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{hyperref}
+
+\geometry{
+  top=2.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm
+}
+
+% 中文：宋体；英文与数字：Times New Roman
+\setCJKmainfont[AutoFakeBold=1.5]{SimSun}
+\setmainfont{Times New Roman}
+\newCJKfontfamily\songtibold{SimSun}[AutoFakeBold=1.5]
+\setstretch{1.0}
+
+% 一级标题：四号宋体居中；二、三级标题：小四号宋体左对齐
+\titleformat{\section}
+  {\centering\songti\fontsize{14pt}{18pt}\selectfont}
+  {\chinese{section}、}{0pt}{}
+\titleformat{\subsection}
+  {\raggedright\bfseries\songtibold\fontsize{12pt}{16pt}\selectfont}
+  {\arabic{section}.\arabic{subsection}}{0.6em}{}
+\titleformat{\subsubsection}
+  {\raggedright\songti\fontsize{12pt}{16pt}\selectfont}
+  {\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}{0.6em}{}
+
+\titlespacing*{\section}{0pt}{1.0em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.6em}{0.4em}
+\titlespacing*{\subsubsection}{0pt}{0.5em}{0.3em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\DeclareCaptionFont{captionfive}{\songti\small}
+\captionsetup{font=captionfive,labelfont=captionfive}
+
+\begin{document}
+\pagestyle{plain}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% =========================
+% 摘要
+% =========================
+\begin{center}
+  {\bfseries\songtibold\fontsize{16pt}{20pt}\selectfont
+  数学建模论文标题（待定）}
+\end{center}
+\vspace{0.8em}
+\begin{center}
+  {\bfseries\songtibold\fontsize{14pt}{18pt}\selectfont 摘要}
+\end{center}
+% 摘要正文待填。
+\vspace{1em}
+\noindent\textbf{关键词：}关键词一；关键词二；关键词三；关键词四；关键词五
+\newpage
+
+% =========================
+% 一、问题重述
+% =========================
+\section{问题重述}
+\subsection{问题背景}
+% 正文待填。
+\subsection{问题任务与关键条件}
+% 正文待填。
+
+% =========================
+% 二、问题分析
+% =========================
+\clearpage
+\section{问题分析}
+\subsection{确定性种植规划的约束结构}
+\subsubsection{决策对象与时空粒度}
+% 正文待填。
+\subsubsection{农业硬约束与收益口径}
+% 正文待填。
+\subsection{不确定性下的收益与风险权衡}
+\subsubsection{随机参数场景}
+% 正文待填。
+\subsubsection{风险度量与共享决策}
+% 正文待填。
+\subsection{作物关联下的策略扩展}
+\subsubsection{替代互补需求响应}
+% 正文待填。
+\subsubsection{联合情景与对照设计}
+% 正文待填。
+\subsection{总体技术路线}
+% 总体流程图及说明待填。
+
+% =========================
+% 三、模型假设
+% =========================
+\clearpage
+\section{模型假设}
+% 假设条目待填。
+
+% =========================
+% 四、符号说明
+% =========================
+\clearpage
+\section{符号说明}
+% 符号说明表待填。
+
+% =========================
+% 五、数据预处理与探索性分析
+% =========================
+\clearpage
+\section{数据预处理与探索性分析}
+\subsection{数据来源与建模粒度}
+\subsubsection{原题与附件数据}
+% 正文待填。
+\subsubsection{统一决策粒度}
+% 正文待填。
+\subsection{字段清洗与记录校验}
+\subsubsection{缺失值与异常记录处理}
+% 正文待填。
+\subsubsection{主键与字段一致性检查}
+% 正文待填。
+\subsection{统一主键与参数构造}
+\subsubsection{基础参数整理}
+% 正文待填。
+\subsubsection{销量基准与收益参数构造}
+% 正文待填。
+\subsection{结构诊断与建模启示}
+% 正文待填。
+
+% =========================
+% 六、问题一模型的建立与求解
+% =========================
+\clearpage
+\section{问题一模型的建立与求解}
+\subsection{销量基准与分段收益核算}
+\subsubsection{销量基准与产销分解}
+% 正文待填。
+\subsubsection{两种超产处理规则}
+% 正文待填。
+\subsection{轮作约束与混合整数规划}
+\subsubsection{决策变量与目标函数}
+% 正文待填。
+\subsubsection{农业约束与词典序目标}
+% 正文待填。
+\subsection{两种滞销规则下的种植方案}
+\subsubsection{超产浪费情形}
+% 正文待填。
+\subsubsection{超产半价情形}
+% 正文待填。
+\subsection{方案可行性与参数敏感性}
+\subsubsection{约束回放与结果核验}
+% 正文待填。
+\subsubsection{关键参数敏感性比较}
+% 正文待填。
+
+% =========================
+% 七、问题二模型的建立与求解
+% =========================
+\clearpage
+\section{问题二模型的建立与求解}
+\subsection{从确定性基准到随机参数场景}
+\subsubsection{销量、产量、成本与价格情景}
+% 正文待填。
+\subsubsection{训练情景与样本外情景}
+% 正文待填。
+\subsection{两阶段随机规划的共享决策与收益核算}
+\subsubsection{第一阶段种植决策}
+% 正文待填。
+\subsubsection{第二阶段产销与利润核算}
+% 正文待填。
+\subsection{SAA--CVaR风险目标的构造与求解}
+\subsubsection{下尾风险度量与线性化}
+% 正文待填。
+\subsubsection{随机混合整数规划求解}
+% 正文待填。
+\subsection{风险权重选择与样本外稳健性}
+\subsubsection{风险收益比较}
+% 正文待填。
+\subsubsection{方案稳健性与约束验证}
+% 正文待填。
+
+% =========================
+% 八、问题三模型的建立与求解
+% =========================
+\clearpage
+\section{问题三模型的建立与求解}
+\subsection{从独立边际到市场关联情景}
+\subsubsection{作物层面的代表市场价格}
+% 正文待填。
+\subsubsection{交叉价格弹性与需求响应}
+% 正文待填。
+\subsection{替代互补响应与联合情景生成}
+\subsubsection{稀疏替代互补网络}
+% 正文待填。
+\subsubsection{Gaussian Copula联合情景}
+% 正文待填。
+\subsection{关联规划方案与收益变化}
+\subsubsection{共享决策与同场景重评}
+% 正文待填。
+\subsubsection{关联方案与基准方案比较}
+% 正文待填。
+\subsection{消融比较与关联结构稳健性}
+\subsubsection{关联因素消融设计}
+% 正文待填。
+\subsubsection{Bootstrap与敏感性检验}
+% 正文待填。
+
+% =========================
+% 九、模型评价、改进推广与结论
+% =========================
+\clearpage
+\section{模型评价、改进推广与结论}
+\subsection{各方案的可行性与结果复核}
+\subsubsection{农业约束可行性}
+% 正文待填。
+\subsubsection{结果文件与指标复核}
+% 正文待填。
+\subsection{边际分布、关联结构与候选集的适用边界}
+\subsubsection{不确定性设定的适用边界}
+% 正文待填。
+\subsubsection{关联参数与候选集的适用边界}
+% 正文待填。
+\subsection{模型推广}
+\subsubsection{数据驱动的滚动重算}
+% 正文待填。
+\subsubsection{管理场景扩展}
+% 正文待填。
+\subsection{三问结论与适用范围}
+\subsubsection{三问主要结论}
+% 正文待填。
+\subsubsection{适用范围与局限}
+% 正文待填。
+
+% =========================
+% AI 声明、参考文献与附录
+% =========================
+\clearpage
+\section*{AI 工具使用声明}
+% AI 工具使用情况待填。
+
+\section*{参考文献}
+% 参考文献条目待填。
+
+\section*{附录}
+\subsection*{附录 A：支撑材料文件列表}
+% 附录内容待填。
+\subsection*{附录 B：程序与复现说明}
+% 附录内容待填。
+\subsection*{附录 C：补充结果与图表}
+% 附录内容待填。
+
+\end{document}
