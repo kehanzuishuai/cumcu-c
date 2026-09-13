@@ -1,0 +1,13 @@
+interface:
+  display_name: "数模论文写作"
+  short_description: "依据冻结模型与结果完成 C 题论文和图表交接"
+  default_prompt: "使用 $数模论文写作 根据通过 paper_ready_manifest 校验并已冻结模型结果的 C 题材料完成论文写作及 Figure/Flowchart Brief 交接。"
+  icon_small: "assets/icon.svg"
+  icon_large: "assets/icon.svg"
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

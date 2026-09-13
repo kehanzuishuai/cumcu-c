@@ -1,0 +1,50 @@
+{
+  "problem": "synthetic-shading",
+  "root": "examples/anonymized-problem",
+  "status": "complete",
+  "files": [
+    {
+      "path": "attachments/observations.csv",
+      "format": "csv",
+      "size_bytes": 1036,
+      "encoding": "utf-8",
+      "sheets_or_structure": ["24 data rows", "header row"],
+      "granularity": "zone-date-period-treatment",
+      "keys_and_units": ["zone", "date", "period", "treatment", "temperature_c: Celsius", "humidity_pct: percent"],
+      "missing_or_anomalies": [],
+      "used_by": ["Q1", "Q3"],
+      "delivery_constraints": [],
+      "audit_status": "verified"
+    },
+    {
+      "path": "attachments/zones.csv",
+      "format": "csv",
+      "size_bytes": 146,
+      "encoding": "utf-8",
+      "sheets_or_structure": ["6 data rows", "header row"],
+      "granularity": "zone",
+      "keys_and_units": ["zone", "weight: dimensionless", "capacity: units", "baseline_visitors: visits", "unit_cost: nominal cost"],
+      "missing_or_anomalies": ["weight sum must be checked"],
+      "used_by": ["Q2", "Q3"],
+      "delivery_constraints": ["capacity is a nonnegative integer"],
+      "audit_status": "verified"
+    },
+    {
+      "path": "attachments/result_template.csv",
+      "format": "csv",
+      "size_bytes": 131,
+      "encoding": "utf-8",
+      "sheets_or_structure": ["6 template rows", "fixed header"],
+      "granularity": "zone",
+      "keys_and_units": ["units: count", "estimated_reduction_c: Celsius, 2 decimals", "lower_bound_c: Celsius, 2 decimals"],
+      "missing_or_anomalies": [],
+      "used_by": ["Q2", "Q3"],
+      "delivery_constraints": ["preserve four columns", "preserve two-decimal temperature format"],
+      "audit_status": "verified"
+    }
+  ],
+  "unverified_scope": [
+    "No real-world causal claim is made; all observations are synthetic.",
+    "Numerical model fitting and optimization are intentionally outside this interpretation example."
+  ]
+}

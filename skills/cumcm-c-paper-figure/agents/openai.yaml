@@ -1,0 +1,14 @@
+interface:
+  display_name: "CUMCM C题论文图表"
+  short_description: "CUMCM论文图表：证据选型、图型组合、高级候选与A4发布"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#0F4D92"
+  default_prompt: "使用 $cumcm-c-paper-figure 读取 Figure Brief 和冻结数据，按原 Gate 绘图并生成可追踪的 figure_manifest.json。"
+policy:
+  products:
+  - "chatgpt"
+  - "codex"
+  - "api"
+  - "atlas"
+  allow_implicit_invocation: true

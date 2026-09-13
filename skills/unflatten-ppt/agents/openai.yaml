@@ -1,0 +1,4 @@
+interface:
+  display_name: "unflatten-ppt"
+  short_description: "Rebuild fixed flowcharts as native editable PowerPoint."
+  default_prompt: "Use $unflatten-ppt to rebuild this fixed Flowchart Brief or raster reference as a native editable PowerPoint slide without changing its logic, then export, compare, and run CUMCM actual-size QA."

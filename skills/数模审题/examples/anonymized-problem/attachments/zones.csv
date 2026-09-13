@@ -1,0 +1,7 @@
+zone,weight,capacity,baseline_visitors,unit_cost
+A,0.24,2,120,1.0
+B,0.18,2,95,1.0
+C,0.16,1,80,1.0
+D,0.14,2,70,1.0
+E,0.12,1,55,1.0
+F,0.16,2,90,1.0

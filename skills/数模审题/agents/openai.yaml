@@ -1,0 +1,6 @@
+interface:
+  display_name: "数模审题"
+  short_description: "完成 C 题审题、模型选择求解、验证与结果冻结"
+  default_prompt: "使用 $数模审题 处理指定 C 题及附件；有关键歧义时先让我确认，随后完成选模、求解、验证和 PAPER_READY 冻结。"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,4 @@
+interface:
+  display_name: "CUMCM 最终成稿冻结"
+  short_description: "校验并冻结 CUMCM C 题最终论文、图表与支撑材料交卷包"
+  default_prompt: "使用 $cumcm-paper-freeze 校验上游清单，并将最终论文、图表、代码、结果与支撑材料冻结为新的 paper_final 审核包。"

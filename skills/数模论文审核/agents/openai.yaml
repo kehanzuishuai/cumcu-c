@@ -1,0 +1,13 @@
+interface:
+  display_name: 数模论文审核
+  short_description: 按C题规范审查最终PDF、复现一致性、匿名与交卷材料
+  default_prompt: 使用 $数模论文审核 按唯一 C 题规范审查 paper_final 冻结包，逐页检查最终 PDF，并核对结果、图表、正文数字与上游 manifest 的一致性。
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

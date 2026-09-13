@@ -1,0 +1,26 @@
+# Operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# LaTeX build outputs
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.xdv
+
+# Python / Node caches
+__pycache__/
+*.py[cod]
+node_modules/
+
+# Local work files
+.planning/
+tmp/
+_qa*/
+_latex*/

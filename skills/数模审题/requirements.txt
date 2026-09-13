@@ -1,0 +1,2 @@
+# Optional: enables PDF page-count inspection in inventory_problem.py.
+pypdf>=4.0
