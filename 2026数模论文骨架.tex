@@ -11,10 +11,19 @@
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{array}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{fvextra}
 \usepackage{enumitem}
 \usepackage{caption}
+% 使章节标题后的首段同样缩进（ctexart 默认 indentfirst=false，且 titlesec 的 \titlespacing* 会关闭首段缩进）
+\usepackage{indentfirst}
 \usepackage{hyperref}
+\hypersetup{hidelinks}
+% 正文编号引文：单条与区间中的每个编号均可跳转至文末对应书目。
+\newcommand{\papercite}[1]{\hyperref[ref:#1]{\textsuperscript{[#1]}}}
+\newcommand{\paperciterange}[2]{\textsuperscript{[\hyperref[ref:#1]{#1}--\hyperref[ref:#2]{#2}]}}
 
 \geometry{
   top=2.5cm,
@@ -26,7 +35,17 @@
 % 中文：宋体；英文与数字：Times New Roman
 \setCJKmainfont[AutoFakeBold=1.5]{SimSun}
 \setmainfont{Times New Roman}
+\setmonofont{DejaVuSansMono.ttf}
 \newCJKfontfamily\songtibold{SimSun}[AutoFakeBold=1.5]
+% ===== 全文加粗口径（已冻结，勿改）=====
+% 中文加粗：黑体 SimHei 叠加 AutoFakeBold=1.5（实测该术语墨量 30.8%，相对宋体伪粗为 1.41 倍，
+%          黑体与宋体正文同属常规中文印刷体，观感协调；SimSun 无真粗体，纯伪粗仅 21.9% 偏浅）。
+% 数字/西文加粗：由 \bfseries 自动切换到 Times New Roman Bold（实测 22.7%，字体 TimesNewRomanPS-BoldMT）。
+% \bfseries 必须保留：中文墨量不受其影响，但它决定数字是否走真粗体；
+%                     实测去掉后数字掉回常规 Times New Roman（15.2%）。
+% 凡新增中文加粗一律用 \textbf{...}，不要再改字号、颜色或换用其他字体家族。
+\setCJKfamilyfont{heiti}{SimHei}[AutoFakeBold=1.5]
+\renewcommand{\textbf}[1]{{\CJKfamily{heiti}\bfseries #1}}
 \setstretch{1.0}
 
 % 一级标题：四号宋体居中；二、三级标题：小四号宋体左对齐
@@ -46,7 +65,53 @@
 \setlength{\parindent}{2em}
 \setlength{\parskip}{0pt}
 \DeclareCaptionFont{captionfive}{\songti\small}
-\captionsetup{font=captionfive,labelfont=captionfive}
+\captionsetup{font=captionfive,labelfont=captionfive,skip=4pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+
+% 将问题二、问题三的既有图位替换为已提供科研图，其余图位保持原样。
+\let\paperoriginalfbox\fbox
+\newcounter{paperfboxcount}
+\renewcommand{\fbox}[1]{%
+  \stepcounter{paperfboxcount}%
+  \ifnum\value{paperfboxcount}=1
+    \includegraphics[width=0.82\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_7_1_2_q2_typical_day_q80_provided.png}%
+  \else\ifnum\value{paperfboxcount}=2
+    \includegraphics[width=0.82\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_7_4_q2_quantile_tradeoff_provided.png}%
+  \else\ifnum\value{paperfboxcount}=3
+    \includegraphics[width=0.78\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_8_4_q3_alpha_tradeoff_provided.png}%
+  \else
+    \paperoriginalfbox{#1}%
+  \fi\fi\fi}
+
+% 附录采用独立的字母—数字编号，供正文以 \label/\ref 自动交叉引用。
+\newcounter{appendixsection}
+\newcounter{appendixsubsection}[appendixsection]
+\renewcommand{\theappendixsection}{\Alph{appendixsection}}
+\renewcommand{\theappendixsubsection}{\Alph{appendixsection}.\arabic{appendixsubsection}}
+\newcommand{\AppendixSection}[2]{\refstepcounter{appendixsection}\section*{附录 \theappendixsection：#2}\label{#1}}
+\newcommand{\AppendixSubsection}[2]{\refstepcounter{appendixsubsection}\subsection*{附录\theappendixsubsection：#2}\label{#1}}
+% 附录源程序直接读取冻结代码文件，避免与最终提交版本发生复制偏差。
+\newcommand{\AppendixCodeFile}[2]{%
+  \subsubsection*{#1}%
+  {\footnotesize\sloppy\urlstyle{same}\noindent 源文件：\nolinkurl{#2}\par}%
+  \vspace{0.2em}%
+  \begingroup
+  \xeCJKsetup{CJKecglue={}}%
+  \VerbatimInput[
+    fontsize=\scriptsize,
+    numbers=left,
+    numbersep=6pt,
+    frame=single,
+    framesep=2mm,
+    xleftmargin=1.8em,
+    breaklines=true,
+    breakanywhere=true,
+    tabsize=4
+  ]{审题codex/#2}%
+  \endgroup
+}
 
 \begin{document}
 \pagestyle{plain}
@@ -58,206 +123,1686 @@
 % =========================
 \begin{center}
   {\bfseries\songtibold\fontsize{16pt}{20pt}\selectfont
-  数学建模论文标题（待定）}
+  基于风险修正与滚动时域优化的微网购电与储能调度}
 \end{center}
 \vspace{0.8em}
 \begin{center}
   {\bfseries\songtibold\fontsize{14pt}{18pt}\selectfont 摘要}
 \end{center}
-% 摘要正文待填。
+% 摘要排版注意：
+%   1) 首段紧接居中标题，\indent 与空行都不产生首行缩进，故显式留 2 字符；
+%   2) 正文中的百分号必须写成 \%，未转义的 % 会把本行后半截当注释吞掉（曾导致整段丢失）。
+\hspace*{2em}非孤岛式微网中，光伏发电功率与小区负载随时间变化，需借助储能和外部电网协调供需。本文以降低购电费用为目标，在满足供电需求和储能运行约束的条件下，研究确定性、预测偏差、日内信息更新及电价波动条件下的微网调度与储能优化问题。
+\par\noindent\hspace*{2em}\textbf{针对问题一}，将一天划分为 144 个 10 分钟时段，建立\textbf{购电—储能词典序线性规划模型}，先最小化购电费用，再在给定购电费用容差内减少储能充放电量，并满足供需、储能效率、容量、功率及日初日末储电量均为 6000 kWh 的约束。最优方案全天购电量为 59482.70 kWh，购电费用为 35126.95 元；与无储能方案相比，购电量减少 2307.24 kWh，费用降低 12925.10 元，降幅 26.90\%，弃光量由 6247.96 kWh 降至 0。
+\par\noindent\hspace*{2em}\textbf{针对问题二}，考虑计划购电确定后负载与光伏发电预测仍存在偏差，建立\textbf{基于历史残差分位数修正的滚动时域线性规划模型}。利用历史同星期负载和近五个完整自然日光伏数据进行预测，并以历史净负载预测残差按 10 分钟时段进行 80\% 分位数修正；储电量跨日连续，实际偏差优先由储能补偿，剩余缺口紧急购电。2025 年 2—12 月，正常购电量为 2164.7262 万 kWh，紧急购电量为 \textbf{12.3700} 万 kWh，总购电费用为 \textbf{1399.7990} 万元，其中正常购电费和紧急购电费分别为 1325.9252 万元和 73.8738 万元。与不作风险修正相比，总费用减少 149.9773 万元，紧急购电费减少 256.2844 万元，正常购电费增加 106.3071 万元，表明适当的风险修正能够通过减少高价紧急购电降低实际费用。
+\par\noindent\hspace*{2em}\textbf{针对问题三}，由于日内光伏预报持续更新，且实际负载可能偏离 0:00 预测，固定的 0:00 计划难以及时适应供需变化，因此建立\textbf{基于日内信息更新与负载反馈的滚动时域优化模型}。每日 0:00制定初始计划，并在 6:00、12:00 和 18:00结合最新光伏预报、实际储电量和已观测负载调整尚未执行的计划，调整量以 0:00 原计划为基准结算，下调取消部分退回原购电费用、并支付相当于该部分购电费用 50\% 的违约费用，上调部分按交易时刻电价的 1.5 倍计价，实际偏差仍优先由储能调节，剩余缺口通过紧急购电补足。2025 年 2—12 月，最终方案上调购电 30.7206 万 kWh、下调购电 114.2817 万 kWh，紧急购电量为 \textbf{2.3340} 万 kWh，总购电费用为 \textbf{1359.9979} 万元；相较采用相同预测与结算规则、但不进行日内更新的对照方案，总购电费用减少 60.5864 万元，紧急购电量减少 9.6564 万 kWh，说明日内信息更新能够有效降低供需偏差及紧急购电需求。
+\par\noindent\hspace*{2em}\textbf{针对问题四}，考虑外部电网电价随日期和时段波动，将问题二、问题三模型分别扩展至波动电价情形。每日 0:00根据历史价格预测当天电价并重新优化购电与储能计划，实际费用按各时段真实电价结算。仅在每日 0:00制定计划时，总购电费用为 \textbf{1468.7087} 万元，紧急购电量为 \textbf{12.4870} 万 kWh，较直接沿用问题二原策略并按波动电价重新计费低 6.1255 万元；允许日内调整时，在 6:00、12:00 和 18:00更新光伏预报、实际储电量和已观测负载，日内沿用 0:00 形成的日内电价预测曲线，总购电费用为 \textbf{1429.1323} 万元，紧急购电量为 \textbf{2.6947} 万 kWh，较直接沿用问题三原策略并按波动电价重新计费低 4.1338 万元，说明波动电价下重新优化购电与储能安排仍具有经济收益。
+
+\par\noindent\hspace*{2em}综合结果表明，历史预测、风险修正与日内信息更新能够协同降低紧急购电需求和购电费用，并保持储能运行约束下的方案可行性。
+
 \vspace{1em}
-\noindent\textbf{关键词：}关键词一；关键词二；关键词三；关键词四；关键词五
+\noindent\textbf{关键词：}微网调度；储能优化；线性规划；风险修正；滚动时域优化
 \newpage
 
 % =========================
 % 一、问题重述
 % =========================
+% =========================
+% 一、问题重述
+% =========================
+% 各章大标题上方留白统一为 2.5em
+\titlespacing*{\section}{0pt}{2.5em}{0.6em}
 \section{问题重述}
 \subsection{问题背景}
-% 正文待填。
+非孤岛式微网需要协调光伏发电、储能设备与外部电网，以满足小区负载需求。由于负载、光伏发电功率及外部电价均具有时变性，购电计划既要满足供电与储能运行约束，也要尽可能降低正常购电、调整购电及紧急购电产生的费用。
 \subsection{问题任务与关键条件}
-% 正文待填。
+问题一：在单日负载、光伏发电功率预测和分时电价已知的条件下，确定各 10 分钟时段的正常购电量及储能充放电方案，使全天购电费用最低，并满足日初、日末储电量相同等运行约束。
+\par\noindent\hspace*{2em}问题二：考虑负载和光伏发电功率随日期变化，每日 0:00 提前制定购电计划。当储能调节后仍有供电缺口时，以同期正常电价的 5 倍进行紧急购电，求得统计期内购电与储能运行方案。
+\par\noindent\hspace*{2em}问题三：在问题二的基础上，利用 6:00、12:00 和 18:00 新发布的光伏发电功率预报调整尚未执行的购电计划，并计入上调、下调及紧急购电费用，比较日内调整前后的经济性，评价不同更新时间的信息价值。
+\par\noindent\hspace*{2em}问题四：将固定分时电价扩展为随日期和时段变化的实际电价，分别重新研究仅在 0:00 制定计划和允许日内调整两种情形，比较波动电价下不同购电与储能策略的费用表现。
+
+\par\noindent\hspace*{2em}各问题均需满足题目规定的储能设备容量、储电量范围、最大充放电功率与充放电效率等运行约束；结果以 10 分钟为时段，多日结果覆盖 2025 年 2 月 1 日至 12 月 31 日，并按题目附件 5 中表 1—表 3 的格式给出指定时段与指定日期的结果。
 
 % =========================
 % 二、问题分析
 % =========================
-\clearpage
+% 各章大标题上方留白统一为 2.5em
+\titlespacing*{\section}{0pt}{2.5em}{0.6em}
 \section{问题分析}
-\subsection{确定性种植规划的约束结构}
-\subsubsection{决策对象与时空粒度}
-% 正文待填。
-\subsubsection{农业硬约束与收益口径}
-% 正文待填。
-\subsection{不确定性下的收益与风险权衡}
-\subsubsection{随机参数场景}
-% 正文待填。
-\subsubsection{风险度量与共享决策}
-% 正文待填。
-\subsection{作物关联下的策略扩展}
-\subsubsection{替代互补需求响应}
-% 正文待填。
-\subsubsection{联合情景与对照设计}
-% 正文待填。
-\subsection{总体技术路线}
-% 总体流程图及说明待填。
+\subsection{问题一：确定性条件下的购电与储能调度分析}
+问题一中，负载、光伏发电功率和分时电价均已知，核心是协调外部购电与储能充放电，在满足供需平衡、容量和功率约束的同时降低全天购电费用。由于同一最低费用可能对应多组调度方案，本文采用\textbf{词典序线性规划}：先最小化购电费用，再以储能吞吐量作为给定购电费用容差范围内方案的择优准则，并通过无储能基准和约束复算检验方案的经济性与可行性。
+\subsection{问题二：预测偏差下的计划购电与紧急购电分析}
+问题二需要在每日 0:00 提前制定购电计划，而当天实际负载和光伏发电功率尚不可知，预测偏低还会引发高价紧急购电。为此，先依据历史数据预测负载与光伏发电功率，再利用\textbf{历史净负载预测残差的分位数}对计划需求进行风险修正，并通过跨日滚动优化确定正常购电和储能安排。实际运行中的剩余偏差优先由储能调节，无法补足的部分再通过紧急购电解决。
+\subsection{问题三：日内预报更新与购电调整分析}
+问题二的购电计划在 0:00 一次确定，无法利用当天随后到达的新信息。问题三进一步引入 6:00、12:00 和 18:00 的光伏发电功率预报、实际储电量及已观测负载，仅对尚未执行的时段重新优化，并通过\textbf{负载反馈}修正后续需求预测。模型同时计入购电调整费用和紧急购电费用，通过不同更新时间组合的比较评价日内信息更新的经济价值。
+\subsection{问题四：波动电价下的策略优化分析}
+问题四将前三问的固定分时电价扩展为随日期和时段变化的波动电价，因此购电与储能计划还需考虑未来价格的不确定性。本文利用历史电价形成预测价格，并在实际交付后按真实电价结算；分别在问题二和问题三模型基础上重新优化“仅 0:00 制定计划”和“允许日内调整”两种策略，再与原策略仅按波动电价重新计费的结果比较，以评估主动重优化带来的收益。
+\subsection{总体求解流程}
+四个问题由确定性调度逐步扩展至预测偏差、日内信息更新和波动电价，前一问的模型结构与结果作为后一问的基础，形成连续的购电—储能优化体系。各问题之间的联系及总体求解流程如图~\ref{fig:overall-flow} 所示。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{总体流程图.png}
+\caption{总体求解流程}
+\label{fig:overall-flow}
+\end{figure}
 
 % =========================
 % 三、模型假设
 % =========================
-\clearpage
+% 各章大标题上方留白统一为 2.5em
+\titlespacing*{\section}{0pt}{2.5em}{0.6em}
 \section{模型假设}
-% 假设条目待填。
+题目已给出的储能容量、充放电功率、运行效率及电价倍率等参数，均直接写入相应约束或目标函数，不再作为模型假设重复列出。为便于模型建立，作如下假设：
+
+\textbf{假设 1：}将附件中各时刻给出的功率数据作为相应 10 分钟区间的右端点离散值，并以右端点矩形规则近似计算时段电量，即取 $\Delta t=1/6\ \mathrm{h}$。该处理仅作为本文的离散化口径，不视为对连续功率曲线的精确积分；储电量在相邻时段之间按状态方程连续递推。
+
+\textbf{假设 2：}研究期内不存在影响数据可比性的重大设备改造或统计、计量方式变化，负载、光伏发电和电价数据按统一口径进行处理，使不同时期的数据能够在相同时间尺度下比较。
+
+\textbf{假设 3：}负载、光伏发电及其预测误差在相近日期和相同时段具有一定延续性，已观测的历史信息能够为后续预测及风险修正提供参考。
+
+\textbf{假设 4：}除题目给定的充、放电效率外，不额外考虑储能自放电、线路损耗和电池老化成本；储能运行仍须满足容量范围、充放电功率上限及储电量递推关系。
+
+\textbf{假设 5：}题目未给出外部电网购电容量上限，因此本文不额外设置网侧购电功率上限，即认为该约束在本题研究范围内不构成限制。
+
+\textbf{假设 6：}光伏发电在满足小区负载和储能充电需求后若仍有剩余，允许弃用；题目未规定余电上网价格，因此不考虑向外部电网售电及相应收益。
+
+\par\noindent\hspace*{2em}以上假设用于统一模型中的现实简化。历史样本长度、残差分位水平、负载反馈强度、滚动时域长度以及电价预测方式等均属于具体模型设定，将在相应问题的模型建立过程中分别说明。
 
 % =========================
 % 四、符号说明
 % =========================
-\clearpage
+% 各章大标题上方留白统一为 2.5em
+\titlespacing*{\section}{0pt}{2.5em}{0.6em}
 \section{符号说明}
-% 符号说明表待填。
+\begingroup
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{
+  >{\centering\arraybackslash}p{2.8cm}
+  >{\raggedright\arraybackslash}p{3.4cm}
+  >{\centering\arraybackslash}p{1.5cm}
+  >{\raggedright\arraybackslash}p{2.7cm}
+  >{\raggedright\arraybackslash}p{4.3cm}}
+\caption{主要符号说明}\label{tab:symbols}\\
+\toprule
+\textbf{符号} & \textbf{含义} & \textbf{单位} & \textbf{使用范围} & \textbf{备注} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{符号} & \textbf{含义} & \textbf{单位} & \textbf{使用范围} & \textbf{备注} \\
+\midrule
+\endhead
+$i$ & 日期索引 & — & 全文 & 问题一中表示指定日期 \\[0.45em]
+$t$ & 日内时段索引 & — & 全文 & 每日共 144 个 10 分钟时段 \\[0.45em]
+$v$ & 购电计划的制定或更新时间 & — & 问题三、问题四日内调整情形 & $v\in\{0,6,12,18\}$ \\[0.45em]
+$\Delta t$ & 单个时段长度 & h & 全文 & $\Delta t=1/6$ \\[0.45em]
+$L_{i,t},\ \widehat L_{i,t}^{(v)}$ & 实际负载功率、时刻 $v$ 的负载预测值 & kW & 实际值用于全文；预测值用于问题二至问题四 & 预测仅使用当时已获得的信息 \\[0.45em]
+$G_{i,t},\ \widehat G_{i,t}^{(v)}$ & 实际光伏发电功率、时刻 $v$ 可获得的光伏预测值 & kW & 实际值用于全文；预测值用于问题二至问题四 & 日内预报只更新尚未执行时段 \\[0.45em]
+$p_{i,t},\ \widehat p_{i,t}$ & 实际电价、预测电价 & 元/kWh & 实际电价用于全文；预测电价用于问题四 & 问题四用预测电价制定计划，按实际电价结算 \\[0.45em]
+$\eta_c,\ \eta_d$ & 储能充电效率、放电效率 & — & 全文 & 由题目给定 \\[0.45em]
+$E_{\min},\ E_{\max}$ & 储电量下限、上限 & kWh & 全文 & 分别为 1200、10800 \\[0.45em]
+$P_{\max}$ & 最大充电功率和最大放电功率 & kW & 全文 & $P_{\max}=5000$，单时段上限为 $P_{\max}\Delta t=5000/6\approx833.3333$ kWh \\[0.45em]
+$\kappa$ & 紧急购电价格倍数 & — & 问题二至问题四 & $\kappa=5$ \\[0.45em]
+$q_{i,t}^{(v)}$ & 时刻 $v$ 确定的正常购电计划量 & kWh & 全文 & $q_{i,t}^{(0)}$ 表示 0:00 计划 \\[0.45em]
+$q_{i,t}^{f}$ & 第 $t$ 时段最终生效的正常购电量 & kWh & 问题三、问题四日内调整情形 & 用于最终费用结算 \\[0.45em]
+$c_{i,t},\ r_{i,t}$ & 第 $t$ 时段的储能充电量、放电量 & kWh & 全文 & $r_{i,t}$ 为储能向微网释放的电量，二者不同时为正 \\[0.45em]
+$e_{i,t}$ & 紧急购电量 & kWh & 问题二至问题四 & 储能调节后仍有缺口时购入 \\[0.45em]
+$u_{i,t}^{+},\ u_{i,t}^{-}$ & 相对 0:00 计划的上调量、下调量 & kWh & 问题三、问题四日内调整情形 & 用于计算购电调整费用 \\[0.45em]
+$E_{i,t}$ & 第 $t$ 时段结束时的储电量 & kWh & 全文 & 在相邻时段及日期之间连续传递 \\[0.45em]
+$w_{i,t}$ & 供需平衡中的未利用富余电量 & kWh & 全文 & 不区分富余电量来源，不直接作为弃光量统计 \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+\par\noindent\hspace*{2em}注：$r_{i,t}$ 表示储能放电量，不用于表示预测残差；后文将预测残差记为 $\varepsilon_{i,t}$。历史误差分位数、负载反馈系数、目标函数值及各项费用等局部符号，在首次出现时另行定义。表中符号按“索引—已知参数—预测参数—决策变量—状态及辅助变量”的顺序排列。
 
 % =========================
 % 五、数据预处理与探索性分析
 % =========================
-\clearpage
+% 各章大标题上方留白统一为 2.5em
+\titlespacing*{\section}{0pt}{2.5em}{0.6em}
 \section{数据预处理与探索性分析}
-\subsection{数据来源与建模粒度}
-\subsubsection{原题与附件数据}
-% 正文待填。
-\subsubsection{统一决策粒度}
-% 正文待填。
-\subsection{字段清洗与记录校验}
-\subsubsection{缺失值与异常记录处理}
-% 正文待填。
-\subsubsection{主键与字段一致性检查}
-% 正文待填。
-\subsection{统一主键与参数构造}
-\subsubsection{基础参数整理}
-% 正文待填。
-\subsubsection{销量基准与收益参数构造}
-% 正文待填。
-\subsection{结构诊断与建模启示}
-% 正文待填。
+\subsection{附件关系与数据质量检查}
+五份附件分别给出问题一的单日基准数据、全年实际负载与实际光伏发电功率、每日 0:00、6:00、12:00 和 18:00 发布的光伏预报、全年实际电价以及结果填报模板。除问题一外，结果统计区间均为 2025 年 2 月 1 日至 12 月 31 日，1 月数据用于形成首日预测所需的历史信息。
+
+\par\noindent\hspace*{2em}对附件 1—4 的数据规模、时间索引及有效性进行核查，结果见表~\ref{tab:data-audit}。各表均未发现缺失值、无效值及异常负值，因此不进行样本删除、插补或平滑处理。
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{>{\centering\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\centering\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}}
+\caption{附件 1—4 数据规模及质量核查结果}\label{tab:data-audit}\\
+\toprule
+\textbf{附件} & \textbf{原始数据规模} & \textbf{处理后规模} & \textbf{核查结果} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{附件} & \textbf{原始数据规模} & \textbf{处理后规模} & \textbf{核查结果} \\
+\midrule
+\endhead
+附件 1 & 144 个 10 分钟时段 & 144 个时段 & 时间严格递增，电价、负载和光伏预测数据完整 \\
+附件 2 & 365 天 $\times$ 144 时段 $\times$ 2 类功率 & 保持不变 & 日期、时段完全对应，105120 个功率值完整有效 \\
+附件 3 & 365 天 $\times$ 4 次发布 $\times$ 24 小时预报 & 保持不变 & 1460 条预报记录、35040 个预报值完整有效 \\
+附件 4 & 365 天 $\times$ 144 时段 & 保持不变 & 52560 个电价值均为正，范围为 0.0076$\sim$1.7936 元/kWh \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+\par\noindent\hspace*{2em}附件 2 与附件 4 采用相同的日期和 10 分钟时段索引。附件 3 中同日后续三次预报的日期标签空白仅作前向填充处理，不修改预测数值；经时间映射后仍超出 2025 年数据覆盖范围的年末预测目标不参与预报误差检验。附件 5 的个别时段标签与自然日边界存在轻微错位，内部计算统一采用每日 144 个连续 10 分钟时段，并按既定对应关系写回模板。
+\subsection{时间映射与功率—电量换算}
+附件中的负载、光伏发电功率和电价数据均按 10 分钟时段记录。为统一各附件的时间索引，本文以自然日为单位，将每天划分为 144 个连续时段。以 0:00 为起点，第 $t$ 个时段记为 $[10(t-1),\ 10t]$ min，$t=1,2,\ldots,144$。对于附件中按时刻给出的负载和光伏发电功率，本文采用右端点映射，将该时刻数值作为前一 10 分钟区间的代表值。例如，0:10 对应 00:00—00:10，0:00+1 对应 23:50—24:00。
+
+负载和光伏发电功率的单位为 kW，而购电量、充放电量和储电量均以 kWh 计。单个时段长度为
+\begin{equation}
+\Delta t=\frac{10}{60}=\frac{1}{6}\ \mathrm{h}.
+\end{equation}
+\par\noindent 因此，第 $i$ 日第 $t$ 个时段的负载电量和光伏发电量分别为
+\begin{equation}
+l_{i,t}=L_{i,t}\Delta t,\qquad g_{i,t}=G_{i,t}\Delta t,
+\end{equation}
+\par\noindent 其中，$L_{i,t}$ 和 $G_{i,t}$ 分别表示该时段的负载功率和光伏发电功率。电价单位为元/kWh，可直接与购电量相乘计算费用。
+
+储电量按时段末记录，并按本时段充放电量逐时段递推；前一日 24:00 的储电量作为下一日 0:00 的初始储电量，保证跨日连续。
+\subsection{负载、光伏发电功率与电价的时序特征}
+负载、光伏发电功率与电价采用相同的 10 分钟时间网格。光伏发电功率具有明显的昼夜规律，全年 52560 个时段中有 23540 个时段光伏发电功率为 0，其余时段还受天气与季节影响；小区负载则全天持续存在并随日期和时段波动。全年共有 10130 个时段光伏发电功率高于同期负载，存在可供储能吸收的富余电量。
+
+\par\noindent\hspace*{2em}储能可将富余光伏或低价时段的电量转移至供电缺口时段，从而减少外部购电支出；电价在 0.0076$\sim$1.7936 元/kWh 之间变化，且日内与跨日差异明显，说明购电与储能充放电需按供需关系和电价变化统一安排。
+\subsection{预测发布时间与可用信息范围}
+为避免提前使用未来信息，本文按各类数据的实际可获得时点组织模型输入。问题一中，当日负载、光伏发电功率预测和电价均已知；问题二中，每日 0:00 仅利用此前已完成日期的负载和光伏发电功率制定当日计划。附件 3 中的光伏预报分别在 0:00、6:00、12:00 和 18:00 发布，日内调整仅使用对应时点已发布的最新预报、实际储电量和已观测负载。实际负载、实际光伏发电功率和实际电价只在发生后参与实际运行、反馈或费用结算；对于波动电价情形，计划阶段利用历史价格形成预测电价。
 
 % =========================
-% 六、问题一模型的建立与求解
+% 六、问题一
 % =========================
-\clearpage
-\section{问题一模型的建立与求解}
-\subsection{销量基准与分段收益核算}
-\subsubsection{销量基准与产销分解}
-% 正文待填。
-\subsubsection{两种超产处理规则}
-% 正文待填。
-\subsection{轮作约束与混合整数规划}
-\subsubsection{决策变量与目标函数}
-% 正文待填。
-\subsubsection{农业约束与词典序目标}
-% 正文待填。
-\subsection{两种滞销规则下的种植方案}
-\subsubsection{超产浪费情形}
-% 正文待填。
-\subsubsection{超产半价情形}
-% 正文待填。
-\subsection{方案可行性与参数敏感性}
-\subsubsection{约束回放与结果核验}
-% 正文待填。
-\subsubsection{关键参数敏感性比较}
-% 正文待填。
+% 全文统一：所有大标题上空 2.5em（各章不分页，连续排版）
+\titlespacing*{\section}{0pt}{2.5em}{0.6em}
+\section{问题一：确定性条件下的购电与储能联合优化}
+附件 1 给出了单日各时段的小区负载、光伏发电功率和分时电价。在上述信息均已知的条件下，问题一需要协调外部购电与储能充放电，在满足各时段负载需求及储能运行约束的同时降低全天购电费用。考虑到最低购电费用可能对应多组可行解，本文建立\textbf{购电—储能词典序线性规划模型}\paperciterange{1}{2}：先最小化全天购电费用，再在给定购电费用容差内最小化电池充放电吞吐量，作为该范围内方案的稳定择优规则。
+
+\par\noindent\hspace*{2em}求解时先由负载、光伏与电价数据建立时段供需平衡和储能状态递推关系，再完成词典序优化、基准比较与可行性检验，整体流程如图~\ref{fig:q1-flow} 所示。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,trim=0 72 0 43,clip]{四张求解流程_可编辑版/幻灯片1.png}
+\caption{问题一购电—储能联合优化流程图}
+\label{fig:q1-flow}
+\end{figure}
+
+\subsection{时段供需平衡与储能状态递推}
+\par\noindent\hspace*{2em}将一天划分为 $144$ 个长度为 $\Delta t=1/6\ \mathrm{h}$ 的时段，记 $t=1,2,\ldots,144$。设第 $t$ 个时段的负载功率和光伏发电功率分别为 $L_t$ 和 $G_t$，则相应的负载电量与光伏发电量分别为 $L_t\Delta t$ 和 $G_t\Delta t$。
+
+\par\noindent\hspace*{2em}记 $q_t$ 为正常购电量，$c_t$ 和 $r_t$ 分别为储能在母线侧的充电量和放电量，$w_t$ 为供需平衡中的未利用富余电量。各时段的能量供需满足
+\begin{equation}
+q_t+G_t\Delta t+r_t=L_t\Delta t+c_t+w_t,\qquad t=1,2,\ldots,144.
+\end{equation}
+式（3）左侧为外部购电、光伏发电和储能放电共同形成的可用电量，右侧对应小区负载、储能充电以及未被利用的富余电量。当光伏发电功率高于同期负载时，剩余电量可用于储能充电；若储能受容量或功率限制无法继续吸收，则形成弃光。本文将可用光伏电量中未供给负载、未用于储能充电且未向外网出售的部分称为弃光量，单位为 kWh。$w_t$ 为供需平衡的富余项，未区分其来源，可能包含未利用的正常购电，因此一般不等同于弃光量；无储能基准中的弃光量按光伏优先供给负载后剩余的光伏电量单独计算。由此，外部购电、光伏利用和储能调节被统一纳入同一时段的供需平衡关系。
+
+\par\noindent\hspace*{2em}记 $E_t$ 为第 $t$ 个时段结束时的电池内部储电量，则 $E_{t-1}$ 同时表示本时段开始时的储电状态。设充、放电效率分别为 $\eta_c$ 和 $\eta_d$。充电过程中仅有 $\eta_c c_t$ 实际存入电池，而向微网释放 $r_t$ 电量需要消耗电池内部 $r_t/\eta_d$ 的能量，因此储电量按照
+\begin{equation}
+E_t=E_{t-1}+\eta_c c_t-\frac{r_t}{\eta_d},\qquad t=1,2,\ldots,144
+\end{equation}
+逐时段递推。
+
+\par\noindent\hspace*{2em}题设给定 $\eta_c=\eta_d=0.9$，储能额定容量为 $12000\ \mathrm{kWh}$，允许储电量保持在额定容量的 $10\%\sim90\%$ 范围内。问题一还要求日初与日末储电量均为 $6000\ \mathrm{kWh}$，故有
+\begin{equation}
+1200\leq E_t\leq10800,\qquad E_0=E_{144}=6000.
+\end{equation}
+
+\par\noindent 储能最大充、放电功率均为 $5000\ \mathrm{kW}$。按单个时段长度 $\Delta t=1/6\ \mathrm{h}$ 换算，每个 10 分钟时段允许的最大充电量和放电量均为
+\begin{equation*}
+5000\times\frac{1}{6}=\frac{5000}{6}\approx833.3333\ \mathrm{kWh}.
+\end{equation*}
+因此，各决策变量还需满足
+\begin{equation}
+0\leq c_t,r_t\leq\frac{5000}{6},\qquad q_t,w_t\geq0.
+\end{equation}
+
+\par\noindent 从实际运行角度，同一时段内储能不应同时充电和放电，其物理互斥关系可表示为
+\begin{equation}
+c_t r_t=0.
+\end{equation}
+
+\par\noindent 需要指出的是，式（7）若直接写入优化模型会使原问题转化为非线性模型。为保持主模型的线性结构，本文在正式线性规划中不额外加入该乘积约束，而是在求解后逐时段核验充、放电状态；144 个时段的正式最优解均未出现同时充放电现象。进一步采用含二元互斥变量的混合整数线性规划模型\papercite{3}进行交叉验证，所得最优费用与调度结果保持一致，说明在本题数据条件下，采用线性规划不会改变问题一的最优结论。
+
+\par\noindent\hspace*{2em}至此，各约束条件共同确定了问题一的基本可行域，并通过充放电互斥的事后核验保证储能运行满足实际要求，为后续词典序目标函数的建立与求解提供基础。
+\subsection{购电费用与电池吞吐量的词典序优化}
+满足供需平衡、储电状态递推、容量边界和充放电功率约束的方案通常不唯一。本文将购电费用作为首要优化目标，并将储能总充放电量作为第二级目标，在给定购电费用容差范围内对方案进行统一选择。
+
+\par\noindent\hspace*{2em}记决策向量为 $\boldsymbol{x}$，其包含各时段的正常购电量 $q_t$、充电量 $c_t$、放电量 $r_t$、储电量 $E_t$ 及富余电量 $w_t$；记满足上述线性约束的可行解集合为 $\mathcal{F}$。第一阶段最小化全天正常购电费用：
+\begin{equation}
+C^{*}=\min_{\boldsymbol{x}\in\mathcal{F}}\sum_{t=1}^{144}p_tq_t,
+\end{equation}
+其中，$p_t$ 为第 $t$ 个时段的购电电价，$C^{*}$ 为第一阶段得到的最低购电费用。
+
+\par\noindent\hspace*{2em}在一级购电费用给定容差范围内，第二阶段以储能在母线侧的总充放电量为目标：
+\begin{equation}
+\begin{aligned}
+\min_{\boldsymbol{x}\in\mathcal{F}}\quad & B=\sum_{t=1}^{144}(c_t+r_t),\\
+\text{s.t.}\quad & \sum_{t=1}^{144}p_tq_t\leq C^{*}+\varepsilon,
+\end{aligned}
+\end{equation}
+其中，$B$ 为全天储能总吞吐量，$\varepsilon$ 为考虑求解器数值精度设置的容差。第二阶段允许购电费用相对一级最优值的增加不超过给定容差，并在此范围内最小化储能总吞吐量。
+
+\par\noindent\hspace*{2em}与将购电费用和储能吞吐量直接加权求和相比，上述处理无需人为设定两类目标之间的权重，能够保证购电费用的最高优先级。第二级目标的作用主要是为满足一级购电费用给定容差的方案提供统一的选择准则，而不作为降低购电费用之外的独立性能改进指标。
+\subsection{最优购电计划与储能运行方案}
+求解词典序线性规划模型后，得到全天正常购电量为 \textbf{59482.6990} kWh，购电费用为 \textbf{35126.9486} 元。按照题目指定的结果格式，表 \ref{tab:q1_purchase} 给出了六个时段的购电量以及全天购电量和购电费用。其中，10:00—10:10、14:00—14:10 和 20:00—20:10 时段无需从外部电网购电，而 12:00—12:10、16:00—16:10 和 18:00—18:10 时段仍存在一定的外部购电需求。
+
+\begin{table}[htbp]
+\centering
+\caption{微网在指定时间段的购电量及全天购电量和购电费}
+\label{tab:q1_purchase}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量 \\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 480.4125 & 14:00--14:10 & 0.0000 \\
+\hline
+16:00--16:10 & 445.4317 & 18:00--18:10 & 531.8941 & 20:00--20:10 & 0.0000 \\
+\hline
+\multicolumn{2}{|c|}{全天购电量} & \multicolumn{1}{c|}{59482.6990} & \multicolumn{2}{c|}{全天购电费} & 35126.9486 \\
+\hline
+\end{tabular}
+\end{table}
+
+\par\noindent\hspace*{2em}储能全天累计充电 $20740.6661\ \mathrm{kWh}$，累计放电 $16799.9396\ \mathrm{kWh}$。按照题目要求，将 144 个 10 分钟时段汇总为六个 4 小时时段，结果见表 \ref{tab:q1_storage}。20:00—24:00 区间内同时出现充电量和放电量，是由于该区间包含多个 10 分钟时段，不同时段采取了不同的充放电动作，并非储能在同一时段同时充电和放电；逐时段核验表明，所有时段均满足充放电互斥要求。
+
+\begin{table}[htbp]
+\centering
+\caption{储能设备在指定时间段的充放电量及0:00和24:00的储电量}
+\label{tab:q1_storage}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量 \\
+\hline
+00:00--04:00 & 4500.0000 & 0.0000 & 04:00--08:00 & 833.3333 & 6365.8412 \\
+\hline
+08:00--12:00 & 4787.9643 & 1702.9970 & 12:00--16:00 & 5286.0352 & 91.1014 \\
+\hline
+16:00--20:00 & 0.0000 & 5780.1319 & 20:00--24:00 & 5333.3333 & 2859.8681 \\
+\hline
+\multicolumn{2}{|c|}{0:00储电量} & 6000.0000 & \multicolumn{2}{c|}{24:00储电量} & 6000.0000 \\
+\hline
+\end{tabular}
+\end{table}
+
+\par\noindent\hspace*{2em}表 \ref{tab:q1_purchase} 和表 \ref{tab:q1_storage} 给出了题目要求的指定时段结果，但分段汇总难以完整反映购电、光伏发电功率与储能状态在一天内的协同变化。为观察各时段的调度特征，进一步绘制日内供需与储能联合运行情况，如图~\ref{fig:q1_operation} 所示。图中上层展示负载、光伏发电与外部购电的时序变化，中层给出储能充电量 $c_t$ 和放电量 $r_t$，下层为时段末储电量 $E_t$ 的变化轨迹。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_6_3_q1_dispatch_provided.png}
+\caption{问题一日内供需与储能联合运行情况}
+\label{fig:q1_operation}
+\end{figure}
+
+\par\noindent\hspace*{2em}从日内运行结果可以看出，储能根据光伏发电功率、负载需求和分时电价在各时段间转移电量：光伏相对充裕或购电成本较低时储能倾向于充电，在光伏不足、负载需求较高或购电成本较高的时段释放电量，从而减少高成本外部购电。全天储电量始终满足 $1200\leq E_t\leq10800\ \mathrm{kWh}$，且日初与日末储电量均为 $6000\ \mathrm{kWh}$，说明最优方案在完成日内能量转移的同时满足题目规定的储能循环条件。
+
+\subsection{无储能基准比较与方案可行性核验}
+为量化储能参与调度后带来的经济性与光伏消纳改善，构造无储能基准方案：各时段光伏发电优先满足小区负载，富余光伏直接弃置，供电缺口全部由外部电网补足。基准方案与正式模型采用相同的负载、光伏和电价数据。
+
+\par\noindent\hspace*{2em}图~\ref{fig:q1_storage_improvement} 对比了有、无储能两种方案的购电量、购电费用和弃光量。无储能时，全天购电量为 $61789.9354\ \mathrm{kWh}$，购电费用为 $48052.0466$ 元，弃光量为 $6247.9630\ \mathrm{kWh}$；引入储能后，全天购电量降至 $59482.6990\ \mathrm{kWh}$，购电费用降至 $35126.9486$ 元，弃光量降为 0。相较基准方案，购电量减少 $2307.2364\ \mathrm{kWh}$（$3.7340\%$），购电费用减少 $12925.0980$ 元（$26.8981\%$），费用降幅明显高于购电量降幅，说明储能的主要收益来自跨时段削减高价购电，并提高光伏利用水平。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_6_4_q1_relative_improvement_provided.png}
+\caption{储能方案相对无储能基准的改善效果}
+\label{fig:q1_storage_improvement}
+\end{figure}
+
+\par\noindent\hspace*{2em}为检验词典序模型中第二级目标的实际作用，将仅最小化购电费用的单目标线性规划与正式词典序线性规划进行比较，结果见表 \ref{tab:q1_single_lex}。
+
+\begin{table}[htbp]
+\centering
+\caption{单目标线性规划与词典序线性规划结果对比}
+\label{tab:q1_single_lex}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{模型} & \textbf{购电费用（元）} & \textbf{电池总吞吐量（kWh）} & \textbf{同时充放电时段数} & \textbf{储电量轨迹最大差（kWh）} \\
+\midrule
+仅最小化购电费用 & 35126.94858929 & 37540.60569835 & 0 & 300.0000 \\
+词典序线性规划 & 35126.94858964 & 37540.60569044 & 0 & 0.0000 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\par\noindent\hspace*{2em}单目标与词典序模型的购电费用仅相差 $3.51\times10^{-7}$ 元、储能吞吐量仅相差 $7.92\times10^{-6}\ \mathrm{kWh}$，二者均处于数值求解容差量级，但储电量轨迹最大相差 $300\ \mathrm{kWh}$。因此，二级目标在本算例中主要用于对费用等价方案进一步择优，而非实质降低储能吞吐量。
+
+\par\noindent\hspace*{2em}问题一的正式模型未显式引入充放电互斥的二元变量。为验证这一简化是否影响最优结果，进一步建立含充放电互斥二元变量的\textbf{混合整数线性规划（\textbf{MILP}）模型}进行交叉求解，并与正式模型的\textbf{线性规划（LP）}结果对比，结果见表 \ref{tab:q1_lp_milp}。
+
+\begin{table}[htbp]
+\centering
+\caption{LP与MILP充放电互斥交叉验证结果}
+\label{tab:q1_lp_milp}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{模型} & \textbf{最优购电费用（元）} & \textbf{购电量（kWh）} & \textbf{电池总吞吐量（kWh）} & \textbf{同时充放电时段数} & \textbf{储电量轨迹最大差（kWh）} \\
+\midrule
+正式LP & 35126.94858964 & 59482.69899752 & 37540.60569044 & 0 & 0.0000 \\
+显式互斥MILP & 35126.94858964 & 59482.69899752 & 37540.60569044 & 0 & 0.0000 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\par\noindent\hspace*{2em}显式互斥 MILP 与正式 LP 的购电费用、购电量、储能吞吐量及储电量轨迹均一致，同时充放电时段数为 0，说明线性规划处理未改变本算例的最优结果。
+
+\par\noindent\hspace*{2em}最终方案的供需平衡、储电量递推及储能运行约束均通过独立复算，统一核验结果见第 10.1 节。
 
 % =========================
-% 七、问题二模型的建立与求解
+% 七、问题二
 % =========================
-\clearpage
-\section{问题二模型的建立与求解}
-\subsection{从确定性基准到随机参数场景}
-\subsubsection{销量、产量、成本与价格情景}
-% 正文待填。
-\subsubsection{训练情景与样本外情景}
-% 正文待填。
-\subsection{两阶段随机规划的共享决策与收益核算}
-\subsubsection{第一阶段种植决策}
-% 正文待填。
-\subsubsection{第二阶段产销与利润核算}
-% 正文待填。
-\subsection{SAA--CVaR风险目标的构造与求解}
-\subsubsection{下尾风险度量与线性化}
-% 正文待填。
-\subsubsection{随机混合整数规划求解}
-% 正文待填。
-\subsection{风险权重选择与样本外稳健性}
-\subsubsection{风险收益比较}
-% 正文待填。
-\subsubsection{方案稳健性与约束验证}
-% 正文待填。
+\section{问题二：预测偏差下的风险修正购电策略}
+问题一在负载、光伏发电功率和电价均已知的条件下完成确定性调度，而问题二需要在每日 0:00 提前制定购电计划，此时当天实际负载与光伏发电功率尚不可知。若计划供电不足，剩余缺口只能以 5 倍电价紧急购电，因此预测偏低带来的经济损失不能忽略。为此，在沿用问题一供需平衡、储能状态递推及运行约束的基础上，本文建立\textbf{基于历史残差分位数修正的滚动时域线性规划模型}\paperciterange{4}{6}：先利用历史数据预测负载和光伏发电功率，再通过历史净负载残差修正计划需求，并在实际运行中由储能优先吸收预测偏差，剩余缺口通过紧急购电补足。
+
+\par\noindent\hspace*{2em}为直观说明预测、风险修正与滚动调度之间的关系，问题二的求解过程如图~\ref{fig:q2-flow} 所示。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,trim=0 72 0 43,clip]{四张求解流程_可编辑版/幻灯片2.png}
+\caption{问题二风险修正滚动购电策略求解流程}
+\label{fig:q2-flow}
+\end{figure}
+
+\subsection{历史负载与光伏的短期预测}
+每日 0:00 制定购电计划时，当天及后续时段的实际负载和实际光伏发电功率尚未获得，因此预测过程仅使用当前时刻以前已经完整记录的历史数据。模型采用 48 h 滚动时域进行计划求解，但每天只执行前 24 h 的调度结果；进入下一日 0:00 后，再纳入最新完成日期的数据重新预测并优化，从而保证整个计算过程不使用未来实际信息。
+
+\par\noindent\hspace*{2em}小区负载具有较明显的周内周期。对于计划窗口中的目标日期 $d$（$d=i$ 或 $d=i+1$），从当前决策日 $i$ 之前最近 28 个完整自然日中筛选与目标日期星期相同的历史日期，构成集合
+\begin{equation}
+\mathcal{H}_{i,d}=\left\{j\mid i-28\leq j<i,\ \operatorname{weekday}(j)=\operatorname{weekday}(d)\right\}.
+\end{equation}
+将集合中的日期按时间先后排列为 $\{j_1,j_2,\ldots,j_m\}$，近期日期取更大权重，第 $d$ 日第 $t$ 个 10 分钟时段的负载功率预测值为
+\begin{equation}
+\widehat{L}_{d,t}^{(0)}=\sum_{k=1}^{m}\frac{2k}{m(m+1)}L_{j_k,t},\qquad t=1,2,\ldots,144.
+\end{equation}
+该方法既保留了不同星期属性下的负载差异，又提高了近期历史数据在预测中的作用，使预测能够随负载近期变化进行调整。
+
+\par\noindent\hspace*{2em}光伏发电功率受近期天气变化影响较明显，因此不再按星期属性分类，而采用当前决策时刻以前最近 5 个完整自然日的同一时段数据进行预测。第 $t$ 个时段的光伏发电功率预测值为
+\begin{equation}
+\widehat{G}_{i,t}^{(0)}=\frac{1}{5}\sum_{k=1}^{5}G_{i-k,t},\qquad t=1,2,\ldots,144.
+\end{equation}
+每日 0:00 根据已有历史数据生成光伏发电功率预测曲线，并用于当前 48 h 计划窗口；进入下一日后，再利用新增的完整日数据重新计算。当天尚未发生的实际光伏发电功率始终不参与计划制定。
+
+\par\noindent\hspace*{2em}在负载和光伏发电功率预测的基础上，定义基础净负载预测为
+\begin{equation}
+\widehat{N}_{i,t}^{(0)}=\widehat{L}_{i,t}^{(0)}-\widehat{G}_{i,t}^{(0)}.
+\end{equation}
+其中，$\widehat{N}_{i,t}^{(0)}>0$ 表示该时段预计存在供电缺口，$\widehat{N}_{i,t}^{(0)}<0$ 表示预计存在光伏富余。将预测功率乘以 $\Delta t=1/6\ \mathrm{h}$ 后，即得到进入购电—储能优化模型的基础净用电量。由于点预测仍可能低估实际净负载，下一节进一步利用历史预测残差对其进行分位数修正。
+\subsection{基于历史残差分位数的净负载修正}
+基础净负载预测仍存在一定误差。为刻画预测偏低的风险，记第 $j$ 日第 $t$ 个时段的实际净负载为
+\begin{equation}
+\begin{aligned}
+N_{j,t}&=L_{j,t}-G_{j,t},\\
+\varepsilon_{j,t}&=N_{j,t}-\widehat{N}_{j,t}^{(0)},
+\end{aligned}
+\end{equation}
+其中，$L_{j,t}$ 和 $G_{j,t}$ 分别为实际负载功率和实际光伏发电功率；残差 $\varepsilon_{j,t}$ 为实际净负载减去由第 $j$ 日 0:00 形成的基础净负载预测，其正负号表示基础预测偏低或偏高。
+当 $\varepsilon_{j,t}>0$ 时，实际净负载高于基础预测值，即原计划低估了该时段的供电需求；当 $\varepsilon_{j,t}<0$ 时，则表示基础预测偏高。只有在第 $j$ 日的实际负载和实际光伏发电功率全部获得后，该日残差才进入后续预测，因此修正过程不会使用尚未发生的实际信息。
+
+\par\noindent\hspace*{2em}在第 $i$ 日 0:00 制定购电计划时，从此前最近 56 个自然日中选取已经具有完整基础预测和实际观测记录的日期，构成历史残差样本集合
+\begin{equation}
+\mathcal{R}_{i}=\left\{j\mid i-56\leq j<i,\ \widehat{N}_{j,\cdot}^{(0)}\ \text{已形成}\right\}.
+\end{equation}
+研究期初若可用历史不足 56 日，则从首个能够形成完整预测残差的日期开始，使用当时已有的全部样本，不对缺失历史进行插值或人为补充。对 $\mathcal{R}_{i}$ 中相同 10 分钟时段的残差分别计算经验分布的 $80\%$ 分位数\papercite{4}，得到时段 $t$ 的风险修正量
+\begin{equation}
+u_{i,t}=Q_{0.8}\left(\left\{\varepsilon_{j,t}\mid j\in\mathcal{R}_{i}\right\}\right).
+\end{equation}
+修正量 $u_{i,t}$ 完全由历史预测误差计算得到，并随日期和时段滚动更新。进入下一日后，最新完成日期的残差加入样本窗口，超过 56 日的历史残差相应退出，从而使修正量能够随近期预测误差特征变化。
+
+\par\noindent\hspace*{2em}将 $u_{i,t}$ 加入 7.1 的基础净负载预测，得到购电计划实际采用的修正后净负载
+\begin{equation}
+\widetilde{N}_{d,t}^{(0)}=\widehat{N}_{d,t}^{(0)}+u_{i,t},\qquad d\in\{i,i+1\}.
+\end{equation}
+其中，$d=i$ 和 $d=i+1$ 分别对应 48 h 计划窗口中的第 1 天和第 2 天；同一决策时刻得到的残差分位数修正量用于当前滚动窗口内相应时段的需求修正。经 $\Delta t=1/6\ \mathrm{h}$ 换算后，$\widetilde{N}_{d,t}^{(0)}\Delta t$ 作为购电—储能优化中的预测净用电量，用于确定正常购电和储能充放电计划。
+
+\par\noindent\hspace*{2em}这种处理并不改变 7.1 的基础预测结构，而是利用历史中“实际净负载高于预测值”的信息调整计划需求，使购电策略对预测偏低造成的供电缺口保留适当余量。图~\ref{fig:q2-typical-risk-correction} 以典型日期展示基础净负载预测、实际净负载与 $80\%$ 分位数修正量之间的关系。
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox[c][2.5cm][c]{0.82\textwidth}{\centering 图位：典型日期基础净负载预测与 $80\%$ 分位数修正图\\[2pt]（待插入）}}
+\caption{典型日期的基础净负载预测与 $80\%$ 分位数修正}
+\label{fig:q2-typical-risk-correction}
+% test
+\end{figure}
+
+\par\noindent\hspace*{2em}风险修正后的预测结果将在下一节进入跨日连续的滚动优化；随后按历史实际数据逐时段进行运行模拟。
+\subsection{跨日滚动计划与实际储能反馈}
+经 7.2 修正后，净负载预测需要进一步转化为可执行的购电与储能计划。本文采用\textbf{48 h 滚动时域线性规划}\paperciterange{5}{6}：每日 $i$ 的 0:00 同时优化当天和次日共 288 个 10 分钟时段，仅执行前 24 h；进入下一日后，以实际期末储电量作为新的初始状态重新求解。
+
+\par\noindent\hspace*{2em}按式（2）的功率—电量换算关系，修正后净负载对应的预测电量为 $\widetilde{N}_{d,t}^{(0)}\Delta t$，$d\in\{i,i+1\}$。计划阶段的决策变量包括正常购电量 $q_{d,t}^{\mathrm{p}}$、充电量 $c_{d,t}^{\mathrm{p}}$、放电量 $r_{d,t}^{\mathrm{p}}$、未利用富余电量 $w_{d,t}^{\mathrm{p}}$ 和储电量 $E_{d,t}^{\mathrm{p}}$。以 48 h 正常购电费用最小为目标：
+\begin{equation}
+\min\sum_{d=i}^{i+1}\sum_{t=1}^{144}p_tq_{d,t}^{\mathrm{p}}.
+\end{equation}
+相应的供需平衡、储电量递推、跨日衔接与运行边界为
+\begin{equation}
+\begin{aligned}
+&q_{d,t}^{\mathrm{p}}+r_{d,t}^{\mathrm{p}}=\widetilde{N}_{d,t}^{(0)}\Delta t+c_{d,t}^{\mathrm{p}}+w_{d,t}^{\mathrm{p}},\\
+&E_{d,t}^{\mathrm{p}}=E_{d,t-1}^{\mathrm{p}}+\eta_c c_{d,t}^{\mathrm{p}}-\frac{r_{d,t}^{\mathrm{p}}}{\eta_d},\\
+&E_{i+1,0}^{\mathrm{p}}=E_{i,144}^{\mathrm{p}},\\
+&E_{i,0}^{\mathrm{p}}=E_{i,0},\qquad E_{i+1,144}^{\mathrm{p}}=6000,\\
+&1200\leq E_{d,t}^{\mathrm{p}}\leq10800,\qquad 0\leq c_{d,t}^{\mathrm{p}},r_{d,t}^{\mathrm{p}}\leq\frac{5000}{6}\ \mathrm{kWh},\qquad q_{d,t}^{\mathrm{p}},w_{d,t}^{\mathrm{p}}\geq0.
+\end{aligned}
+\end{equation}
+其中，前两式对 $d\in\{i,i+1\}$ 与 $t=1,\ldots,144$ 成立，因此计划窗口内部两日的储电量通过 $E_{i+1,0}^{\mathrm{p}}=E_{i,144}^{\mathrm{p}}$ 直接衔接，不另设中断。滚动窗口以当天实际起始储电量为初值，并将 48 h 末端储电量固定为 $6000\ \mathrm{kWh}$；进入下一日后，以实际期末储电量作为新窗口的初始状态重新求解，使计划状态与实际状态的口径保持一致。
+
+\par\noindent\hspace*{2em}求得计划后，仅执行当天正常购电量 $q_{i,t}^{\mathrm{p}}$，记为 $q_{i,t}$。实际负载与实际光伏发电功率到达后，定义储能调节前的电量余缺
+\begin{equation}
+a_{i,t}=q_{i,t}+G_{i,t}\Delta t-L_{i,t}\Delta t.
+\end{equation}
+当 $a_{i,t}\geq0$ 时，富余电量优先用于充电：
+\begin{equation}
+c_{i,t}=\min\left\{a_{i,t},\ \frac{5000}{6},\ \frac{10800-E_{i,t-1}}{\eta_c}\right\},\qquad w_{i,t}=a_{i,t}-c_{i,t}.
+\end{equation}
+当 $a_{i,t}<0$ 时，储能优先放电，仍未补足的部分通过紧急购电解决：
+\begin{equation}
+r_{i,t}=\min\left\{-a_{i,t},\ \frac{5000}{6},\ \eta_d\left(E_{i,t-1}-1200\right)\right\},\qquad e_{i,t}=\max\left\{0,\ -a_{i,t}-r_{i,t}\right\}.
+\end{equation}
+因此，同一时段只会执行充电或放电中的一种操作。运行模拟中的实际供需平衡为
+\begin{equation}
+q_{i,t}+G_{i,t}\Delta t+r_{i,t}+e_{i,t}=L_{i,t}\Delta t+c_{i,t}+w_{i,t},
+\end{equation}
+实际储电量按第 6 章式（4）递推，增加日期索引，并采用实际充放电量。
+当天结束后，实际储电量直接传递至下一日：
+\begin{equation}
+E_{i+1,0}=E_{i,144}.
+\end{equation}
+正常购电按分时电价 $p_t$ 结算，紧急购电按同期电价的 5 倍结算，因此第 $i$ 日实际购电费用为
+\begin{equation}
+C_i=\sum_{t=1}^{144}p_tq_{i,t}+\sum_{t=1}^{144}5p_te_{i,t}.
+\end{equation}
+由此，计划阶段负责确定正常购电与储能安排，运行模拟阶段则利用储能反馈吸收预测偏差，并以紧急购电补足剩余缺口；储电量按照运行模拟结果跨日连续传递。下一节将基于统计期内运行模拟结果，比较不同预测与风险处理方式下的费用和紧急购电表现。
+\subsection{全期购电结果与预测—风险关键模块有效性分析}
+按照前述预测、风险修正和滚动调度方法，对 2025 年 2 月 1 日至 12 月 31 日共 334 天进行逐日运行模拟。考虑到四个指定日期的结果表结构相同，为避免正文中重复表格占用过多篇幅，本文选取 2025 年 3 月 20 日作为代表日期，在正文中展示其指定时段正常购电量、全天购电量与购电费用，以及储能设备分时段充放电量和 0:00、24:00 的储电量；其余指定日期的同类结果统一列于附录，完整逐时段结果见对应结果文件。表 \ref{tab:q2-purchase-selected} 和表 \ref{tab:q2-storage-selected} 分别按题目表 1、表 2 的格式给出该代表日期的结果；问题二其余三个指定日期的同类结果见附录~\ref{app:q2-supplement}。表 \ref{tab:q2-emergency-selected} 按题目表 3 的格式集中列出四个指定日期的紧急购电事件。
+
+\begin{table}[H]
+\centering
+\caption{微网在指定时间段的正常购电量及全天购电量和购电费}
+\label{tab:q2-purchase-selected}
+\small
+\textbf{2025 年 3 月 20 日}\par
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量\\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 582.7096 & 14:00--14:10 & 0.0000\\
+\hline
+16:00--16:10 & 479.5529 & 18:00--18:10 & 701.7312 & 20:00--20:10 & 0.0000\\
+\hline
+\multicolumn{2}{|c|}{全天购电量} & 63841.8084 & \multicolumn{2}{c|}{全天购电费} & 39430.3622\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{储能设备在指定时间段的充放电量及 0:00、24:00 的储电量}
+\label{tab:q2-storage-selected}
+\small
+\textbf{2025 年 3 月 20 日}\par
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量\\
+\hline
+0:00--4:00 & 1411.2592 & 190.5300 & 4:00--8:00 & 1082.4118 & 5299.0706\\
+\hline
+8:00--12:00 & 6188.4915 & 2777.3772 & 12:00--16:00 & 3811.3211 & 474.3713\\
+\hline
+16:00--20:00 & 230.6784 & 5855.4450 & 20:00--24:00 & 4213.6414 & 2830.3274\\
+\hline
+\multicolumn{2}{|c|}{0:00储电量} & 9024.4209 & \multicolumn{2}{c|}{24:00储电量} & 4904.9757\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{微网在指定日期的紧急购电量}
+\label{tab:q2-emergency-selected}
+\footnotesize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{2025.3.20} & \multicolumn{2}{c|}{2025.6.21} & \multicolumn{2}{c|}{2025.9.23} & \multicolumn{2}{c|}{2025.12.21}\\
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量\\
+\hline
+20:30--20:40 & 178.4605 & --- & 0.0000 & 20:20--20:30 & 6.3750 & --- & 0.0000\\
+\hline
+--- & --- & --- & --- & 20:50--21:10 & 36.7777 & --- & ---\\
+\hline
+--- & --- & --- & --- & 21:20--21:50 & 23.8190 & --- & ---\\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\par\noindent\hspace*{2em}四个指定日期的全天正常购电量分别为 $63841.8084$、$42190.0469$、$69318.8824$ 和 $97884.6594\ \mathrm{kWh}$。其中，3 月 20 日发生 $178.4605\ \mathrm{kWh}$ 的紧急购电；9 月 23 日共有三个连续缺口事件，紧急购电量合计 $66.9717\ \mathrm{kWh}$；6 月 21 日和 12 月 21 日的供需偏差均可由储能在容量和功率约束内完成补偿，未触发紧急购电。四日的日初、日末储电量并不要求分别相等，而是按照运行模拟结果跨日连续传递，与问题一的单日闭环条件有所不同。
+
+\par\noindent\hspace*{2em}对全部 334 天结果进行汇总，总购电费用为 $1399.7990$ 万元，具体购电量及费用构成见表 \ref{tab:q2-annual-result}。
+
+\begin{table}[H]
+\centering
+\caption{2025年2月1日至12月31日购电结果汇总}
+\label{tab:q2-annual-result}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular*}{0.96\textwidth}{@{\extracolsep{\fill}}ccccc}
+\toprule
+\textbf{\shortstack{正常购电量\\（kWh）}} & \textbf{\shortstack{紧急购电量\\（kWh）}} & \textbf{\shortstack{正常购电费\\（元）}} & \textbf{\shortstack{紧急购电费\\（元）}} & \textbf{\shortstack{总购电费\\（元）}}\\
+\midrule
+21647262.3826 & 123699.5020 & 13259252.2664 & 738737.8952 & 13997990.1616\\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\par\noindent\hspace*{2em}紧急购电量仅占正常购电与紧急购电总量的 $0.568\%$，但由于其单位电价为正常购电的 5 倍，对应费用占总购电费用的 $5.278\%$。因此，即使紧急购电在统计期购电量中所占比例较低，减少由净负载低估造成的短时供电缺口仍能对统计期费用产生明显影响。
+
+\par\noindent\hspace*{2em}为检验历史残差分位数修正的实际作用，在保持负载和光伏发电功率预测方法、48 h 滚动窗口、储能执行规则及费用口径不变的条件下，设置完全关闭残差修正的对照方案，结果见表 \ref{tab:q2-risk-ablation}。
+
+\begin{table}[H]
+\centering
+\caption{历史残差分位数修正的组件对照结果}
+\label{tab:q2-risk-ablation}
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.28}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{方案} & \textbf{正常购电费} & \textbf{紧急购电费} & \textbf{总购电费} & \textbf{紧急购电量}\\
+& \textbf{（元）} & \textbf{（元）} & \textbf{（元）} & \textbf{（kWh）}\\
+\midrule
+无残差修正 & 12196180.8903 & 3301581.8627 & 15497762.7530 & 545200.1094\\
+80\%分位数修正 & 13259252.2664 & 738737.8952 & 13997990.1616 & 123699.5020\\
+\midrule
+\addlinespace[0.25em]
+变化量 & +1063071.3761 & -2562843.9675 & -1499772.5914 & -421500.6074\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\par\noindent\hspace*{2em}关闭残差修正时，总购电费用为 $1549.7763$ 万元。\newline 其中紧急购电费用达到 $330.1582$ 万元，采用 $80\%$ 分位数修正后，正常购电费用增加 $106.3071$ 万元，但紧急购电费用减少 $256.2844$ 万元，使总费用净下降 $149.9773$ 万元（$9.68\%$），紧急购电量同时减少 $42.1501$ 万 kWh。可见，适量增加计划购电能够有效规避 5 倍电价的紧急购电。
+
+\par\noindent\hspace*{2em}图~\ref{fig:q2-emergency-distribution} 比较两种方案每日紧急购电费用的分布及较大费用出现的情况。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_7_4_q2_emergency_raincloud.png}
+\caption{无残差修正与 $80\%$ 分位数修正下的紧急购电分布}
+\label{fig:q2-emergency-distribution}
+\end{figure}
+
+\par\noindent\hspace*{2em}进一步保持风险修正机制不变，仅改变历史残差经验分布的分位水平
+\[
+\tau\in\{0,0.6,0.7,0.8,0.9,0.95\},
+\]
+得到图~\ref{fig:q2-tau-sensitivity} 所示的敏感性结果。此处 $\tau=0$ 表示采用残差经验分布的 0 分位数作为修正量，并不等同于表 \ref{tab:q2-risk-ablation} 中完全关闭残差修正的对照方案。
+\begin{figure}[H]
+\centering
+\fbox{\parbox[c][2.5cm][c]{0.82\textwidth}{\centering 图位：不同历史残差分位水平下的费用—紧急购电量权衡图\\[2pt]（待插入）}}
+\caption{不同历史残差分位水平下的费用—紧急购电量权衡}
+\label{fig:q2-tau-sensitivity}
+\end{figure}
+
+\par\noindent\hspace*{2em}在检验的六个分位水平中，$80\%$ 对应的总费用最低；进一步提高分位水平虽减少紧急购电，但正常购电费用增加。
+
+\par\noindent\hspace*{2em}由此，历史残差分位数修正在保持滚动调度可行的同时，有效降低了预测偏低所引起的紧急购电成本。
 
 % =========================
-% 八、问题三模型的建立与求解
+% 八、问题三
 % =========================
-\clearpage
-\section{问题三模型的建立与求解}
-\subsection{从独立边际到市场关联情景}
-\subsubsection{作物层面的代表市场价格}
-% 正文待填。
-\subsubsection{交叉价格弹性与需求响应}
-% 正文待填。
-\subsection{替代互补响应与联合情景生成}
-\subsubsection{稀疏替代互补网络}
-% 正文待填。
-\subsubsection{Gaussian Copula联合情景}
-% 正文待填。
-\subsection{关联规划方案与收益变化}
-\subsubsection{共享决策与同场景重评}
-% 正文待填。
-\subsubsection{关联方案与基准方案比较}
-% 正文待填。
-\subsection{消融比较与关联结构稳健性}
-\subsubsection{关联因素消融设计}
-% 正文待填。
-\subsubsection{Bootstrap与敏感性检验}
-% 正文待填。
+\section{问题三：日内预报更新与负载反馈下的滚动优化}
+问题二的购电计划在每日 0:00 一次确定，无法利用当天随后获得的新预报和实际运行信息。问题三进一步允许在 6:00、12:00 和 18:00 对尚未执行的购电计划进行调整，因此需要在保持固定电价、储能运行约束和紧急购电规则不变的基础上，将日内信息更新引入滚动调度过程。
+
+\par\noindent\hspace*{2em}本文建立\textbf{基于日内信息更新与负载反馈的滚动时域优化模型}\papercite{7}。每日 0:00 先形成初始购电与储能计划；在 6:00、12:00 和 18:00，利用当时最新的光伏发电功率预报、实际储电量和已观测负载，对尚未执行的时段重新优化，并采用反馈系数 $\alpha=0.5$ 修正后续负载预测。已执行时段保持不变，实际供需偏差仍优先由储能调节，剩余缺口通过紧急购电补足。问题三的求解流程如图~\ref{fig:q3_flow} 所示。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,trim=0 72 0 43,clip]{四张求解流程_可编辑版/幻灯片3.png}
+\caption{问题三日内预报更新与购电调整流程}
+\label{fig:q3_flow}
+\end{figure}
+
+\subsection{光伏预报对齐与因果负载反馈}
+为与本文采用的 10 分钟调度尺度一致，将预报发布时间记为 $v$，其取值为每日 0:00、6:00、12:00 和 18:00。
+每次预报均以发布时间对应的实际光伏发电功率作为起点，其中 0:00 的起点取前一日 24:00 的实际观测值，其余时刻取当日 $v{:}00$ 的实际观测值。设发布时间 $v$ 后第 $h$ 小时的光伏发电功率预报为 $F_{i,h}^{(v)}\;(h=1,\ldots,24)$，起点记为 $F_{i,0}^{(v)}$。
+
+\par\noindent\hspace*{2em}对于发布后的第 $s$ 个 10 分钟时段，令 $x_s=s/6$，采用分段线性插值将逐小时预报映射到 10 分钟时间网格：
+\begin{equation}
+\begin{aligned}
+\widehat{G}_{i,s}^{(v)}&=(1-\lambda_s)F_{i,m_s}^{(v)}+\lambda_sF_{i,m_s+1}^{(v)},\\
+m_s&=\lfloor x_s\rfloor,\qquad \lambda_s=x_s-m_s.
+\end{aligned}
+\end{equation}
+当 $x_s=24$ 时，直接取 $F_{i,24}^{(v)}$。该处理利用相邻整点预报进行线性过渡，使逐小时光伏发电功率预报能够平滑对应到各 10 分钟调度时段。
+
+\par\noindent\hspace*{2em}在时刻 $v$ 更新计划时，当日已有 $6v$ 个 10 分钟时段执行完毕，因此新获得的光伏发电功率预报只作用于尚未执行的 $144-6v$ 个时段。已执行时段的购电计划和实际运行结果保持不变；预报窗口中超出当日范围的部分仅用于滚动优化中的后续时段，不修改已执行时段的计划。
+
+\par\noindent\hspace*{2em}负载预测则以 0:00 形成的历史同星期加权预测 $\widehat{L}_{i,t}^{(0)}$ 为基准。6:00、12:00 和 18:00 更新时，利用已发生时段的实际负载与基准预测之间的偏差修正当日剩余时段。定义已执行时段的累计负载比值为
+\begin{equation}
+R_i^{(v)}=\frac{\displaystyle\sum_{t=1}^{6v}L_{i,t}}{\displaystyle\sum_{t=1}^{6v}\widehat{L}_{i,t}^{(0)}}.
+\end{equation}
+正式模型取负载反馈系数 $\alpha=0.5$，将该比值按反馈强度作用于当日尚未执行时段的负载预测，得
+\begin{equation}
+\widehat{L}_{i,t}^{(v)}=\left[1+\alpha\left(R_i^{(v)}-1\right)\right]\widehat{L}_{i,t}^{(0)},\qquad v\in\{6,12,18\},\quad t=6v+1,\ldots,144.
+\end{equation}
+0:00 时尚无当日实际负载可供反馈，因此直接采用基准预测；6:00、12:00 和 18:00 的反馈修正仅使用已经观测到的负载，并只作用于当日剩余时段。跨越至次日的负载预测仍采用原有历史预测结果，不使用当日尚未发生的实际信息。
+
+\par\noindent\hspace*{2em}由此，在每个日内更新时间均可获得与当前信息一致的负载和光伏发电功率预测，为后续未执行时段的购电计划调整提供输入。
+\subsection{购电调整费用与未执行时段约束}
+在 6:00、12:00 和 18:00 获得新信息后，仅允许调整尚未执行的购电计划，已经完成交付的时段保持不变。记 $q_{i,t}^{(v)}$ 为第 $i$ 日在时刻 $v\in\{0,6,12,18\}$ 确定的第 $t$ 时段正常购电量。时刻 $v$ 到来时，当日已有 $6v$ 个 10 分钟时段执行完毕，可调整时段集合为
+\begin{equation}
+\mathcal{T}_v=\{6v+1,6v+2,\ldots,144\}.
+\end{equation}
+对于已执行时段，购电量维持上一版本不变：
+\begin{equation}
+q_{i,t}^{(v)}=q_{i,t}^{(\operatorname{prev}(v))},\qquad t\leq 6v,
+\end{equation}
+其中，$\operatorname{prev}(v)$ 表示时刻 $v$ 之前最近一次计划更新时间。尚未执行的时段则依据最新光伏发电功率预报、负载预测和当前储电量重新优化。因此，当日各时段最终生效的正常购电量为
+\begin{equation}
+q_{i,t}^{f}=\begin{cases}
+q_{i,t}^{(0)}, & 1\leq t\leq36,\\
+q_{i,t}^{(6)}, & 37\leq t\leq72,\\
+q_{i,t}^{(12)}, & 73\leq t\leq108,\\
+q_{i,t}^{(18)}, & 109\leq t\leq144.
+\end{cases}
+\end{equation}
+每次更新仍从当前时刻向后保留 24 h 优化窗口，其中超出当日的部分仅用于约束后续储能安排，不修改已执行时段的计划。
+
+\par\noindent\hspace*{2em}题目规定，日内购电调整统一以每日 0:00 形成的原始计划 $q_{i,t}^{(0)}$ 为结算基准。定义上调量和下调量分别为
+\begin{equation}
+\begin{aligned}
+u_{i,t}^{+}&=\max\!\left(q_{i,t}^{f}-q_{i,t}^{(0)},\ 0\right),\qquad u_{i,t}^{-}=\max\!\left(q_{i,t}^{(0)}-q_{i,t}^{f},\ 0\right),\\
+q_{i,t}^{f}&=q_{i,t}^{(0)}+u_{i,t}^{+}-u_{i,t}^{-}.
+\end{aligned}
+\end{equation}
+
+\par\noindent 正常购电结算费用 $C_i^{\mathrm N}$ 由 0:00 原计划购电费用与购电调整费用构成；再加紧急购电费用，得到总购电费用。
+中间各次调整不重复计费，而以最终正常购电量与 0:00 原始计划之间的差额统一结算。若下调 $u_{i,t}^{-}$，取消部分退回原购电费用，同时支付该部分购电费用 $50\%$ 的违约费用；若上调 $u_{i,t}^{+}$，新增部分按对应时段电价的 $1.5$ 倍计费。因此，第 $i$ 日正常购电结算费用为
+\begin{equation}
+C_i^{\mathrm N}=\sum_{t=1}^{144}\left[p_tq_{i,t}^{(0)}-0.5p_tu_{i,t}^{-}+1.5p_tu_{i,t}^{+}\right].
+\end{equation}
+其中，$-0.5p_tu_{i,t}^{-}$ 表示下调后相对于原计划减少的净支出，并非额外收益。
+
+\par\noindent\hspace*{2em}运行模拟沿用第 7.3 节的储能反馈与紧急购电规则，并在式（23）中采用最终正常购电量 $q_{i,t}^{f}$。储能仍无法补足的缺口 $e_{i,t}$ 按同期电价的 5 倍购入，第 $i$ 日总购电费用为
+\begin{equation}
+C_i=C_i^{\mathrm N}+\sum_{t=1}^{144}5p_te_{i,t}.
+\end{equation}
+上述结算方式使日内更新带来的正常购电调整成本与实际运行中的紧急购电成本能够在同一费用口径下比较，为后续评价日内预报更新的经济收益提供基础。
+\subsection{多时点滚动求解与日内更新收益}
+在每日 0:00 制定初始购电计划后，分别于 6:00、12:00 和 18:00 利用新发布的光伏发电功率预报、已观测负载偏差及实际储电量，对尚未执行时段重新求解。以下结果均采用最终确定的负载反馈系数 $\alpha=0.5$，并按 8.2 节的购电调整与紧急购电结算规则统计。
+
+\par\noindent\hspace*{2em}表~\ref{tab:q3-purchase-selected}、表~\ref{tab:q3-storage-selected} 展示 3 月 20 日的购电与储能结果，表~\ref{tab:q3-emergency-selected} 汇总四个指定日期的紧急购电事件；其他指定日期结果见附录~\ref{app:q3-specified-dates}。
+
+\par\noindent\hspace*{2em}表中“全天购电量”为最终正常购电量；“全天购电费”为 0:00 原计划购电费用、购电调整费用与紧急购电费用之和。
+
+\begin{table}[H]
+\centering
+\caption{微网在指定时间段的正常购电量及全天购电量和购电费}
+\label{tab:q3-purchase-selected}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+
+\textbf{2025 年 3 月 20 日}\par\vspace{0.2em}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量 \\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 552.9497 & 14:00--14:10 & 0.0000 \\
+\hline
+16:00--16:10 & 532.7965 & 18:00--18:10 & 703.0559 & 20:00--20:10 & 0.0000 \\
+\hline
+\multicolumn{2}{|c|}{全天购电量（kWh）} & 63013.1004 &
+\multicolumn{2}{c|}{全天购电费（元）} & 41059.8250 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{储能设备在指定时间段的充放电量及 0:00、24:00 的储电量}
+\label{tab:q3-storage-selected}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+
+\textbf{2025 年 3 月 20 日}\par\vspace{0.2em}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量 \\
+\hline
+0:00--4:00 & 1372.8360 & 190.5300 & 4:00--8:00 & 934.3725 & 5813.6763 \\
+\hline
+8:00--12:00 & 4340.0468 & 2777.3772 & 12:00--16:00 & 6268.4752 & 287.2112 \\
+\hline
+16:00--20:00 & 256.5956 & 5637.9852 & 20:00--24:00 & 4501.4306 & 3002.6417 \\
+\hline
+\multicolumn{2}{|c|}{0:00储电量（kWh）} & 9059.0018 &
+\multicolumn{2}{c|}{24:00储电量（kWh）} & 5288.2477 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{微网在指定日期的紧急购电量}
+\label{tab:q3-emergency-selected}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{2025.3.20} &
+\multicolumn{2}{c|}{2025.6.21} &
+\multicolumn{2}{c|}{2025.9.23} &
+\multicolumn{2}{c|}{2025.12.21} \\
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量 \\
+\hline
+--- & 0.0000 & --- & 0.0000 &
+20:20--20:30 & 6.3750 & 7:50--8:00 & 1.6725 \\
+\hline
+--- & --- & --- & --- & --- & --- & --- & --- \\
+\hline
+--- & --- & --- & --- & --- & --- & --- & --- \\
+\hline
+\end{tabular}
+\end{table}
+
+四个指定日期中，3 月 20 日和 6 月 21 日的供需偏差均由储能完成补偿，未发生紧急购电；9 月 23 日和 12 月 21 日分别仅发生 $6.3750\ \mathrm{kWh}$ 与 $1.6725\ \mathrm{kWh}$ 的紧急购电。各日储电量不再要求回到固定初值，而是按实际运行状态跨日传递。
+
+表 \ref{tab:q3-annual-summary} 汇总统计期结果。日内更新后，最终正常购电量为 $21120897.4341\ \mathrm{kWh}$，紧急购电量为 $23339.6808\ \mathrm{kWh}$。上调、下调购电量及费用分项亦列于表中；下调净退费是取消原购电费用并支付该部分 50\% 违约费用后的净额。
+
+\begin{table}[H]
+\centering
+\caption{问题三统计期内购电量与费用汇总}
+\label{tab:q3-annual-summary}
+\small
+\renewcommand{\arraystretch}{1.20}
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{|>{\centering\arraybackslash}p{3.50cm}|>{\centering\arraybackslash}p{3.50cm}|>{\centering\arraybackslash}p{3.50cm}|>{\centering\arraybackslash}p{3.50cm}|}
+\hline
+\shortstack{最终正常购电量\\（kWh）} & \shortstack{上调购电量\\（kWh）} &
+\shortstack{下调购电量\\（kWh）} & \shortstack{紧急购电量\\（kWh）} \\
+\hline
+21120897.4341 & 307205.5101 & 1142817.3223 & 23339.6808 \\
+\hline
+\end{tabular}
+
+\vspace{0.45em}
+\begin{tabular}{|>{\centering\arraybackslash}p{4.73cm}|>{\centering\arraybackslash}p{4.73cm}|>{\centering\arraybackslash}p{4.73cm}|}
+\hline
+\shortstack{0:00原计划\\购电费用（元）} & \shortstack{下调净退费\\（元）} & \shortstack{上调购电\\费用（元）} \\
+\hline
+13482376.9554 & 368942.6983 & 354960.6433 \\
+\hline
+\end{tabular}
+
+\vspace{0.35em}
+\begin{tabular}{|>{\centering\arraybackslash}p{4.73cm}|>{\centering\arraybackslash}p{4.73cm}|>{\centering\arraybackslash}p{4.73cm}|}
+\hline
+\shortstack{正常购电\\结算费用（元）} & \shortstack{紧急购电\\费用（元）} & \shortstack{总购电\\费用（元）} \\
+\hline
+13468394.9004 & 131583.9912 & 13599978.8916 \\
+\hline
+\end{tabular}
+\end{table}
+
+\par\noindent\hspace*{2em}为展示 0:00 初始计划在各次更新后对尚未执行时段的调整，图~\ref{fig:q3-plan-heatmaps} 给出典型日期的购电计划及相对初始计划的变化。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.74\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_8_3_q3_plan_heatmaps_provided.png}
+\caption{不同发布时间下的购电计划及相对 0:00 计划的调整量}
+\label{fig:q3-plan-heatmaps}
+\end{figure}
+
+为公平衡量日内更新的作用，将最终方案与“仅在 0:00 制定计划、日内不再更新”的对照方案比较。后者沿用相同的预测、储能约束和费用规则，仅关闭 6:00、12:00 与 18:00 的计划更新。引入三次日内更新后，统计期总购电费用由 $1420.5843$ 万元降至 $1359.9979$ 万元，节省 $60.5864$ 万元；紧急购电量由 $11.9904$ 万 kWh 降至 $2.3340$ 万 kWh，减少 $9.6564$ 万 kWh。
+
+进一步对 $\{6{:}00,12{:}00,18{:}00\}$ 的全部八种更新时间组合进行运行模拟；完整费用、紧急购电量及基于\textbf{Shapley 值}\papercite{8}的分解结果见附录~\ref{app:q3-supplement}。其中节省费用均相对于仅在 0:00 制定计划的对照方案计算。
+
+如图~\ref{fig:q3-update-combinations} 所示，八种组合中，6:00、12:00、18:00 全部更新时总费用最低。仅在 12:00 更新时节省 $41.8790$ 万元，其 Shapley 平均边际费用贡献为 $28.6008$ 万元，均为三个时点中最高；6:00 平均减少紧急购电 $4.6473$ 万 kWh，为三个时点中最多，说明各更新时间的作用具有互补性。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.74\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_8_3_q3_update_combinations_provided.png}
+\caption{日内更新时间组合的费用与紧急购电表现}
+\label{fig:q3-update-combinations}
+\end{figure}
+
+\subsection{信息模块贡献与负载反馈强度分析}
+8.3 已比较不同更新时间组合的作用。为了区分日内更新收益的具体来源，在固定 6:00、12:00 和 18:00 三个更新时间的条件下，分别控制“实际储电量更新”“新光伏发电功率预报”和“负载反馈”三个信息模块的启用状态，形成完整的 $2^3$ 组合对照实验。各组实验均保持购电调整规则、储能约束、风险修正和跨日储电量传递方式不变，完整组合结果见附录~\ref{app:q3-supplement}。
+
+\par\noindent\hspace*{2em}三类信息全部启用时，总购电费用较全部关闭减少 $60.5864$ 万元，紧急购电量由 $11.9904$ 万 kWh 降至 $2.3340$ 万 kWh。单独启用实际储电量更新、新光伏发电功率预报和负载反馈时的节省费用分别为 $38.3232$、$15.5837$ 和 $13.6381$ 万元。为避免加入顺序影响评价，采用 Shapley 值计算平均边际费用贡献。实际储电量更新、新光伏发电功率预报和负载反馈分别贡献 $28.7126$、$18.4259$ 和 $13.4479$ 万元，其中实际储电量更新贡献最大；完整结果见附录~\ref{app:q3-supplement}。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_8_4_q3_information_modules_provided.png}
+\caption{三类日内信息模块组合的费用与紧急购电表现}
+\label{fig:q3-information-modules}
+\end{figure}
+
+\par\noindent\hspace*{2em}图~\ref{fig:q3-information-modules} 表明，三个模块共同启用时费用节省最大，且实际储电量更新在单独启用时已带来最显著改善，和 Shapley 分解的排序一致。
+
+分别取 $\alpha=0$、$0.25$、$0.50$、$0.75$ 和 $1.00$ 五个取值，完整敏感性数值见附录~\ref{app:q3-supplement}。
+
+\par\noindent\hspace*{2em}如图~\ref{fig:q3-alpha-tradeoff} 所示，在五个取值中，紧急购电量随 $\alpha$ 增大而下降，总费用则先降后升，$\alpha=0.50$ 时最低，为 $1359.9979$ 万元。继续提高反馈强度虽减少紧急购电，却增加购电调整净支出，使总费用回升。
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox[c][2.5cm][c]{0.82\textwidth}{\centering 图位：不同负载反馈系数下的费用—紧急购电量权衡图\\[2pt]（待插入）}}
+\caption{不同负载反馈系数下的费用—紧急购电量权衡}
+\label{fig:q3-alpha-tradeoff}
+\end{figure}
+
+\par\noindent\hspace*{2em}时间顺序检验中，$\alpha=0.62$ 在验证期比 $0.50$ 节省 $3286.23$ 元，但在后续留出期和波动电价场景中分别多支出 $3516.12$ 元和 $3775.16$ 元，其优势未能持续，因此仍采用 $\alpha=0.50$；样本划分、候选网格与后续检验用途见附录~\ref{app:q3-supplement}。
 
 % =========================
-% 九、模型评价、改进推广与结论
+% 九、问题四
 % =========================
-\clearpage
+\section{问题四：波动电价下的购电策略重优化}
+前三问采用固定分时电价，问题四进一步考虑电价随日期和时段波动，因此需在计划阶段形成预测电价，并按实际电价结算。
+
+\par\noindent\hspace*{2em}对于仅在 0:00 制定计划的情形，沿用问题二的信息边界和风险修正机制；对于允许日内调整的情形，则继承问题三在 6:00、12:00 和 18:00 的光伏预报更新、实际储电量传递及 $\alpha=0.5$ 的负载反馈，日内不再更新 0:00 形成的价格预测。最后，将重新优化方案与“保持原策略、仅按波动电价重新计费”的结果比较，以衡量主动调整购电策略带来的收益。问题四的求解流程如图~\ref{fig:q4_flow} 所示。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{四张求解流程_可编辑版/幻灯片4.png}
+\caption{问题四波动电价下的购电策略重优化流程}
+\label{fig:q4_flow}
+\end{figure}
+
+\subsection{历史电价预测与实际交付结算}
+每日 0:00 制定购电计划时，当日及次日实际电价尚不可知，因此计划阶段只能依据历史价格形成预测电价；实际运行结束后，再按照各 10 分钟时段的实际电价结算。考虑到电价通常具有明显的日内和周内周期性\papercite{9}，本文以同星期历史电价曲线构造预测价格。
+
+设第 $i$ 日第 $t$ 个时段的实际电价为 $p_{i,t}$。对目标日期 $i$，从此前 28 个完整自然日中筛选与目标日期星期相同的历史日期，记为 $\mathcal{H}_i$，并以对应时段的历史均值作为电价预测：
+
+\begin{equation}
+\widehat{p}_{i,t}
+=
+\frac{1}{|\mathcal{H}_i|}
+\sum_{j\in\mathcal{H}_i}p_{j,t},
+\qquad
+\mathcal{H}_i=
+\left\{
+j\mid
+\max(1,i-28)\leq j<i,\
+\operatorname{weekday}(j)=\operatorname{weekday}(i)
+\right\}.
+\label{eq:q4-price-forecast}
+\end{equation}
+
+\par\noindent $\widehat{p}_{i,t}$ 仅由计划时刻以前已经获得的价格记录计算。48 h 滚动窗口中的次日电价采用相同方法预测，不使用第 $i$ 日及第 $i+1$ 日尚未发生的实际价格。
+
+采用平均绝对误差（MAE）和均方根误差（RMSE）评价预测准确性\papercite{10}，并补充报告加权绝对百分比误差（WAPE）。滚动验证中，三项指标分别为 \textbf{0.0489 元/kWh、0.0696 元/kWh 和 6.45\%}，均低于前一日同一时段延续预测，完整结果及指标定义见附录~\ref{app:q4-supplement}。图~\ref{fig:q4-price-forecast-actual} 进一步给出了预测值与实际值的对应关系。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_9_1_q4_price_hexbin.png}
+\caption{历史同星期电价预测与实际电价的对应关系}
+\label{fig:q4-price-forecast-actual}
+\end{figure}
+
+全年实际电价介于 $0.0076\sim1.7936$ 元/kWh，均值为 $0.7575$ 元/kWh。较明显的日内及跨日价格差异为重新安排购电与储能时段提供了空间。
+
+实际交付时，费用统一按照对应时段的实际电价计算。对于仅在 0:00 制定计划的情形，第 $i$ 日购电费用为
+
+\begin{equation}
+C_i^{(0)}
+=
+\sum_{t=1}^{144}
+p_{i,t}
+\left(
+q_{i,t}^{0}+5e_{i,t}
+\right),
+\label{eq:q4-actual-settlement}
+\end{equation}
+
+\par\noindent 其中，$q_{i,t}^{0}$ 和 $e_{i,t}$ 分别为正常购电量和紧急购电量。预测电价只用于计划优化，实际电价仅用于最终费用结算，从而保证决策过程中不使用未来价格信息。
+
+\par\noindent\hspace*{2em}预测电价随后作为购电与储能重优化的价格输入。
+
+\subsection{波动电价下的计划购电策略重新优化}
+在仅于每日 0:00 制定计划的情形下，继续沿用问题二的负载预测、光伏发电功率预测、历史净负载残差 80\% 分位数修正、48 h 滚动计划以及跨日储电量连续规则，仅将固定分时电价替换为式 \eqref{eq:q4-price-forecast} 得到的预测电价。每次求解同时形成未来 48 h 的购电与储能计划，但只执行当日 144 个时段，下一日再以实际期末储电量为初始状态重新计算。
+
+按预测电价重新优化后，统计期总购电费用为 $1468.7087$ 万元，其中正常购电费用为 $1392.7742$ 万元，紧急购电费用为 $75.9346$ 万元。为区分电价变化本身与主动调整策略带来的影响，将问题二原有购电与储能方案保持不变，仅按问题四的实际波动电价重新计费，得到 $1474.8342$ 万元的比较基准。主动重新优化使正常购电费用减少 $5.1081$ 万元，紧急购电费用减少 $1.0174$ 万元，统计期总费用节省 $6.1255$ 万元，降幅约为 $0.42\%$。紧急购电量虽增加 $1170.25$ kWh，但对应费用下降，说明其电量加权平均结算电价有所降低。完整购电量与费用分项见附录~\ref{app:q4-supplement}。
+
+\par\noindent\hspace*{2em}上述策略仅利用每日 0:00 已获得的信息。进一步允许日内更新后，可在新的光伏发电功率预报和实际运行状态到达时重新调整尚未执行的购电计划。
+
+\subsection{波动电价下的日内购电调整策略}
+日内调整情形沿用问题三的光伏发电功率预报更新、实际储电量更新及 $\alpha=0.5$ 的负载反馈机制，并继续只调整尚未执行的时段。问题四在此基础上的主要变化是引入波动电价，而日内价格预测仍保持 0:00 形成的结果不变。
+
+对于尚未执行的时段，有
+
+\begin{equation}
+\widehat{p}_{i,t}^{(6)}
+=
+\widehat{p}_{i,t}^{(12)}
+=
+\widehat{p}_{i,t}^{(18)}
+=
+\widehat{p}_{i,t}^{(0)}.
+\label{eq:q4-price-frozen-intraday}
+\end{equation}
+
+\par\noindent 因此，6:00、12:00 和 18:00 的计划更新只吸收新的光伏发电功率预报、实际储电量和负载反馈信息，价格预测始终保持 0:00 的结果不变。
+
+调整购电仍以 0:00 原始计划为结算基准，最终费用按照各时段实际电价计算。统计期内的购电量与费用构成见表~\ref{tab:q4-intraday-result}。
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{波动电价下日内购电调整的统计期结果}
+\label{tab:q4-intraday-result}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lrlr}
+\toprule
+\textbf{指标} & \textbf{数值} & \textbf{指标} & \textbf{数值} \\
+\midrule
+原始正常购电量/kWh & 21887910.2506 & 最终正常购电量/kWh & 21051179.4837 \\
+上调购电量/kWh & 311674.8853 & 下调购电量/kWh & 1148405.6523 \\
+紧急购电量/kWh & 26946.6585 & 原计划购电费用/元 & 14166202.73 \\
+下调购电结算抵扣/元 & -391246.20 & 上调购电费用/元 & 377813.31 \\
+正常购电结算费用/元 & 14152769.83 & 紧急购电费用/元 & 138553.49 \\
+总购电费用/元 & 14291323.32 & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+下面将其与保持问题三原策略、仅按实际波动电价重新计费的基准方案比较，以评价主动重新优化的经济收益。
+
+
+\subsection{重新优化收益与负载反馈作用分析}
+两种情形下重新优化结果与相应基准方案的完整费用比较见附录~\ref{app:q4-supplement}。仅在 0:00 制定计划时，主动重新优化节省 $6.1255$ 万元；允许日内调整时，主动重新优化节省 $4.1338$ 万元。
+
+由于上述比较均采用相同的实际电价进行结算，费用差异主要来自购电与储能时段的重新安排。仅在 0:00 制定计划时，正常购电费用和紧急购电费用均有所下降；允许日内调整时，正常购电结算费用减少 $4.5552$ 万元，而紧急购电费用增加 $0.4214$ 万元，二者合计后统计期总费用仍减少 $4.1338$ 万元。因此，波动电价下重新优化的主要收益来自正常购电与储能运行时段的重新配置，紧急购电量或紧急购电费用并不必然同步下降。两类情形中“原策略重新计价”与“主动重新优化”的费用变化如图~\ref{fig:q4-reprice-reoptimization} 所示。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.91\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_9_4_q4_reprice_dumbbell_provided.png}
+\caption{原策略重新计价与主动重新优化的费用比较}
+\label{fig:q4-reprice-reoptimization}
+\end{figure}
+
+进一步考察负载反馈和日内电价再修正对结果的影响。保持新光伏发电功率预报、实际储电量更新、费用结算和储能约束不变，分别改变负载反馈系数以及是否利用日内已实现价格再次修正后续预测；再修正公式、历史窗口与参数见附录~\ref{app:q4-supplement}。结果见表 \ref{tab:q4-feedback-price}。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{负载反馈与日内电价再修正的对照结果}
+\label{tab:q4-feedback-price}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ccrr}
+\toprule
+\textbf{负载反馈系数} & \textbf{日内电价再修正} & \textbf{总购电费用（元）} & \textbf{紧急购电量（kWh）} \\
+\midrule
+$0$ & 关闭 & 14421755.29 & 49580.83 \\
+$0$ & 启用 & 14421117.79 & 49163.54 \\
+$0.5$ & 关闭 & 14291323.32 & 26946.66 \\
+$0.5$ & 启用 & 14293311.43 & 26988.87 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\par\noindent\hspace*{2em}关闭日内电价再修正时，$\alpha=0.5$ 使总费用减少 $13.0432$ 万元、紧急购电量减少 $2.2634$ 万 kWh；启用价格再修正后，负载反馈仍可节省 $12.7806$ 万元。相比之下，日内价格再修正在 $\alpha=0$ 时仅节省 $637.50$ 元，在 $\alpha=0.5$ 时反而增加 $1988.11$ 元，因此正式方案不再日内修正电价。
+
+
+% =========================
+% 十、模型独立核验与结果可比性分析
+% =========================
+\section{模型独立核验与结果可比性分析}
+前文给出了不同条件下的购电与储能调度结果。为检验结果的可复现性及不同方案之间的可比性，本章分别复算费用与运行约束、检查决策信息，并校正期末储电量差异。
+
+\subsection{费用与储能运行约束的独立复算}
+将最终逐时段结果与原始数据重新匹配，在不调用原求解程序的条件下，依据既定结算规则独立复算费用，并检查供需平衡、储电量递推及储能运行约束，结果见表~\ref{tab:independent_validation_all}。问题一、问题二记录汇总费用复算差，问题三和问题四记录逐时段费用公式的最大差。
+
+\begin{table}[htbp]
+\centering
+\caption{各问题费用独立复算与储能运行综合核验}
+\label{tab:independent_validation_all}
+\small
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.20}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.75cm} >{\centering\arraybackslash}p{2.35cm} >{\centering\arraybackslash}p{1.35cm} >{\centering\arraybackslash}p{2.55cm} >{\centering\arraybackslash}p{2.55cm} >{\centering\arraybackslash}p{3.35cm}}
+\toprule
+\textbf{情形} & \textbf{费用复算差} & \textbf{复算范围} & \textbf{供需平衡最大残差} & \textbf{储电量递推最大残差} & \textbf{容量/功率/同时充放电违规数} \\
+& \textbf{（元）} & & \textbf{（kWh）} & \textbf{（kWh）} & \\
+\midrule
+问题一 & $1.60\times10^{-10}$ & 汇总 & $1.00\times10^{-10}$ & $1.22\times10^{-10}$ & $0/0/0$ \\
+问题二 & $1.86\times10^{-9}$ & 汇总 & $6.96\times10^{-13}$ & $4.55\times10^{-12}$ & $0/0/0$ \\
+问题三 & $6.82\times10^{-13}$ & 逐时段 & $6.82\times10^{-13}$ & $4.55\times10^{-12}$ & $0/0/0$ \\
+问题四：仅 0:00 计划 & $1.82\times10^{-12}$ & 逐时段 & $6.96\times10^{-13}$ & $4.55\times10^{-12}$ & $0/0/0$ \\
+问题四：日内调整 & $9.09\times10^{-13}$ & 逐时段 & $6.82\times10^{-13}$ & $4.55\times10^{-12}$ & $0/0/0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+表中 $0/0/0$ 依次表示储电量越界次数、充放电功率超限次数和同时充放电时段数。五种情形均未发生储电量越界、充放电功率超限或同时充放电；供需平衡与储电量递推的最大残差均处于数值误差量级。费用独立复算结果与正式结果一致，说明各方案的费用计算和储能运行状态均可由最终逐时段结果独立复现。
+
+\subsection{信息截止、时段锁定与跨日连续性核查}
+数值复算能够验证费用与约束是否一致，但还需检查滚动决策过程中是否使用了决策时刻之后的真实信息。为此，在四个季节代表日的相应决策时刻保持已有历史数据、预测信息和实际储电量不变，仅扰动此后尚未发生的实际负载、光伏发电功率或实际电价，并比较扰动前后的购电计划。
+
+\begin{table}[htbp]
+\centering
+\caption{信息截止、时段锁定与跨日连续性核验}
+\label{tab:information_audit}
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.18}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.70cm} >{\centering\arraybackslash}p{1.35cm} >{\centering\arraybackslash}p{1.70cm} >{\centering\arraybackslash}p{1.55cm} >{\centering\arraybackslash}p{1.95cm} >{\raggedright\arraybackslash}p{3.45cm}}
+\toprule
+\textbf{情形} & \textbf{扰动测试数} & \textbf{最大计划变化} & \textbf{信息越界次数} &
+\textbf{跨日储电量最大断点} & \textbf{已执行时段锁定情况} \\
+& & \textbf{（kWh）} & & \textbf{（kWh）} & \\
+\midrule
+问题二 & 8 & 0 & 0 & 0 & 仅在 0:00 制定计划 \\
+问题三 & 32 & 0 & 0 & 0 & 6:00、12:00、18:00 均无改动 \\
+问题四：仅 0:00 计划 & 12 & 0 & 0 & 0 & 仅在 0:00 制定计划 \\
+问题四：日内调整 & 48 & 0 & 0 & 0 & 6:00、12:00、18:00 均无改动 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\par\noindent\hspace*{2em}100 项未来真实信息扰动测试中，当前购电计划最大变化均为 0，未发现未来真实负载、光伏发电功率或实际电价提前进入决策。问题三和问题四的日内更新均未修改已执行时段，问题二至问题四的跨日储电量最大断点均为 0，说明信息截止、时段锁定和跨日连续性均满足要求。
+
+\subsection{期末储电量价值校正与方案排序}
+不同策略在统计期末可能保留不同的储电量。若仅比较现金购电费用，期末储电量较低的方案可能因提前释放更多电能而获得额外的账面优势。为检验这一差异是否会改变方案排序，对期末储电量进行价值折算。
+
+设对照方案与待比较方案的期末储电量分别为 $E_T^{\mathrm{ref}}$ 和 $E_T^{\mathrm{new}}$，现金费用节省额为 $\Delta C_{\mathrm{cash}}$。以剩余储电量按平均电价释放后的可利用价值进行校正，可得
+
+\begin{equation}
+\Delta C_{\mathrm{inv}}
+=
+\Delta C_{\mathrm{cash}}
++
+\eta_d\bar p
+\left(
+E_T^{\mathrm{new}}-E_T^{\mathrm{ref}}
+\right),
+\label{eq:terminal_inventory_value}
+\end{equation}
+
+\par\noindent 其中，$\eta_d=0.9$ 为放电效率，$\bar p$ 为相应情形下的平均电价。当待比较方案的期末储电量较低时，其少保留的储能价值将从现金费用优势中扣除；期末储电量较高时则作相反调整。
+
+为检验方案排序在更严格估值下是否稳定，再以 5 倍最大电价对期末储电量差异进行保守折算：
+
+\begin{equation}
+\Delta C_{\mathrm{cons}}
+=
+\Delta C_{\mathrm{cash}}
+-
+\eta_d\cdot5p_{\max}
+\left|
+E_T^{\mathrm{new}}-E_T^{\mathrm{ref}}
+\right|.
+\label{eq:terminal_inventory_conservative}
+\end{equation}
+
+\par\noindent 两种校正方式下的完整比较结果见附录~\ref{app:terminal-inventory}，各组方案均具有相同的初始储电量。
+
+\par\noindent\hspace*{2em}标准价值校正后，问题三和问题四日内调整方案仍分别节省 $12.0067$ 万元和 $12.9702$ 万元；采用更保守的估值后仍保持正收益，方案排序均未改变，完整结果见表~\ref{tab:terminal_inventory_comparison}。
+
+期末储电量价值校正仅用于检验相同任务、相同初始状态下不同策略的公平可比性。问题一至问题四报告的正式购电费用仍采用实际费用结算结果，不以校正后的数值替代。
+
+
+% =========================
+% 十一、模型评价、改进推广与结论
+% =========================
 \section{模型评价、改进推广与结论}
-\subsection{各方案的可行性与结果复核}
-\subsubsection{农业约束可行性}
-% 正文待填。
-\subsubsection{结果文件与指标复核}
-% 正文待填。
-\subsection{边际分布、关联结构与候选集的适用边界}
-\subsubsection{不确定性设定的适用边界}
-% 正文待填。
-\subsubsection{关联参数与候选集的适用边界}
-% 正文待填。
-\subsection{模型推广}
-\subsubsection{数据驱动的滚动重算}
-% 正文待填。
-\subsubsection{管理场景扩展}
-% 正文待填。
-\subsection{三问结论与适用范围}
-\subsubsection{三问主要结论}
-% 正文待填。
-\subsubsection{适用范围与局限}
-% 正文待填。
+\subsection{模型优点}
+\par\noindent\hspace*{2em}（1）\textbf{优化目标与调度要求相匹配。}词典序优化先最小化购电费用，再以储能总吞吐量在给定购电费用容差范围内进一步择优。与显式设置充放电互斥约束的混合整数线性规划交叉验证表明，两种模型的费用与调度结果一致。
+
+\par\noindent\hspace*{2em}（2）\textbf{预测误差直接进入购电决策。}风险修正使计划需求在正常购电成本与高价紧急购电风险之间取得平衡。残差修正的对照结果显示，$80\%$ 分位数在所检验的分位水平中对应最低总费用。
+
+\par\noindent\hspace*{2em}（3）\textbf{能够利用日内新增信息动态调整计划。}信息模块对照与 Shapley 分解表明，在本算例中，实际储电量更新、光伏发电功率预报与负载反馈的 Shapley 平均边际费用贡献均为正，联合使用时总费用最低。
+
+\par\noindent\hspace*{2em}（4）\textbf{决策过程具有明确的信息边界和核验机制。}各时刻仅使用当时已获得的信息，且储电量在各时段与日期之间连续传递。100 项未来真实信息扰动测试均未改变当前决策；费用独立复算与原结果一致，期末储电量价值校正后方案排序不变。
+\subsection{模型局限}
+\par\noindent\hspace*{2em}（1）负载、光伏发电功率和电价预测主要依赖历史周期性与近期数据，对节假日、极端天气及价格结构突变等异常情形的刻画仍较有限。
+
+\par\noindent\hspace*{2em}（2）储能模型主要考虑容量、充放电功率和转换效率，未进一步计入自放电、电池老化及温度变化等因素，因此当前目标函数主要反映购电与调整费用，尚未完整描述长期运行成本。
+
+\par\noindent\hspace*{2em}（3）模型将微网视为单一供需节点，未进一步考虑线路容量、网损、电压约束及多个微网之间的能量交换，因此结果更适用于题目给定的汇总能量调度场景。
+\subsection{改进与推广}
+\par\noindent\hspace*{2em}可引入天气、节假日等外生变量，在保持信息边界的条件下开展概率预测与多场景滚动优化。储能模型可补充老化、自放电及温度影响，兼顾短期购电费用与长期使用成本。获得网络参数后，可进一步考虑线路容量、网损和电压约束，并扩展至多微网或共享储能场景。
+
+\subsection{主要结论}
+\par\noindent\hspace*{2em}（1）在负载、光伏发电功率和电价均已知的条件下，词典序线性规划得到全天正常购电量 $59482.6990\ \mathrm{kWh}$，购电费用 $35126.95$ 元。与无储能方案相比，购电费用降低 $26.90\%$，弃光量由 $6247.9630\ \mathrm{kWh}$ 降至 0，表明储能能够通过跨时段转移电量提高光伏利用率并降低高价时段购电需求。
+
+\par\noindent\hspace*{2em}（2）在每日 0:00 提前制定计划的条件下，采用历史净负载预测残差的 $80\%$ 分位数修正后，2025 年 2 月 1 日至 12 月 31 日总购电费用为 \textbf{1399.7990 万元}。与关闭残差修正相比，总费用降低约 \textbf{9.68\%}，说明适度的风险修正能够有效减少预测偏低造成的高价紧急购电。
+
+\par\noindent\hspace*{2em}（3）引入 6:00、12:00 和 18:00 的日内更新后，总购电费用降至 \textbf{1359.9979 万元}。相较采用相同预测与结算规则、但不进行日内更新的对照方案，总购电费用减少 \textbf{60.5864 万元}，紧急购电量减少 \textbf{9.6564 万 kWh}。负载反馈系数取 $\alpha=0.5$ 时，在降低紧急购电与控制调整费用之间取得较好的平衡。
+
+\par\noindent\hspace*{2em}（4）在波动电价条件下，仅在 0:00 制定计划和允许日内调整两种情形的总购电费用分别为 \textbf{1468.7087 万元}和 \textbf{1429.1323 万元}。与保持原策略、仅按实际电价重新计费相比，主动重新优化分别节省 \textbf{6.1255 万元}和 \textbf{4.1338 万元}。在是否进行日内电价再修正的两种条件下，负载反馈均降低了总购电费用，而日内再次修正价格预测未表现出稳定收益。
 
 % =========================
 % AI 声明、参考文献与附录
 % =========================
-\clearpage
 \section*{AI 工具使用声明}
-% AI 工具使用情况待填。
+\par\noindent\hspace*{2em}本参赛队在竞赛过程中使用了 AI 工具，主要用于论文语言润色、表达优化及部分代码与图表辅助，以提升论文的准确性和阅读体验；模型、数据、计算结果与结论均由参赛队员人工核验确认。AI 工具的具体使用情况、典型交互及人工修改与核验过程详见支撑材料《AI 工具使用详情.pdf》。
 
+\clearpage
 \section*{参考文献}
-% 参考文献条目待填。
+\begingroup
+\small
+\begin{enumerate}[label={\textup{[\arabic*]}}, leftmargin=2.3em, itemsep=0.25em, topsep=0.3em]
+\item\label{ref:1} BERTSIMAS D, TSITSIKLIS J N. Introduction to linear optimization[M]. Belmont: Athena Scientific, 1997.
+\item\label{ref:2} EHRGOTT M. Multicriteria optimization[M]. 2nd ed. Berlin: Springer-Verlag, 2005.
+\item\label{ref:3} NEMHAUSER G L, WOLSEY L A. Integer and combinatorial optimization[M]. New York: Wiley, 1988.
+\item\label{ref:4} HYNDMAN R J, FAN Y. Sample quantiles in statistical packages[J]. The American Statistician, 1996, 50(4): 361--365.
+\item\label{ref:5} MAYNE D Q, RAWLINGS J B, RAO C V, et al. Constrained model predictive control: Stability and optimality[J]. Automatica, 2000, 36(6): 789--814.
+\item\label{ref:6} SILVENTE J, KOPANOS G M, PISTIKOPOULOS E N, et al. A rolling horizon optimization framework for the simultaneous energy supply and demand planning in microgrids[J]. Applied Energy, 2015, 155: 485--501.
+\item\label{ref:7} PARISIO A, RIKOS E, GLIELMO L. A model predictive control approach to microgrid operation optimization[J]. IEEE Transactions on Control Systems Technology, 2014, 22(5): 1813--1827.
+\item\label{ref:8} SHAPLEY L S. A value for n-person games[C]//KUHN H W, TUCKER A W, eds. Contributions to the Theory of Games II. Princeton: Princeton University Press, 1953: 307--317.
+\item\label{ref:9} WERON R. Electricity price forecasting: A review of the state-of-the-art with a look into the future[J]. International Journal of Forecasting, 2014, 30(4): 1030--1081.
+\item\label{ref:10} HYNDMAN R J, KOEHLER A B. Another look at measures of forecast accuracy[J]. International Journal of Forecasting, 2006, 22(4): 679--688.
+\end{enumerate}
+\endgroup
 
-\section*{附录}
-\subsection*{附录 A：支撑材料文件列表}
-% 附录内容待填。
-\subsection*{附录 B：程序与复现说明}
-% 附录内容待填。
-\subsection*{附录 C：补充结果与图表}
-% 附录内容待填。
+\clearpage
+\AppendixSection{app:supplement}{补充结果与图表}
+\AppendixSubsection{app:q2-supplement}{问题二其余指定日期结果}
+
+\begin{table}[H]
+\centering
+\caption{问题二其余指定日期微网正常购电结果}
+\label{tab:q2-purchase-appendix}
+\small
+\textbf{2025 年 6 月 21 日}\par
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量\\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 0.0000 & 14:00--14:10 & 0.0000\\
+\hline
+16:00--16:10 & 239.5252 & 18:00--18:10 & 0.0000 & 20:00--20:10 & 0.0000\\
+\hline
+\multicolumn{2}{|c|}{全天购电量} & 42190.0469 & \multicolumn{2}{c|}{全天购电费} & 23988.9139\\
+\hline
+\end{tabular}\par\vspace{0.7em}
+
+\textbf{2025 年 9 月 23 日}\par
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量\\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 498.6559 & 14:00--14:10 & 0.0000\\
+\hline
+16:00--16:10 & 533.3026 & 18:00--18:10 & 791.7373 & 20:00--20:10 & 0.0000\\
+\hline
+\multicolumn{2}{|c|}{全天购电量} & 69318.8824 & \multicolumn{2}{c|}{全天购电费} & 43133.8132\\
+\hline
+\end{tabular}\par\vspace{0.7em}
+
+\textbf{2025 年 12 月 21 日}\par
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量\\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 983.4198 & 14:00--14:10 & 0.0000\\
+\hline
+16:00--16:10 & 855.9184 & 18:00--18:10 & 731.1782 & 20:00--20:10 & 0.0000\\
+\hline
+\multicolumn{2}{|c|}{全天购电量} & 97884.6594 & \multicolumn{2}{c|}{全天购电费} & 63059.4744\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{问题二其余指定日期储能设备运行结果}
+\label{tab:q2-storage-appendix}
+\small
+\textbf{2025 年 6 月 21 日}\par
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量\\
+\hline
+0:00--4:00 & 611.2809 & 66.5687 & 4:00--8:00 & 486.5193 & 2520.3163\\
+\hline
+8:00--12:00 & 8991.6775 & 0.0000 & 12:00--16:00 & 0.0000 & 0.0000\\
+\hline
+16:00--20:00 & 190.1471 & 5231.4297 & 20:00--24:00 & 8974.1694 & 2485.8966\\
+\hline
+\multicolumn{2}{|c|}{0:00储电量} & 4593.7867 & \multicolumn{2}{c|}{24:00储电量} & 10473.0777\\
+\hline
+\end{tabular}\par\vspace{0.7em}
+
+\textbf{2025 年 9 月 23 日}\par
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量\\
+\hline
+0:00--4:00 & 1825.8687 & 22.8963 & 4:00--8:00 & 541.0884 & 6060.5489\\
+\hline
+8:00--12:00 & 5607.9336 & 1896.6157 & 12:00--16:00 & 4504.5986 & 541.8748\\
+\hline
+16:00--20:00 & 182.0335 & 5700.5625 & 20:00--24:00 & 8440.2965 & 2933.3395\\
+\hline
+\multicolumn{2}{|c|}{0:00储电量} & 8839.9721 & \multicolumn{2}{c|}{24:00储电量} & 8769.5676\\
+\hline
+\end{tabular}\par\vspace{0.7em}
+
+\textbf{2025 年 12 月 21 日}\par
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量\\
+\hline
+0:00--4:00 & 1767.6823 & 145.1295 & 4:00--8:00 & 1205.5377 & 1470.0630\\
+\hline
+8:00--12:00 & 5718.1534 & 7027.2864 & 12:00--16:00 & 6697.7901 & 2220.1094\\
+\hline
+16:00--20:00 & 3.6562 & 5627.3300 & 20:00--24:00 & 8442.0846 & 2842.5258\\
+\hline
+\multicolumn{2}{|c|}{0:00储电量} & 9019.2955 & \multicolumn{2}{c|}{24:00储电量} & 8990.2158\\
+\hline
+\end{tabular}
+\end{table}
+
+\AppendixSubsection{app:q3-specified-dates}{问题三其余指定日期结果}
+
+\begin{table}[H]
+\centering
+\caption{问题三其余指定日期微网正常购电结果}
+\label{tab:q3-purchase-appendix}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\textbf{2025 年 6 月 21 日}\par\vspace{0.2em}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量 \\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 0.0000 & 14:00--14:10 & 0.0000 \\
+\hline
+16:00--16:10 & 162.6189 & 18:00--18:10 & 0.0000 & 20:00--20:10 & 0.0000 \\
+\hline
+\multicolumn{2}{|c|}{全天购电量（kWh）} & 41593.0254 &
+\multicolumn{2}{c|}{全天购电费（元）} & 23656.7882 \\
+\hline
+\end{tabular}
+
+\vspace{0.7em}
+\textbf{2025 年 9 月 23 日}\par\vspace{0.2em}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量 \\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 40.9722 & 14:00--14:10 & 0.0000 \\
+\hline
+16:00--16:10 & 538.4372 & 18:00--18:10 & 811.7140 & 20:00--20:10 & 0.0000 \\
+\hline
+\multicolumn{2}{|c|}{全天购电量（kWh）} & 68699.3401 &
+\multicolumn{2}{c|}{全天购电费（元）} & 44431.5357 \\
+\hline
+\end{tabular}
+
+\vspace{0.7em}
+\textbf{2025 年 12 月 21 日}\par\vspace{0.2em}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 购电量 & 时间段 & 购电量 & 时间段 & 购电量 \\
+\hline
+10:00--10:10 & 0.0000 & 12:00--12:10 & 935.1050 & 14:00--14:10 & 0.0000 \\
+\hline
+16:00--16:10 & 879.2543 & 18:00--18:10 & 729.7332 & 20:00--20:10 & 0.0000 \\
+\hline
+\multicolumn{2}{|c|}{全天购电量（kWh）} & 96923.9463 &
+\multicolumn{2}{c|}{全天购电费（元）} & 63374.6243 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{问题三其余指定日期储能设备运行结果}
+\label{tab:q3-storage-appendix}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\textbf{2025 年 6 月 21 日}\par\vspace{0.2em}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量 \\
+\hline
+0:00--4:00 & 611.2807 & 66.5685 & 4:00--8:00 & 582.9662 & 2506.9533 \\
+\hline
+8:00--12:00 & 9026.0374 & 0.0000 & 12:00--16:00 & 0.0000 & 0.0000 \\
+\hline
+16:00--20:00 & 207.9911 & 5246.6161 & 20:00--24:00 & 8953.5141 & 2485.8966 \\
+\hline
+\multicolumn{2}{|c|}{0:00储电量（kWh）} & 4461.2128 &
+\multicolumn{2}{c|}{24:00储电量（kWh）} & 10453.6739 \\
+\hline
+\end{tabular}
+
+\vspace{0.7em}
+\textbf{2025 年 9 月 23 日}\par\vspace{0.2em}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量 \\
+\hline
+0:00--4:00 & 1655.1687 & 22.8963 & 4:00--8:00 & 457.9779 & 6389.1675 \\
+\hline
+8:00--12:00 & 6104.6729 & 1896.6157 & 12:00--16:00 & 4545.2207 & 442.2217 \\
+\hline
+16:00--20:00 & 119.6002 & 5630.5020 & 20:00--24:00 & 8447.2735 & 2961.9895 \\
+\hline
+\multicolumn{2}{|c|}{0:00储电量（kWh）} & 8993.6020 &
+\multicolumn{2}{c|}{24:00储电量（kWh）} & 8920.0882 \\
+\hline
+\end{tabular}
+
+\vspace{0.7em}
+\textbf{2025 年 12 月 21 日}\par\vspace{0.2em}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+时间段 & 充电量 & 放电量 & 时间段 & 充电量 & 放电量 \\
+\hline
+0:00--4:00 & 1705.8616 & 145.1295 & 4:00--8:00 & 1196.5267 & 1486.5790 \\
+\hline
+8:00--12:00 & 5329.3511 & 7704.3271 & 12:00--16:00 & 7834.9017 & 2125.3843 \\
+\hline
+16:00--20:00 & 0.0000 & 5588.1236 & 20:00--24:00 & 8444.1033 & 2842.5258 \\
+\hline
+\multicolumn{2}{|c|}{0:00储电量（kWh）} & 9074.9341 &
+\multicolumn{2}{c|}{24:00储电量（kWh）} & 9032.3047 \\
+\hline
+\end{tabular}
+\end{table}
+
+\AppendixSubsection{app:q3-supplement}{问题三补充对比与敏感性结果}
+
+\begin{table}[H]
+\centering
+\caption{不同日内更新时间组合的费用与紧急购电结果}
+\label{tab:q3-update-combination}
+\small
+\renewcommand{\arraystretch}{1.15}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|r|r|r}
+\hline
+\textbf{更新时间组合} & \textbf{总购电费用（元）} & \textbf{紧急购电量（kWh）} & \textbf{节省费用（元）} \\
+\hline
+$\varnothing$ & 14205843.32 & 119903.91 & 0.00 \\
+$\{6{:}00\}$ & 13905332.15 & 39415.08 & 300511.17 \\
+$\{12{:}00\}$ & 13787053.10 & 66740.57 & 418790.22 \\
+$\{18{:}00\}$ & 13912889.22 & 52735.09 & 292954.10 \\
+$\{6{:}00,12{:}00\}$ & 13669742.05 & 37319.47 & 536101.27 \\
+$\{6{:}00,18{:}00\}$ & 13823839.81 & 23391.26 & 382003.51 \\
+$\{12{:}00,18{:}00\}$ & 13717736.05 & 52888.02 & 488107.27 \\
+$\{6{:}00,12{:}00,18{:}00\}$ & 13599978.89 & 23339.68 & 605864.43 \\
+\hline
+\multicolumn{4}{c}{Shapley 平均边际贡献} \\
+\hline
+\textbf{更新时间} & \multicolumn{2}{c|}{\textbf{平均节省费用（元）}} & \textbf{平均减少紧急购电量（kWh）} \\
+\hline
+6:00 & \multicolumn{2}{c|}{173816.18} & 46473.21 \\
+12:00 & \multicolumn{2}{c|}{286007.59} & 18062.08 \\
+18:00 & \multicolumn{2}{c|}{146040.65} & 32028.93 \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{三类信息模块的组合对照结果}
+\label{tab:q3-information-ablation}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ccc r r r}
+\toprule
+\textbf{实际储电量} & \textbf{新光伏发电} & \textbf{负载反馈} & \textbf{总购电费用} & \textbf{紧急购电量} & \textbf{较三类信息均不使用时} \\
+\textbf{更新} & \textbf{功率预报} & & \textbf{（元）} & \textbf{（kWh）} & \textbf{节省的费用（元）} \\
+\midrule
+关 & 关 & 关 & 14205843.32 & 119903.91 & 0.00 \\
+开 & 关 & 关 & 13822611.17 & 45812.41 & 383232.16 \\
+关 & 开 & 关 & 14050006.57 & 98416.76 & 155836.75 \\
+关 & 关 & 开 & 14069462.81 & 74389.84 & 136380.51 \\
+开 & 开 & 关 & 13720153.48 & 45747.04 & 485689.84 \\
+开 & 关 & 开 & 13800257.57 & 25882.18 & 405585.75 \\
+关 & 开 & 开 & 13778596.30 & 50075.64 & 427247.02 \\
+开 & 开 & 开 & 13599978.89 & 23339.68 & 605864.43 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{三类信息模块的 Shapley 平均边际贡献}
+\label{tab:q3-information-shapley}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lrr}
+\toprule
+\textbf{模块} & \textbf{平均节省费用} & \textbf{平均减少紧急购电量} \\
+& \textbf{（元）} & \textbf{（kWh）} \\
+\midrule
+实际储电量更新 & 287126.24 & 50472.05 \\
+新光伏发电功率预报 & 184259.18 & 12073.14 \\
+负载反馈 & 134479.01 & 34019.03 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{负载反馈系数的五点敏感性结果}
+\label{tab:q3-alpha-sensitivity}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{c r r r r r}
+\toprule
+\raisebox{1.25ex}{$\boldsymbol{\alpha}$} & \textbf{\shortstack{0:00 原计划\\购电费用（元）}} & \textbf{\shortstack{购电调整费用\\（元）}} &
+\textbf{\shortstack{紧急购电费用\\（元）}} & \textbf{\shortstack{总购电费用\\（元）}} & \textbf{\shortstack{紧急购电量\\（kWh）}} \\
+\midrule
+0.00 & 13475035.44 & -8932.30 & 254050.34 & 13720153.48 & 45747.04 \\
+0.25 & 13478991.78 & -26166.34 & 185851.46 & 13638676.90 & 33319.69 \\
+0.50 & 13482376.96 & -13982.06 & 131583.99 & 13599978.89 & 23339.68 \\
+0.75 & 13484060.95 & 23407.39 & 105168.94 & 13612637.28 & 18527.18 \\
+1.00 & 13484954.79 & 83595.30 & 94265.50 & 13662815.60 & 16445.59 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\par\noindent\hspace*{2em}为检验 $\alpha=0.50$ 的稳健性，补充校准将 2025 年 2 月 1 日至 6 月 30 日作为预热期，7 月 1 日至 9 月 30 日作为验证期，10 月 1 日至 12 月 31 日作为留出期。验证期先在 $\{0,0.1,\ldots,1.0\}$ 中粗筛，再在 $\{0.50,0.52,\ldots,0.70\}$ 中细筛，$\alpha=0.62$ 的验证期费用最低；随后在留出期及波动电价下的日内调整分支中与 $\alpha=0.50$ 对照。该检验用于评估验证期优势是否可延续，未替换正式方案的 $\alpha=0.50$。
+
+\clearpage
+\AppendixSubsection{app:q4-supplement}{问题四补充比较结果}
+
+历史同星期均值预测与前一日同一时段延续预测的完整滚动验证结果见表~\ref{tab:q4-price-validation}。表中指标以 2025 年 2 月 1 日至 12 月 31 日共 $n=48096$ 个 10 分钟电价点为样本，记实际电价与预测电价分别为 $p_k$、$\widehat p_k$，则
+\[
+\begin{aligned}
+\operatorname{MAE}&=\frac{1}{n}\sum_{k=1}^{n}|p_k-\widehat p_k|,\qquad
+\operatorname{RMSE}=\sqrt{\frac{1}{n}\sum_{k=1}^{n}(p_k-\widehat p_k)^2},\\
+\operatorname{WAPE}&=\frac{\sum_{k=1}^{n}|p_k-\widehat p_k|}{\sum_{k=1}^{n}p_k}\times100\%.
+\end{aligned}
+\]
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{两种电价预测方法的滚动验证结果}
+\label{tab:q4-price-validation}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{预测方法} & \textbf{MAE（元/kWh）} & \textbf{RMSE（元/kWh）} & \textbf{WAPE} & \textbf{平均偏差（元/kWh）} \\
+\midrule
+前一日同一时段延续预测 & 0.0843 & 0.1238 & 11.13\% & -0.00060 \\
+历史同星期均值预测 & 0.0489 & 0.0696 & 6.45\% & -0.00003 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\par\noindent\hspace*{2em}日内电价再修正仅作为对照实验，正式方案仍采用 0:00 形成的预测电价。对更新时刻 $v\in\{6,12,18\}$，令 $m=6v$，先由此前 28 个完整自然日内与目标日期星期相同的历史电价均值构造当天与次日的基准曲线，并拼接尚未到达的 24 h 基准向量 $\boldsymbol b_{i,v}$。利用当天已实现的前缀价格计算比例系数
+\[
+\lambda_{i,v}=\frac{\sum_{t=1}^{m}p_{i,t}}{\sum_{t=1}^{m}\widehat p_{i,t}}.
+\]
+再以近 28 日残差 $e_{j,t}=p_{j,t}-\widehat p_{j,t}$ 估计一阶自回归系数 $\rho_{i,v}$，并截断至 $[-0.99,0.99]$。设 $r_{i,v}=p_{i,m}-\lambda_{i,v}\widehat p_{i,m}$，则第 $h$ 个后续时段的再修正预测为
+\[
+\widetilde p_{i,v,h}=\max\left\{0,\lambda_{i,v}b_{i,v,h}+r_{i,v}\rho_{i,v}^{h}\right\},\qquad h=1,\ldots,144.
+\]
+该式只使用更新时刻以前已实现的当天电价和历史残差；表~\ref{tab:q4-feedback-price} 的“启用”即采用该方法。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{仅在 0:00 制定计划时的波动电价运行结果}
+\label{tab:q4-plan-result}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{指标} & \textbf{原策略仅按} & \textbf{按预测电价} & \textbf{变化} \\
+& \textbf{实际电价重计费} & \textbf{重新优化} & \\
+\midrule
+正常购电量（kWh） & 21647262.3826 & 21581018.2339 & -66244.1487 \\
+紧急购电量（kWh） & 123699.5020 & 124869.7518 & 1170.2497 \\
+正常购电费用（元） & 13978822.18 & 13927741.67 & -51080.51 \\
+紧急购电费用（元） & 769519.96 & 759345.78 & -10174.18 \\
+总购电费用（元） & 14748342.14 & 14687087.44 & -61254.70 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{原策略重新计价与主动重新优化的费用比较}
+\label{tab:q4-reoptimization-comparison}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llrrr}
+\toprule
+\textbf{情形} & \textbf{策略} & \textbf{正常购电} & \textbf{紧急购电} & \textbf{总购电} \\
+& & \textbf{结算费用（元）} & \textbf{费用（元）} & \textbf{费用（元）} \\
+\midrule
+仅 0:00 制定计划 & 保持问题二原策略并重计价 & 13978822.18 & 769519.96 & 14748342.14 \\
+{} & 按预测电价重新优化 & 13927741.67 & 759345.78 & 14687087.44 \\
+\midrule
+允许日内调整 & 保持问题三原策略并重计价 & 14198321.49 & 134339.97 & 14332661.46 \\
+{} & 按预测电价重新优化 & 14152769.83 & 138553.49 & 14291323.32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\AppendixSubsection{app:terminal-inventory}{期末储电量价值校正结果}
+
+\begin{table}[htbp]
+\centering
+\caption{期末储电量价值校正下的方案排序核验}
+\label{tab:terminal_inventory_comparison}
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.18}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.75cm} >{\centering\arraybackslash}p{1.75cm} >{\centering\arraybackslash}p{1.75cm} >{\centering\arraybackslash}p{1.75cm} >{\centering\arraybackslash}p{1.75cm} >{\centering\arraybackslash}p{1.75cm} >{\centering\arraybackslash}p{1.25cm}}
+\toprule
+\textbf{比较情形} & \textbf{对照方案期末储电量} & \textbf{最终方案期末储电量} &
+\textbf{现金费用节省} & \textbf{标准校正后节省} & \textbf{保守校正后节省} & \textbf{排序是否变化} \\
+& \multicolumn{2}{c}{\textbf{（kWh）}} & \multicolumn{3}{c}{\textbf{（元）}} & \\
+\midrule
+问题三最终方案比较 &
+8687.22 & 8531.12 &
+120174.59 & 120066.94 & 119194.52 & 否 \\
+
+问题四日内调整最终方案比较 &
+8801.69 & 8666.32 &
+129794.47 & 129702.18 & 128701.92 & 否 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\AppendixSubsection{app:q4-dispatch-figure}{问题四日内调整的购电—储能联合运行情况}
+
+如图~\ref{fig:q4-intraday-dispatch} 所示，主动重新优化后典型日内购电、储能充放电与储电量随预测电价相应调整。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{paper_figures_20260912/paper_figures_20260912/fig_9_2_3_q4_dispatch.png}
+\caption{波动电价下日内调整的购电—储能联合运行情况}
+\label{fig:q4-intraday-dispatch}
+\end{figure}
+
+\clearpage
+% 从附录 B 起采用题目要求的 B-1、B-2、……编号形式；附录 A 的既有编号不变。
+\renewcommand{\theappendixsubsection}{\Alph{appendixsection}-\arabic{appendixsubsection}}
+\AppendixSection{app:support-materials}{支撑材料文件目录}
+
+\par\noindent\hspace*{2em}支撑材料按“完整计算结果、源程序、补充结果与图表”三类组织，当前分别包含 5、54 和 93 个文件，另含《AI 工具使用详情.pdf》，共 153 个纳入校验的支撑文件。表~\ref{tab:support-material-list} 以提交文件夹为根目录列出其层级与主要内容；逐文件的相对路径、文件大小和 SHA-256 校验值见根目录下的\texttt{支撑材料清单\_SHA256.csv}。
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
+\begin{longtable}{>{\centering\arraybackslash}p{0.7cm} >{\raggedright\arraybackslash}p{4.1cm} >{\raggedright\arraybackslash}p{7.8cm}}
+\caption{支撑材料文件目录}\label{tab:support-material-list}\\
+\toprule
+\textbf{序号} & \textbf{相对目录或文件} & \textbf{主要文件与内容} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{c}{续表~\thetable}\\
+\toprule
+\textbf{序号} & \textbf{相对目录或文件} & \textbf{主要文件与内容} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{接下页}\\
+\endfoot
+\bottomrule
+\endlastfoot
+1 & 根目录 & 《AI 工具使用详情.pdf》；\texttt{支撑材料清单\_SHA256.csv}。后者记录全部支撑文件的相对路径、大小和 SHA-256 校验值。\\
+2 & 1、完整计算结果 & \texttt{result1.xlsx}、\texttt{result2.xlsx}、\texttt{result3.xlsx}、\texttt{result4-2.xlsx}、\texttt{result4-3.xlsx}，分别对应问题一至问题四的完整计算结果。\\
+3 & 2、源程序 & 《README\_程序运行说明.pdf》；下设“问题一”至“问题四”四个源程序目录。\\
+4 & 2、源程序\textbackslash 问题一 & \texttt{q1\_solve.py} 为正式求解入口；同时包含公共数据读取、调度核心、结果工作簿生成和独立复算程序。\\
+5 & 2、源程序\textbackslash 问题二 & \texttt{q2\_solve.py} 为正式求解入口；同时包含分量消融、候选稳健性、在线路线交叉核验、结果生成和独立校验程序。\\
+6 & 2、源程序\textbackslash 问题三 & \texttt{q3\_solve.py} 为正式求解入口；同时包含负载反馈、信息模块与更新时间组合消融、反馈系数标定、结算敏感性、结果生成和独立校验程序。\\
+7 & 2、源程序\textbackslash 问题四 & \texttt{q4\_solve.py} 为正式求解入口；同时包含波动电价迁移、负载反馈与电价再修正对照、期末储电量检验、结果生成和独立校验程序。\\
+8 & 3、补充结果与图表 & 《图表说明与正文解读建议.md》；下设“其他较大篇幅中间结果”“求解流程图”“问题二补充结果”“问题三消融与敏感性结果”“问题四补充比较结果”五个目录。\\
+9 & 3、补充结果与图表\textbackslash 其他较大篇幅中间结果 & “验证记录”目录，包含四问独立复算、模型结果核验及五个结果工作簿核验的 JSON 文件。\\
+10 & 3、补充结果与图表\textbackslash 求解流程图 & 总体流程图的 PNG、PPTX 文件，以及问题一至问题四求解流程图 PNG 和四张流程图的可编辑 PPTX 文件。\\
+11 & 3、补充结果与图表\textbackslash 问题二补充结果 & 残差分位数敏感性、候选方案稳健性、分量消融、在线路线交叉核验结果，以及论文配图和 MATLAB 绘图脚本。\\
+12 & 3、补充结果与图表\textbackslash 问题三消融与敏感性结果 & 负载反馈候选、反馈系数标定与五点敏感性、信息模块及更新时间组合消融结果，以及论文配图和 MATLAB 绘图脚本。\\
+13 & 3、补充结果与图表\textbackslash 问题四补充比较结果 & 波动电价下重计价与重新优化、负载反馈与电价再修正、期末储电量检验等结果，以及论文配图和 MATLAB 绘图脚本。\\
+\end{longtable}
+\endgroup
+
+\clearpage
+% 新增支撑材料目录后，原源程序代码附录顺延为 C，各小节自动编号为 C-1、C-2、……。
+\AppendixSection{app:source-code}{源程序代码}
+
+本附录仅保留问题一至问题四的正式求解入口，便于对应正文模型逐问查看。各入口依赖的公共数据读取、线性规划调度核心、结果工作簿生成、对比实验、独立复算，以及正文图像和绘图数据，均随完整源代码和图表数据一并提交至支撑材料，不再在论文中重复列示。
+
+\AppendixSubsection{app:code-q1}{问题一求解程序}
+
+该程序实现确定性购电—储能词典序线性规划，依次求解最低购电费用和最小储能吞吐量，并输出购电计划、储能运行结果及结果工作簿载荷。
+
+\AppendixCodeFile{问题一确定性优化}{code/q1_solve.py}
+
+\AppendixSubsection{app:code-q2}{问题二求解程序}
+
+该程序实现历史同星期负载预测、近五个完整自然日光伏预测、分时段残差分位数修正和跨日连续储能仿真，生成问题二统计期运行结果。
+
+\AppendixCodeFile{问题二风险修正滚动优化}{code/q2_solve.py}
+
+\AppendixSubsection{app:code-q3}{问题三求解与负载反馈程序}
+
+该程序实现 0:00 初始计划与 6:00、12:00、18:00 日内滚动调整，并以因果负载反馈构造最终采用的 $\alpha=0.5$ 预测修正。
+
+\AppendixCodeFile{问题三日内滚动优化}{code/q3_solve.py}
+
+\AppendixSubsection{app:code-q4}{问题四波动电价求解程序}
+
+该程序读取实际电价数据，形成日前电价预测，并在波动电价下分别实现仅 0:00 制定计划和允许日内调整的购电—储能优化。
+
+\AppendixCodeFile{问题四波动电价优化}{code/q4_solve.py}
 
 \end{document}
