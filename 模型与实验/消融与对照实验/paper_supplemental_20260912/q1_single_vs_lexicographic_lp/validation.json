@@ -1,0 +1,71 @@
+{
+  "experiment": "Q1 single-objective LP versus current lexicographic LP",
+  "unchanged_conditions": "same data, efficiencies, SOC range/endpoints, power limit and right-endpoint energy conversion",
+  "single_objective_validation": {
+    "metrics": {
+      "balance_max_abs_kwh": 2.2737367544323206e-13,
+      "state_max_abs_kwh": 8.313350008393172e-13,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "soc_open_kwh": 6000.0,
+      "soc_close_kwh": 6000.0,
+      "charge_max_kwh_per_slot": 833.3333333333333,
+      "discharge_max_kwh_per_slot": 715.6530333333333,
+      "simultaneous_positive_slot_count": 0,
+      "simultaneous_max_kwh": 0.0,
+      "independent_cost_yuan": 35126.948589289634,
+      "reported_cost_yuan": 35126.948589289634,
+      "cost_reconciliation_abs_yuan": 0.0,
+      "secondary_cost_above_primary_yuan": 7.275957614183426e-12
+    },
+    "pass_flags": {
+      "balance": true,
+      "state": true,
+      "soc_bounds": true,
+      "soc_cycle": true,
+      "power": true,
+      "nonnegative": true,
+      "mutual_exclusion": true,
+      "cost_reconciliation": true
+    },
+    "all_pass": true
+  },
+  "lexicographic_validation": {
+    "metrics": {
+      "balance_max_abs_kwh": 2.2737367544323206e-13,
+      "state_max_abs_kwh": 8.313350008393172e-13,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "soc_open_kwh": 6000.0,
+      "soc_close_kwh": 6000.0,
+      "charge_max_kwh_per_slot": 833.3333333333333,
+      "discharge_max_kwh_per_slot": 715.6530333333333,
+      "simultaneous_positive_slot_count": 0,
+      "simultaneous_max_kwh": 0.0,
+      "independent_cost_yuan": 35126.9485896409,
+      "reported_cost_yuan": 35126.948589640895,
+      "cost_reconciliation_abs_yuan": 7.275957614183426e-12,
+      "secondary_cost_above_primary_yuan": 3.5126868169754744e-07
+    },
+    "pass_flags": {
+      "balance": true,
+      "state": true,
+      "soc_bounds": true,
+      "soc_cycle": true,
+      "power": true,
+      "nonnegative": true,
+      "mutual_exclusion": true,
+      "cost_reconciliation": true
+    },
+    "all_pass": true
+  },
+  "lexicographic_reproduces_formal_main": {
+    "pass": true,
+    "differences": {
+      "cost_yuan": 0.0,
+      "purchase_kwh": 0.0
+    }
+  },
+  "status": "PASS",
+  "note": "single-objective mutual-exclusion metric is a diagnostic, not an added constraint; the model comparison asks whether the lexicographic second objective eliminates any degenerate cycling."
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "experiment": "Q1 LP-MILP independent recomputation",
+  "status": "PASS",
+  "independence": "reads Attachment 1 and experiment trajectory directly; does not import the LP/MILP solver module",
+  "lp": {
+    "metrics": {
+      "purchase_cost_yuan": 35126.9485896409,
+      "purchase_kwh": 59482.698997522966,
+      "charge_kwh": 20740.666127313852,
+      "discharge_kwh": 16799.939563124222,
+      "throughput_kwh": 37540.60569043808,
+      "balance_max_abs_kwh": 7.958078640513122e-13,
+      "state_max_abs_kwh": 1.1937117960769683e-12,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "soc_terminal_abs_kwh": 0.0,
+      "charge_max_kwh_per_slot": 833.333333333333,
+      "discharge_max_kwh_per_slot": 715.653033333333,
+      "simultaneous_positive_slot_count": 0,
+      "simultaneous_max_kwh": 0.0,
+      "nonnegative_max_violation_kwh": 0.0,
+      "maximum_constraint_residual_kwh": 1.1937117960769683e-12
+    },
+    "pass_flags": {
+      "balance": true,
+      "state": true,
+      "soc": true,
+      "power": true,
+      "nonnegative": true,
+      "mutual_exclusion": true
+    },
+    "all_pass": true
+  },
+  "milp": {
+    "metrics": {
+      "purchase_cost_yuan": 35126.9485896409,
+      "purchase_kwh": 59482.698997522966,
+      "charge_kwh": 20740.666127313852,
+      "discharge_kwh": 16799.939563124222,
+      "throughput_kwh": 37540.60569043808,
+      "balance_max_abs_kwh": 7.958078640513122e-13,
+      "state_max_abs_kwh": 1.1937117960769683e-12,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "soc_terminal_abs_kwh": 0.0,
+      "charge_max_kwh_per_slot": 833.333333333333,
+      "discharge_max_kwh_per_slot": 715.653033333333,
+      "simultaneous_positive_slot_count": 0,
+      "simultaneous_max_kwh": 0.0,
+      "nonnegative_max_violation_kwh": 0.0,
+      "maximum_constraint_residual_kwh": 1.1937117960769683e-12
+    },
+    "pass_flags": {
+      "balance": true,
+      "state": true,
+      "soc": true,
+      "power": true,
+      "nonnegative": true,
+      "mutual_exclusion": true
+    },
+    "all_pass": true
+  },
+  "milp_minus_lp": {
+    "purchase_cost_yuan": 0.0,
+    "purchase_kwh": 0.0,
+    "charge_kwh": 0.0,
+    "discharge_kwh": 0.0,
+    "throughput_kwh": 0.0
+  },
+  "reconciliation": {
+    "lp_cost_vs_summary_abs_yuan": 7.275957614183426e-12,
+    "milp_cost_vs_summary_abs_yuan": 7.275957614183426e-12,
+    "lp_purchase_vs_summary_abs_kwh": 0.0,
+    "milp_purchase_vs_summary_abs_kwh": 0.0,
+    "lp_throughput_vs_summary_abs_kwh": 0.0,
+    "milp_throughput_vs_summary_abs_kwh": 0.0
+  },
+  "equivalence_flags": {
+    "objective_equal_within_tolerance": true,
+    "throughput_equal_within_tolerance": true,
+    "both_constraint_sets_pass": true,
+    "protected_formal_files_unchanged": true
+  },
+  "source_sha256": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377",
+  "trajectory_sha256": "fb84b76568de3ad79bf94749522cabeb076c8f67464e19f657d88c9f3a865689",
+  "summary_sha256": "d2e4485859f888262bc23b0122f74bcd14dd7a7fbe5ab7e5af3f9258e9c19a52",
+  "protected_formal_files_sha256": {
+    "results\\result1.xlsx": "a725d4c2e6a427146eb090d0c83b027abd21514241c4f6d0fc2ec44dc8df63dc",
+    "results\\q1_detail.csv": "96d79225ea9599a5fff812be036fcad7c2bec872491ff522ce999daf273a2e72",
+    "results\\q1_summary.json": "155dc40f2ffa3d1e6e7cef4ce5b80166d4421e9cbb8a2d76c7c4d3cc24abcc2f",
+    "validation\\q1_validation.json": "7aa1c241fa7cf4266a02ad12576df1e4ac0df81c56151e4ebe7c35d0d0b8b5e2",
+    "validation\\q1_independent_recompute.json": "cd773899f957f2c982a77f715aa0dd7bcbea437ceba611a91d0e5e8bbfafbf8f"
+  }
+}

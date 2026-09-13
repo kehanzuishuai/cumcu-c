@@ -1,0 +1,26 @@
+{
+  "recordCount": 2,
+  "truncated": false,
+  "metadata": {
+    "revision": "yws1fb",
+    "target": {
+      "id": "wb/mbelin",
+      "beforeLines": 0,
+      "afterLines": 0
+    },
+    "kind": {
+      "requested": "table,region",
+      "tokens": [
+        "table",
+        "region"
+      ]
+    },
+    "include": {
+      "tokens": []
+    },
+    "exclude": {
+      "tokens": []
+    },
+    "notices": []
+  }
+}

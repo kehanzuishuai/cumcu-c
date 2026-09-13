@@ -1,0 +1,43 @@
+{
+  "experiment": "future-actual-information perturbation audit",
+  "method": "At each available decision time, hold the admissible history and state fixed, perturb only same-day future realized load/PV/price, and compare the decision vector before and after perturbation.",
+  "audit_dates": [
+    "2025-03-20",
+    "2025-06-21",
+    "2025-09-23",
+    "2025-12-21"
+  ],
+  "samples": {
+    "Q2": {
+      "tests": 8,
+      "max_future_perturbation_plan_difference_kwh": 0.0,
+      "max_formal_reproduction_difference_kwh": 0.0,
+      "pass": true
+    },
+    "Q3": {
+      "tests": 32,
+      "max_future_perturbation_plan_difference_kwh": 0.0,
+      "max_formal_reproduction_difference_kwh": 0.0,
+      "pass": true
+    },
+    "Q4_2": {
+      "tests": 12,
+      "max_future_perturbation_plan_difference_kwh": 0.0,
+      "max_formal_reproduction_difference_kwh": 0.0,
+      "pass": true
+    },
+    "Q4_3": {
+      "tests": 48,
+      "max_future_perturbation_plan_difference_kwh": 0.0,
+      "max_formal_reproduction_difference_kwh": 0.0,
+      "pass": true
+    }
+  },
+  "failed_tests": [],
+  "not_applicable": {
+    "Q2": "Q2 has only a midnight normal-purchase decision; 06/12/18 are not decision nodes.",
+    "Q4_2": "The no-attachment-3 dynamic-price formulation has only a midnight normal-purchase decision; 06/12/18 are not decision nodes.",
+    "Q2_Q3_fixed_price": "the fixed tariff is ex ante known, so no future actual price series exists to perturb."
+  },
+  "status": "PASS"
+}

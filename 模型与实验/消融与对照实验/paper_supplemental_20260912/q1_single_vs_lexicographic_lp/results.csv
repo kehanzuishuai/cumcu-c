@@ -1,0 +1,4 @@
+﻿record_type,model,purchase_cost_yuan,purchase_kwh,battery_throughput_kwh,charge_kwh,discharge_kwh,simultaneous_charge_discharge_slots,max_simultaneous_kwh,soc_initial_kwh,soc_final_kwh,validation_all_pass,soc_max_abs_difference_kwh,soc_l1_difference_kwh,charge_max_abs_difference_kwh,discharge_max_abs_difference_kwh
+model,仅最小化购电费用,35126.948589289634,59482.69899835391,37540.60569835392,20740.66613168725,16799.939566666668,0,0.0,6000.0,6000.0,True,,,,
+model,先费用后吞吐量的词典序 LP,35126.948589640895,59482.698997522966,37540.60569043808,20740.66612731386,16799.939563124222,0,0.0,6000.0,6000.0,True,,,,
+difference,词典序 LP − 单目标 LP,3.5126140573993325e-07,-8.30943463370204e-07,-7.915834430605173e-06,,,,,,,,300.0,600.0000944651401,333.3333333333333,3.542442811976798e-06

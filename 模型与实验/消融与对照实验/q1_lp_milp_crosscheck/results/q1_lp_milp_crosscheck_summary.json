@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "experiment": "Q1 LP-MILP mutual-exclusion cross-validation",
+  "status": "PASS_EQUIVALENT_OPTIMUM",
+  "scope": "isolated validation only; frozen Q1 MAIN and formal outputs are not replaced",
+  "only_change_in_milp": "binary z_t and explicit c_t <= (5000/6)z_t, r_t <= (5000/6)(1-z_t)",
+  "held_constant": {
+    "input_sha256": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377",
+    "slots": 144,
+    "integration": "right_endpoint_rectangle",
+    "eta_charge": 0.9,
+    "eta_discharge": 0.9,
+    "soc_min_kwh": 1200.0,
+    "soc_max_kwh": 10800.0,
+    "soc_initial_kwh": 6000.0,
+    "soc_terminal_kwh": 6000.0,
+    "charge_discharge_limit_kwh_per_slot": 833.3333333333333,
+    "lexicographic_structure": "stage 1 minimum purchase cost; stage 2 minimum c+r within the same cost tolerance"
+  },
+  "comparison": {
+    "lp": {
+      "primary_minimum_cost_yuan": 35126.94858928963,
+      "secondary_solution_cost_yuan": 35126.948589640895,
+      "daily_purchase_kwh": 59482.698997522966,
+      "charge_kwh": 20740.66612731386,
+      "discharge_kwh": 16799.939563124222,
+      "throughput_kwh": 37540.60569043808,
+      "simultaneous_positive_slot_count": 0,
+      "maximum_constraint_residual_kwh": 8.313350008393172e-13,
+      "solve_time_total_seconds": 0.01626659999601543
+    },
+    "milp": {
+      "primary_minimum_cost_yuan": 35126.94858928963,
+      "secondary_solution_cost_yuan": 35126.948589640895,
+      "daily_purchase_kwh": 59482.698997522966,
+      "charge_kwh": 20740.66612731386,
+      "discharge_kwh": 16799.939563124222,
+      "throughput_kwh": 37540.60569043808,
+      "simultaneous_positive_slot_count": 0,
+      "maximum_constraint_residual_kwh": 8.313350008393172e-13,
+      "solve_time_primary_seconds": 0.02263890000176616,
+      "solve_time_secondary_seconds": 0.054045199998654425,
+      "solve_time_total_seconds": 0.07668410000042059,
+      "primary_mip_gap": 0.0,
+      "secondary_mip_gap": 0.0
+    },
+    "milp_minus_lp": {
+      "primary_minimum_cost_yuan": 0.0,
+      "secondary_solution_cost_yuan": 0.0,
+      "daily_purchase_kwh": 0.0,
+      "throughput_kwh": 0.0,
+      "solve_time_total_seconds": 0.060417500004405156
+    }
+  },
+  "trajectory_check": {
+    "lp_resolve_vs_frozen_max_abs": {
+      "purchase_kwh": 4.2828911140140106e-11,
+      "charge_kwh": 3.700506567838602e-11,
+      "discharge_kwh": 3.342393029015511e-11,
+      "soc_close_kwh": 4.729372449219227e-11
+    },
+    "milp_vs_frozen_lp_max_abs": {
+      "purchase_kwh": 4.2828911140140106e-11,
+      "charge_kwh": 3.700506567838602e-11,
+      "discharge_kwh": 3.342393029015511e-11,
+      "soc_close_kwh": 4.729372449219227e-11
+    },
+    "milp_vs_lp_resolve_max_abs": {
+      "purchase_kwh": 0.0,
+      "charge_kwh": 0.0,
+      "discharge_kwh": 0.0,
+      "soc_close_kwh": 0.0
+    },
+    "lp_resolve_reproduces_frozen_within_tolerance": true,
+    "milp_trajectory_matches_frozen_lp_within_tolerance": true
+  },
+  "conclusion": "The frozen LP solution is already mutually exclusive and the explicit MILP has the same lexicographic objective values; the binary constraint does not change the Q1 optimum.",
+  "files": {
+    "trajectory_csv": "experiments\\q1_lp_milp_crosscheck\\results\\q1_lp_milp_trajectory.csv"
+  }
+}

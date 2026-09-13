@@ -1,0 +1,190 @@
+{
+  "experiment": "Q2 residual-quantile sensitivity",
+  "unique_change": "only tau in the same trailing-56-day slotwise net-load residual quantile",
+  "constant_conditions": {
+    "forecast": "candidate_linear_pv5",
+    "terminal": "fixed_6000_at_48h",
+    "execution": "frozen Q2 causal storage executor",
+    "settlement": "fixed-price Q2"
+  },
+  "tau_checks": {
+    "0.0": {
+      "title": "Q2 τ=0.0",
+      "status": "PASS",
+      "pass_flags": {
+        "rows": true,
+        "information_cutoff": true,
+        "actual_balance": true,
+        "actual_state": true,
+        "soc_bounds": true,
+        "storage_power": true,
+        "crossday_soc": true,
+        "mutual_exclusion": true,
+        "emergency_not_charging": true,
+        "plan_balance": true,
+        "plan_state": true,
+        "plan_mutual_exclusion": true,
+        "cash_recompute": true
+      },
+      "metrics": {
+        "information_cutoff_violations": 0,
+        "simultaneous_actual_slots": 0,
+        "emergency_charge_overlap_slots": 0,
+        "normal_cost_recompute_yuan": 9010269.14125805,
+        "emergency_cost_recompute_yuan": 25050830.628985874,
+        "max_charge_kwh_per_slot": 833.3333333333333,
+        "max_discharge_kwh_per_slot": 833.3333333333333
+      }
+    },
+    "0.6": {
+      "title": "Q2 τ=0.6",
+      "status": "PASS",
+      "pass_flags": {
+        "rows": true,
+        "information_cutoff": true,
+        "actual_balance": true,
+        "actual_state": true,
+        "soc_bounds": true,
+        "storage_power": true,
+        "crossday_soc": true,
+        "mutual_exclusion": true,
+        "emergency_not_charging": true,
+        "plan_balance": true,
+        "plan_state": true,
+        "plan_mutual_exclusion": true,
+        "cash_recompute": true
+      },
+      "metrics": {
+        "information_cutoff_violations": 0,
+        "simultaneous_actual_slots": 0,
+        "emergency_charge_overlap_slots": 0,
+        "normal_cost_recompute_yuan": 12477042.945799377,
+        "emergency_cost_recompute_yuan": 2240676.8793440727,
+        "max_charge_kwh_per_slot": 833.3333333333333,
+        "max_discharge_kwh_per_slot": 833.3333333333333
+      }
+    },
+    "0.7": {
+      "title": "Q2 τ=0.7",
+      "status": "PASS",
+      "pass_flags": {
+        "rows": true,
+        "information_cutoff": true,
+        "actual_balance": true,
+        "actual_state": true,
+        "soc_bounds": true,
+        "storage_power": true,
+        "crossday_soc": true,
+        "mutual_exclusion": true,
+        "emergency_not_charging": true,
+        "plan_balance": true,
+        "plan_state": true,
+        "plan_mutual_exclusion": true,
+        "cash_recompute": true
+      },
+      "metrics": {
+        "information_cutoff_violations": 0,
+        "simultaneous_actual_slots": 0,
+        "emergency_charge_overlap_slots": 0,
+        "normal_cost_recompute_yuan": 12831187.301303122,
+        "emergency_cost_recompute_yuan": 1350930.7424106232,
+        "max_charge_kwh_per_slot": 833.3333333333333,
+        "max_discharge_kwh_per_slot": 833.3333333333333
+      }
+    },
+    "0.8": {
+      "title": "Q2 τ=0.8",
+      "status": "PASS",
+      "pass_flags": {
+        "rows": true,
+        "information_cutoff": true,
+        "actual_balance": true,
+        "actual_state": true,
+        "soc_bounds": true,
+        "storage_power": true,
+        "crossday_soc": true,
+        "mutual_exclusion": true,
+        "emergency_not_charging": true,
+        "plan_balance": true,
+        "plan_state": true,
+        "plan_mutual_exclusion": true,
+        "cash_recompute": true
+      },
+      "metrics": {
+        "information_cutoff_violations": 0,
+        "simultaneous_actual_slots": 0,
+        "emergency_charge_overlap_slots": 0,
+        "normal_cost_recompute_yuan": 13259252.266410911,
+        "emergency_cost_recompute_yuan": 738737.8951797552,
+        "max_charge_kwh_per_slot": 833.3333333333333,
+        "max_discharge_kwh_per_slot": 833.3333333333333
+      }
+    },
+    "0.9": {
+      "title": "Q2 τ=0.9",
+      "status": "PASS",
+      "pass_flags": {
+        "rows": true,
+        "information_cutoff": true,
+        "actual_balance": true,
+        "actual_state": true,
+        "soc_bounds": true,
+        "storage_power": true,
+        "crossday_soc": true,
+        "mutual_exclusion": true,
+        "emergency_not_charging": true,
+        "plan_balance": true,
+        "plan_state": true,
+        "plan_mutual_exclusion": true,
+        "cash_recompute": true
+      },
+      "metrics": {
+        "information_cutoff_violations": 0,
+        "simultaneous_actual_slots": 0,
+        "emergency_charge_overlap_slots": 0,
+        "normal_cost_recompute_yuan": 13876905.955845768,
+        "emergency_cost_recompute_yuan": 323864.4643684455,
+        "max_charge_kwh_per_slot": 833.3333333333333,
+        "max_discharge_kwh_per_slot": 833.3333333333333
+      }
+    },
+    "0.95": {
+      "title": "Q2 τ=0.95",
+      "status": "PASS",
+      "pass_flags": {
+        "rows": true,
+        "information_cutoff": true,
+        "actual_balance": true,
+        "actual_state": true,
+        "soc_bounds": true,
+        "storage_power": true,
+        "crossday_soc": true,
+        "mutual_exclusion": true,
+        "emergency_not_charging": true,
+        "plan_balance": true,
+        "plan_state": true,
+        "plan_mutual_exclusion": true,
+        "cash_recompute": true
+      },
+      "metrics": {
+        "information_cutoff_violations": 0,
+        "simultaneous_actual_slots": 0,
+        "emergency_charge_overlap_slots": 0,
+        "normal_cost_recompute_yuan": 14409785.221755961,
+        "emergency_cost_recompute_yuan": 162732.3054807055,
+        "max_charge_kwh_per_slot": 833.3333333333333,
+        "max_discharge_kwh_per_slot": 833.3333333333333
+      }
+    }
+  },
+  "tau_080_reproduces_formal_main": {
+    "pass": true,
+    "differences": {
+      "normal_cost_yuan": 0.0,
+      "emergency_cost_yuan": 0.0,
+      "total_cost_yuan": 0.0,
+      "emergency_purchase_kwh": 0.0
+    }
+  },
+  "status": "PASS"
+}

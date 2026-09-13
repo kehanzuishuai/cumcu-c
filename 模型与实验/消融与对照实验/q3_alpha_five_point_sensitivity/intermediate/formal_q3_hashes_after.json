@@ -1,0 +1,15 @@
+{
+  "results/q3_detail.csv": "f6489f5a9579681d7c6a817fde57c1e59f6aaffa9b1117a44e21116ee8cb0684",
+  "results/q3_daily.csv": "241da012ae1b198a6f0b6f218e8c1dac1f27b36d3479dc6c6c700c4ad30d6e34",
+  "results/q3_storage_4h.csv": "cebb718f5ae81fdde89314ef4930a487c434ecbfc21d2e68de427ee14a1c89aa",
+  "results/q3_emergency_events.csv": "6e099fc099578e6faa29a14a62a329bf0d71c8bc7bd66493abc4d64cd22dd518",
+  "results/q3_plan_versions.csv": "26e4e9076893a04d447b1bbfce4ad66f57e4900c23be66705d060aca7819ad5c",
+  "results/q3_summary.json": "0a34ec7b6b262c3690b884a373d4e63496c2b0898a7dc70e668c48b3d5ae32d4",
+  "results/result3.xlsx": "a588a2444e3e357d491a2062c6be0332583a2f22ed40562fe6eb1da58c6672f1",
+  "validation/q3_validation.json": "18cd597c1e9e47b1e1c91a7049bfcf7ddfa68305810e6f4f46ccb24fab2e2714",
+  "validation/q3_independent_recompute.json": "4e15184582d1671b4f149b184ae49c9cc3fc55580a36d188488b15ac74c10c10",
+  "validation/result3_workbook_validation.json": "6e14e17a92332f39d99689d52447baa649ab240a61541571eafdd431cb80e22e",
+  "intermediate/q3_workbook_payload.json": "d4248e15f75bc7816da2f3d8d4a24cdaa170bc5d0210e2a41422504d3380dcff",
+  "intermediate/q3_run_manifest.json": "5ba66db2d00ee3b24ebba04963f604ed37f6a603ee6dc1e68685a7341783cd7b",
+  "intermediate/final_promotion_alpha05_manifest.json": "ed237e1eb1d304d31707c9171ac848f135c1ecee1c54983b67e7005d59680145"
+}

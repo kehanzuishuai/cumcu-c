@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "experiment": "Q1 LP-MILP mutual-exclusion cross-validation",
+  "status": "PASS",
+  "tolerances": {
+    "constraint_kwh": 1e-06,
+    "positive_flow_kwh": 1e-07,
+    "objective_yuan": 1e-05,
+    "trajectory_kwh": 1e-06
+  },
+  "lp_validation": {
+    "metrics": {
+      "balance_max_abs_kwh": 2.2737367544323206e-13,
+      "state_max_abs_kwh": 8.313350008393172e-13,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "soc_open_kwh": 6000.0,
+      "soc_close_kwh": 6000.0,
+      "charge_max_kwh_per_slot": 833.3333333333333,
+      "discharge_max_kwh_per_slot": 715.6530333333333,
+      "simultaneous_positive_slot_count": 0,
+      "simultaneous_max_kwh": 0.0,
+      "independent_cost_yuan": 35126.9485896409,
+      "reported_cost_yuan": 35126.948589640895,
+      "cost_reconciliation_abs_yuan": 7.275957614183426e-12,
+      "secondary_cost_above_primary_yuan": 3.5126868169754744e-07
+    },
+    "pass_flags": {
+      "balance": true,
+      "state": true,
+      "soc_bounds": true,
+      "soc_cycle": true,
+      "power": true,
+      "nonnegative": true,
+      "mutual_exclusion": true,
+      "cost_reconciliation": true
+    },
+    "all_pass": true
+  },
+  "milp_validation": {
+    "metrics": {
+      "balance_max_abs_kwh": 2.2737367544323206e-13,
+      "state_max_abs_kwh": 8.313350008393172e-13,
+      "charge_mutex_max_violation_kwh": 0.0,
+      "discharge_mutex_max_violation_kwh": 0.0,
+      "binary_integrality_max_abs": 0.0,
+      "soc_lower_max_violation_kwh": 0.0,
+      "soc_upper_max_violation_kwh": 0.0,
+      "charge_upper_max_violation_kwh": 0.0,
+      "discharge_upper_max_violation_kwh": 0.0,
+      "nonnegative_max_violation_kwh": 0.0,
+      "soc_initial_abs_kwh": 0.0,
+      "soc_terminal_abs_kwh": 0.0,
+      "cost_recompute_abs_yuan": 0.0,
+      "simultaneous_positive_slot_count": 0,
+      "simultaneous_max_kwh": 0.0,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "charge_max_kwh_per_slot": 833.3333333333333,
+      "discharge_max_kwh_per_slot": 715.6530333333333,
+      "maximum_constraint_residual_kwh": 8.313350008393172e-13
+    },
+    "pass_flags": {
+      "equalities": true,
+      "bounds": true,
+      "binary_integrality": true,
+      "mutual_exclusion": true,
+      "cost_recompute": true
+    },
+    "all_pass": true
+  },
+  "equivalence_gates": {
+    "frozen_lp_has_no_simultaneous_charge_discharge": true,
+    "lp_all_constraints_pass": true,
+    "milp_all_constraints_pass": true,
+    "primary_cost_equal_within_tolerance": true,
+    "secondary_cost_equal_within_tolerance": true,
+    "throughput_equal_within_tolerance": true,
+    "lp_resolve_matches_frozen_trajectory": true,
+    "milp_matches_frozen_trajectory": true,
+    "protected_formal_files_unchanged": true
+  },
+  "interpretation": {
+    "objective_equivalence_pass": true,
+    "trajectory_gate_is_diagnostic_not_required_for_optimality": true,
+    "reason": "Multiple slot-level trajectories may share the same cost and throughput; objective equivalence plus LP feasibility under explicit mutual exclusion proves that the binary restriction does not improve or worsen the optimum."
+  },
+  "protected_sha256_before": {
+    "results\\result1.xlsx": "a725d4c2e6a427146eb090d0c83b027abd21514241c4f6d0fc2ec44dc8df63dc",
+    "results\\q1_detail.csv": "96d79225ea9599a5fff812be036fcad7c2bec872491ff522ce999daf273a2e72",
+    "results\\q1_summary.json": "155dc40f2ffa3d1e6e7cef4ce5b80166d4421e9cbb8a2d76c7c4d3cc24abcc2f",
+    "validation\\q1_validation.json": "7aa1c241fa7cf4266a02ad12576df1e4ac0df81c56151e4ebe7c35d0d0b8b5e2",
+    "validation\\q1_independent_recompute.json": "cd773899f957f2c982a77f715aa0dd7bcbea437ceba611a91d0e5e8bbfafbf8f"
+  },
+  "protected_sha256_after": {
+    "results\\result1.xlsx": "a725d4c2e6a427146eb090d0c83b027abd21514241c4f6d0fc2ec44dc8df63dc",
+    "results\\q1_detail.csv": "96d79225ea9599a5fff812be036fcad7c2bec872491ff522ce999daf273a2e72",
+    "results\\q1_summary.json": "155dc40f2ffa3d1e6e7cef4ce5b80166d4421e9cbb8a2d76c7c4d3cc24abcc2f",
+    "validation\\q1_validation.json": "7aa1c241fa7cf4266a02ad12576df1e4ac0df81c56151e4ebe7c35d0d0b8b5e2",
+    "validation\\q1_independent_recompute.json": "cd773899f957f2c982a77f715aa0dd7bcbea437ceba611a91d0e5e8bbfafbf8f"
+  },
+  "environment": {
+    "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:09:58) [MSC v.1929 64 bit (AMD64)]",
+    "python_executable": "D:\\anaconda\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.3.5",
+    "scipy": "1.16.3",
+    "lp_solver": "scipy.optimize.linprog(method='highs')",
+    "milp_solver": "scipy.optimize.milp(HiGHS), mip_rel_gap=0"
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "experiment": "P4 causal evening SOC reserve",
+  "pre_registered_policy": "At 00:00, set pre-18 SOC floor to SOC_MIN plus the internal-energy equivalent of the trailing-history Q80 post-18 positive residual above the frozen Q80 forecast; release linearly from 18:00 to 24:00.",
+  "no_tuning": "Q80 and residual history are inherited; no reserve multiplier or test-driven parameter scan.",
+  "runs": {
+    "q4_2_reserve": {
+      "strategy": "p4_q4_2_reserve",
+      "forecast_kind": "candidate_linear_pv5",
+      "risk_quantile": 0.8,
+      "residual_window_days": 56,
+      "terminal_mode": "fixed_6000_at_48h",
+      "days": 334,
+      "normal_purchase_kwh": 21569857.769463584,
+      "emergency_purchase_kwh": 141846.95213369495,
+      "normal_cost_yuan": 13922884.2358461,
+      "emergency_cost_yuan": 852631.2150553868,
+      "total_cost_yuan": 14775515.450901488,
+      "charge_kwh": 6293444.69859403,
+      "discharge_kwh": 5095168.6875354815,
+      "surplus_discard_kwh": 2574239.2155720633,
+      "soc_initial_kwh": 6000.0,
+      "soc_final_kwh": 8801.687028537037,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+      "plan_simultaneous_positive_slots": 0,
+      "plan_secondary_days": 0,
+      "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+      "max_actual_state_residual_kwh": 9.094947017729282e-13,
+      "max_crossday_soc_gap_kwh": 0.0
+    },
+    "q4_3_reserve": {
+      "strategy": "p4_q4_3_reserve",
+      "update_hours": [
+        6,
+        12,
+        18
+      ],
+      "interpolation": "linear",
+      "days": 334,
+      "original_purchase_kwh": 21862566.086213026,
+      "effective_purchase_kwh": 21077647.461578734,
+      "upward_adjustment_kwh": 285963.8793142226,
+      "downward_adjustment_kwh": 1070882.503948514,
+      "emergency_purchase_kwh": 65410.97987141106,
+      "base_plan_cost_yuan": 14154079.036699953,
+      "downward_credit_yuan": 351464.4520163751,
+      "upward_adjustment_cost_yuan": 337702.60538231215,
+      "normal_settlement_cost_yuan": 14140317.19006589,
+      "emergency_cost_yuan": 365726.82356243994,
+      "total_cost_yuan": 14506044.01362833,
+      "charge_kwh": 6369698.642839964,
+      "discharge_kwh": 5156934.382374687,
+      "surplus_discard_kwh": 1991104.6860182027,
+      "soc_initial_kwh": 6000.0,
+      "soc_final_kwh": 8801.687028537037,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "max_plan_balance_residual_kwh": 1.5916157281026244e-12,
+      "max_plan_state_residual_kwh": 1.8189894035458565e-12,
+      "max_adjustment_link_residual_kwh": 1.5916157281026244e-12,
+      "plan_simultaneous_positive_slots": 0,
+      "plan_secondary_count": 0,
+      "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+      "max_actual_state_residual_kwh": 9.094947017729282e-13,
+      "max_crossday_soc_gap_kwh": 0.0
+    }
+  },
+  "comparison": {
+    "q4_2": {
+      "reserve_minus_greedy_total_cost_yuan": 88428.00692812353,
+      "reserve_minus_greedy_emergency_kwh": 16977.20034490178,
+      "lower_cost_months": 0,
+      "base_after_18": {
+        "after_18_emergency_kwh": 87446.7809136223,
+        "after_18_share": 0.7003039540074631,
+        "after_18_emergency_cost_yuan": 567273.9808704264
+      },
+      "reserve_after_18": {
+        "after_18_emergency_kwh": 92614.55714491385,
+        "after_18_share": 0.6529189083852984,
+        "after_18_emergency_cost_yuan": 606438.9838501464
+      }
+    },
+    "q4_3": {
+      "reserve_minus_greedy_total_cost_yuan": 84926.22420903295,
+      "reserve_minus_greedy_emergency_kwh": 16247.440940257751,
+      "lower_cost_months": 0,
+      "base_after_18": {
+        "after_18_emergency_kwh": 30120.49442801665,
+        "after_18_share": 0.6126591999448251,
+        "after_18_emergency_cost_yuan": 175313.96976532345
+      },
+      "reserve_after_18": {
+        "after_18_emergency_kwh": 36285.04089001414,
+        "after_18_share": 0.5547240075190061,
+        "after_18_emergency_cost_yuan": 223363.59575399267
+      }
+    }
+  },
+  "retain_gate": "retain only if full-period cost is lower in both Q4-2 and Q4-3 and cost is lower in a strict majority of months in each",
+  "retain": false,
+  "frozen_files_unchanged": true,
+  "frozen_hashes_before": {
+    "results/q1_summary.json": "155dc40f2ffa3d1e6e7cef4ce5b80166d4421e9cbb8a2d76c7c4d3cc24abcc2f",
+    "results/result1.xlsx": "a725d4c2e6a427146eb090d0c83b027abd21514241c4f6d0fc2ec44dc8df63dc",
+    "validation/q1_validation.json": "7aa1c241fa7cf4266a02ad12576df1e4ac0df81c56151e4ebe7c35d0d0b8b5e2",
+    "results/q2_summary.json": "c6cde5a6e6ab3b3a590ef892c4a09aaff14d7905c2c594975e57909a1db7fcc6",
+    "results/result2.xlsx": "eb5a8231344901cec1e41c3124fe3693ee18c55a4ff89ab7578c6ca2ce4b42bd",
+    "validation/q2_validation.json": "5565d48460d2d883d27f6fceeca939304a2bc82814fabac819e46d07089acce2",
+    "results/q3_summary.json": "694e7c1f30a0c634542a94a179170bdab0a72f46caf427c1853816ea6ce9229f",
+    "results/result3.xlsx": "3631a4f916a226e9d875c19a79bb79380d5480456ebe828daf0f832610d79afc",
+    "results/q3_detail.csv": "b6817054770886da6cb38ea501ffa3ea15ac30a0e497958708a87d4a61ab1151",
+    "validation/q3_validation.json": "a1128ca2b2cc836f7be0ed9e44d314d616c0dd9cd215ee90cfacce874dcd8019",
+    "results/q4_summary.json": "21f0ee8eb4128f7cb2b237b954a8a7d10467a57a5f2879bb3fa172e98bf257e5",
+    "results/result4-2.xlsx": "b001610c34bda6cebe7d956d5e75c544119eac2391b10d489f6428e185b16ab9",
+    "results/result4-3.xlsx": "b4277a465c34c5eb315c64338b7351d0143a385c445affcc4064e48e020bf538",
+    "validation/q4_2_validation.json": "e6ca7d6d7bbdbcb4413a86568760cd6814eab40184e3ca616a623b6ebbf69879",
+    "validation/q4_3_validation.json": "ee9116751310109614ba70abf869a2f3632387c68dc672b59b0cab527d71b799"
+  },
+  "frozen_hashes_after": {
+    "results/q1_summary.json": "155dc40f2ffa3d1e6e7cef4ce5b80166d4421e9cbb8a2d76c7c4d3cc24abcc2f",
+    "results/result1.xlsx": "a725d4c2e6a427146eb090d0c83b027abd21514241c4f6d0fc2ec44dc8df63dc",
+    "validation/q1_validation.json": "7aa1c241fa7cf4266a02ad12576df1e4ac0df81c56151e4ebe7c35d0d0b8b5e2",
+    "results/q2_summary.json": "c6cde5a6e6ab3b3a590ef892c4a09aaff14d7905c2c594975e57909a1db7fcc6",
+    "results/result2.xlsx": "eb5a8231344901cec1e41c3124fe3693ee18c55a4ff89ab7578c6ca2ce4b42bd",
+    "validation/q2_validation.json": "5565d48460d2d883d27f6fceeca939304a2bc82814fabac819e46d07089acce2",
+    "results/q3_summary.json": "694e7c1f30a0c634542a94a179170bdab0a72f46caf427c1853816ea6ce9229f",
+    "results/result3.xlsx": "3631a4f916a226e9d875c19a79bb79380d5480456ebe828daf0f832610d79afc",
+    "results/q3_detail.csv": "b6817054770886da6cb38ea501ffa3ea15ac30a0e497958708a87d4a61ab1151",
+    "validation/q3_validation.json": "a1128ca2b2cc836f7be0ed9e44d314d616c0dd9cd215ee90cfacce874dcd8019",
+    "results/q4_summary.json": "21f0ee8eb4128f7cb2b237b954a8a7d10467a57a5f2879bb3fa172e98bf257e5",
+    "results/result4-2.xlsx": "b001610c34bda6cebe7d956d5e75c544119eac2391b10d489f6428e185b16ab9",
+    "results/result4-3.xlsx": "b4277a465c34c5eb315c64338b7351d0143a385c445affcc4064e48e020bf538",
+    "validation/q4_2_validation.json": "e6ca7d6d7bbdbcb4413a86568760cd6814eab40184e3ca616a623b6ebbf69879",
+    "validation/q4_3_validation.json": "ee9116751310109614ba70abf869a2f3632387c68dc672b59b0cab527d71b799"
+  }
+}

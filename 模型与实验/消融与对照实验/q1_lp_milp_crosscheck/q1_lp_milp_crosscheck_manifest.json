@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "input_sha256": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377",
+  "code_sha256": "241bbc3e2f56809a3ae915c42ff488df909c915ae396d910a8b2a3172e23da0a",
+  "outputs_sha256": {
+    "experiments\\q1_lp_milp_crosscheck\\results\\q1_lp_milp_crosscheck_summary.json": "d2e4485859f888262bc23b0122f74bcd14dd7a7fbe5ab7e5af3f9258e9c19a52",
+    "experiments\\q1_lp_milp_crosscheck\\results\\q1_lp_milp_trajectory.csv": "fb84b76568de3ad79bf94749522cabeb076c8f67464e19f657d88c9f3a865689",
+    "experiments\\q1_lp_milp_crosscheck\\validation\\q1_lp_milp_crosscheck_validation.json": "043af01274f48d334a75c6e575ddef05e54f5f5b0611f32bda8f4069e10e4ee2",
+    "experiments\\q1_lp_milp_crosscheck\\validation\\q1_lp_milp_independent_recompute.json": "b9f6b769cbe8f06710f64a92818ea985ae42fd7543b58e39095aa061f6ea5c9b"
+  },
+  "protected_formal_files_unchanged": true,
+  "independent_validator_sha256": "1995fa21570109e1be93f95b8b0db0eabc6b728ff2820ca305613f0047a3f373",
+  "independent_recompute_status": "PASS"
+}
