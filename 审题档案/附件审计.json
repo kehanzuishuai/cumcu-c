@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "problem": "2026-C",
+  "title": "微网与外部电网电力调控策略",
+  "source_archive": "C:\\Users\\GAOKEHAN\\Desktop\\C题.zip",
+  "source_archive_sha256": "d7cc78abb8faf2e9c72c6a865b5c51d009dc439cbfb927e613f5dd1aa84826b9",
+  "root": "D:\\2026数模\\审题codex\\source_materials\\C题",
+  "status": "complete",
+  "independence": {
+    "read_harness": false,
+    "external_solution_or_paper_used": false,
+    "evidence_scope": [
+      "C题.zip 内题面 PDF",
+      "附件 1-4 数据工作簿",
+      "附件 5 的五个结果模板"
+    ]
+  },
+  "files": [
+    {
+      "path": "C题.pdf",
+      "format": "pdf",
+      "size_bytes": 354389,
+      "sha256": "2c098f6ae9dd47ae965aebdec3b9facf3de6c173f999783c1012c08fc5fb9d2d",
+      "encoding": null,
+      "sheets_or_structure": ["3 页 A4", "题面 Q1-Q4", "表 1-3", "附录 1", "附件说明", "结果文件说明"],
+      "granularity": "题目级；小问级；结果模板级",
+      "keys_and_units": ["功率 kW", "电量 kWh", "电价 元/kWh", "费用 元", "时刻/时间段"],
+      "missing_or_anomalies": [
+        "“充放电效率为 90%”未唯一说明单向效率或往返效率",
+        "Q2-Q4 未明确给出全部未来信息的可获得时点",
+        "Q3 调整结算公式与多次调整基准未完全形式化"
+      ],
+      "used_by": ["Q1", "Q2", "Q3", "Q4"],
+      "delivery_constraints": ["result1.xlsx", "result2.xlsx", "result3.xlsx", "result4-2.xlsx", "result4-3.xlsx"],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件1.xlsx",
+      "format": "xlsx",
+      "size_bytes": 16003,
+      "sha256": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377",
+      "encoding": null,
+      "sheets_or_structure": [
+        {"sheet": "Sheet1", "range": "A1:D145", "rows_including_header": 145, "columns": 4, "formulas": 0}
+      ],
+      "granularity": "单一日型 × 144 个 10 分钟标签；0:10 至次日 0:00",
+      "keys_and_units": ["时间", "电价 元/kWh", "小区负载 kW", "光伏发电预测功率 kW"],
+      "missing_or_anomalies": [
+        "无缺失、非有限值或负值",
+        "时间轴严格递增、相邻 10 分钟",
+        "首标签 0:10；最后标签 0:00+1",
+        "与结果模板时段起止语义未显式对齐"
+      ],
+      "used_by": ["Q1", "Q2", "Q3"],
+      "delivery_constraints": [],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件2.xlsx",
+      "format": "xlsx",
+      "size_bytes": 907128,
+      "sha256": "2e95fd446bfafa0d8c59577b5c2e2ea8b3f1def20dde54a3062556f4da9b4c72",
+      "encoding": null,
+      "sheets_or_structure": [
+        {"sheet": "小区负载", "range": "A1:EO366", "records": 365, "time_columns": 144, "formulas": 0},
+        {"sheet": "光伏发电实际功率", "range": "A1:EO366", "records": 365, "time_columns": 144, "formulas": 0}
+      ],
+      "granularity": "日期 2025-01-01 至 2025-12-31 × 144 个 10 分钟标签",
+      "keys_and_units": ["日期", "时间标签", "小区负载 kW", "光伏发电实际功率 kW"],
+      "missing_or_anomalies": [
+        "365 个日期连续、唯一、升序",
+        "两张表日期轴和时间轴完全一致",
+        "105120 个数值单元均无缺失、非有限值或负值",
+        "10130/52560 个时槽出现光伏功率高于负荷，必须处理富余电能"
+      ],
+      "used_by": ["Q2", "Q3", "Q4"],
+      "delivery_constraints": ["输出仅要求 2025-02-01 至 2025-12-31；1 月角色需结合信息集和状态衔接解释"],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件3.xlsx",
+      "format": "xlsx",
+      "size_bytes": 293526,
+      "sha256": "8a61b06c52bd0d639a1cc37c61a7d9f5b75edcbca718f64c1bd3498ec9f9d843",
+      "encoding": null,
+      "sheets_or_structure": [
+        {"sheet": "Sheet1", "range": "A1:Z1461", "records": 1460, "date_issue_keys": 1460, "forecast_leads": 24, "formulas": 0}
+      ],
+      "granularity": "日期 × 发布时刻 0:00/6:00/12:00/18:00 × 未来 1-24 小时整点",
+      "keys_and_units": ["日期", "预报时刻", "预报1小时至预报24小时 kW"],
+      "missing_or_anomalies": [
+        "365 天均恰有四个发布时间；日期续行使用空白单元格，读取时必须前向填充",
+        "35040 个预报值无缺失、非有限值或负值",
+        "预报目标范围延伸至 2026-01-01 18:00，附件 2 仅能对齐其中 35004 个目标",
+        "Artifact Tool 预览把空日期续行显示为 28；已由原始单元格值判定为预览伪影"
+      ],
+      "used_by": ["Q3", "Q4"],
+      "delivery_constraints": ["结果模板不保存各发布时间的版本轨迹，只保存调整购电量和最终调度结果"],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件4.xlsx",
+      "format": "xlsx",
+      "size_bytes": 409790,
+      "sha256": "20e9c93aeab5e8e21ae4dd15587f9e190f7408692504c1319598461cd654fe71",
+      "encoding": null,
+      "sheets_or_structure": [
+        {"sheet": "Sheet1", "range": "A1:EO366", "records": 365, "time_columns": 144, "formulas": 0}
+      ],
+      "granularity": "日期 2025-01-01 至 2025-12-31 × 144 个 10 分钟标签",
+      "keys_and_units": ["日期", "时间标签", "电价 元/kWh"],
+      "missing_or_anomalies": [
+        "52560 个价格均为正且无缺失",
+        "取值范围 0.0076-1.7936 元/kWh",
+        "与附件 2 日期/时间键完全对齐",
+        "365 天日价格曲线无重复",
+        "只提供实际价格，未单列未来价格预报"
+      ],
+      "used_by": ["Q4"],
+      "delivery_constraints": [],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件5/result1.xlsx",
+      "format": "xlsx",
+      "size_bytes": 13323,
+      "sha256": "28360e0974e7d6065394a8aba4e14a86773ae0036cc7d3ea1b211b515b03d688",
+      "encoding": null,
+      "sheets_or_structure": [
+        {"sheet": "计划购电量", "range": "A1:B145", "fields": ["时间段", "购电量"]},
+        {"sheet": "充放电量", "range": "A1:E7", "fields": ["时间段", "充电量", "放电量", "时刻", "储电量"]}
+      ],
+      "granularity": "计划购电 144 个 10 分钟时段；充放电六个 4 小时聚合段；储电量 0:00/24:00",
+      "keys_and_units": ["购电量 kWh", "充电量 kWh", "放电量 kWh", "储电量 kWh"],
+      "missing_or_anomalies": ["模板空值为待填字段；无公式", "首时段 0:10-0:20；末时段跨至次日 0:10"],
+      "used_by": ["Q1"],
+      "delivery_constraints": ["保持文件名和工作表名", "论文中的全天购电量/费用不在本模板单列"],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件5/result2.xlsx",
+      "format": "xlsx",
+      "size_bytes": 18397,
+      "sha256": "1c26494cfc6d754e0bd9bff7e13e1126a73d2d2da6c5336eb251d89b9a1a1a47",
+      "encoding": null,
+      "sheets_or_structure": [
+        {"sheet": "计划购电量", "range": "A1:EQ335", "records": 334, "time_columns": 144, "summary_columns": ["全天购电量", "全天购电费"]},
+        {"sheet": "充放电量", "range": "A1:F20", "structure": "前两日+省略号+末日示例骨架"},
+        {"sheet": "紧急购电量", "range": "A1:C11", "structure": "多行事件示例骨架"}
+      ],
+      "granularity": "2025-02-01 至 2025-12-31；逐日 10 分钟计划；4 小时充放电汇总；紧急购电事件段",
+      "keys_and_units": ["日期", "时间段", "计划/紧急购电量 kWh", "充放电量 kWh", "储电量 kWh", "购电费 元"],
+      "missing_or_anomalies": [
+        "计划表日期连续、唯一，共 334 天",
+        "充放电和紧急购电工作表只有版式示例，需按实际记录扩展",
+        "存在 `7:0` 非补零标签",
+        "末时段 `0:00-0:10+1` 起点的跨日标记不完整",
+        "未规定紧急购电按逐槽还是连续事件段汇总"
+      ],
+      "used_by": ["Q2"],
+      "delivery_constraints": ["保持文件名、工作表名、日期范围和列序", "全天总量/总成本位于 EP/EQ"],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件5/result3.xlsx",
+      "format": "xlsx",
+      "size_bytes": 265429,
+      "sha256": "c59da470cabd0be23f602c95c8aa9d11ec224a0cdac216b3e1f218e65d006bdc",
+      "encoding": null,
+      "sheets_or_structure": [
+        {"sheet": "计划购电量", "range": "A1:EQ335", "records": 334, "time_columns": 144, "summary_columns": ["全天购电量", "全天购电费"]},
+        {"sheet": "调整购电量", "range": "A1:EQ335", "records": 334, "time_columns": 144, "summary_columns": ["全天购电量", "全天购电费"]},
+        {"sheet": "充放电量", "range": "A1:F26", "structure": "前两日+指定日+省略号+末日示例骨架"},
+        {"sheet": "紧急购电量", "range": "A1:C11", "structure": "多行事件示例骨架"}
+      ],
+      "granularity": "2025-02-01 至 2025-12-31；逐日 10 分钟初始计划和调整结果；4 小时最终充放电汇总；最终紧急购电事件段",
+      "keys_and_units": ["日期", "时间段", "计划/调整/紧急购电量 kWh", "最终充放电量 kWh", "储电量 kWh", "购电费 元"],
+      "missing_or_anomalies": [
+        "调整购电表无发布时间维度",
+        "模板未唯一说明调整购电量是最终绝对量或净增量，但题面比较用语支持前者",
+        "模板未保存 6:00/12:00/18:00 各版本，只能另设内部日志"
+      ],
+      "used_by": ["Q3"],
+      "delivery_constraints": ["保持文件名、四张工作表、日期范围和列序", "最终费用口径受 Q3 结算歧义约束"],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件5/result4-2.xlsx",
+      "format": "xlsx",
+      "size_bytes": 18397,
+      "sha256": "1c26494cfc6d754e0bd9bff7e13e1126a73d2d2da6c5336eb251d89b9a1a1a47",
+      "encoding": null,
+      "sheets_or_structure": ["与 result2.xlsx 字节级相同"],
+      "granularity": "同 result2.xlsx，用附件 4 波动电价重算",
+      "keys_and_units": ["同 result2.xlsx"],
+      "missing_or_anomalies": ["模板复用是题面明确交付，不判为错误"],
+      "used_by": ["Q4-2"],
+      "delivery_constraints": ["文件名必须为 result4-2.xlsx"],
+      "audit_status": "verified"
+    },
+    {
+      "path": "附件/附件5/result4-3.xlsx",
+      "format": "xlsx",
+      "size_bytes": 265429,
+      "sha256": "c59da470cabd0be23f602c95c8aa9d11ec224a0cdac216b3e1f218e65d006bdc",
+      "encoding": null,
+      "sheets_or_structure": ["与 result3.xlsx 字节级相同"],
+      "granularity": "同 result3.xlsx，用附件 4 波动电价重算",
+      "keys_and_units": ["同 result3.xlsx"],
+      "missing_or_anomalies": ["模板复用是题面明确交付，不判为错误"],
+      "used_by": ["Q4-3"],
+      "delivery_constraints": ["文件名必须为 result4-3.xlsx"],
+      "audit_status": "verified"
+    }
+  ],
+  "cross_file_checks": {
+    "attachment2_sheet_headers_equal": true,
+    "attachment2_attachment4_headers_equal": true,
+    "attachment2_attachment4_dates_equal": true,
+    "attachment1_time_equals_annual_grid": true,
+    "result2_equals_result4_2": true,
+    "result3_equals_result4_3": true,
+    "all_workbooks_no_formulas": true,
+    "all_workbooks_no_external_links": true,
+    "all_workbooks_no_hidden_sheets_rows_or_columns": true,
+    "all_expected_files_readable": true
+  },
+  "sample_flow": {
+    "attachment2_rows": 365,
+    "date_exclusions": 0,
+    "date_imputations": 0,
+    "output_period_rows": 334,
+    "output_period": "2025-02-01/2025-12-31",
+    "attachment3_raw_rows": 1460,
+    "attachment3_date_forward_fills": 1095,
+    "attachment3_value_imputations": 0,
+    "attachment3_aligned_forecast_actual_pairs": 35004,
+    "attachment3_unaligned_tail_pairs": 36
+  },
+  "unverified_scope": [
+    "未运行购电优化，故未验证任何结果工作簿的数值可行性",
+    "未对未给出的其他发布时间预报做真实数据验证",
+    "待 BLOCKER 解除后再验证 Q3/Q4 结算字段与全天购电费映射"
+  ]
+}
