@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "pass_flags": {
+    "frozen_main_unchanged": true,
+    "fixed_q80_exact_anchor": true,
+    "all_constraints": true,
+    "row_counts": true
+  },
+  "q80_anchor_difference": {
+    "normal_purchase_kwh": 0.0,
+    "emergency_purchase_kwh": 0.0,
+    "normal_cost_yuan": 0.0,
+    "emergency_cost_yuan": 0.0,
+    "total_cost_yuan": 0.0,
+    "soc_final_kwh": 0.0
+  }
+}

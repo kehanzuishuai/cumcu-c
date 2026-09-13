@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "question": "Q2 component ablation",
+  "frozen_main_unchanged": true,
+  "ablation_definition": {
+    "common": "candidate_linear_pv5 point forecast, frozen Q2 information/executor/costs, 48h rolling horizon",
+    "A0": "point forecast only; terminal SOC fixed to 6000 kWh at 48h",
+    "A1": "A0 plus trailing-56-day slotwise fixed Q80 residual uplift; exact frozen-main anchor",
+    "A2": "A1 risk replaced by daily causal Q70/Q80/Q90 selection minimizing prior-28-day one-period 1x/5x fee proxy",
+    "A3": "A2 plus free terminal SOC valued at mean normal price times discharge efficiency"
+  },
+  "online_comparator_definition": {
+    "evidence": "user-provided screenshot; exact source code unavailable",
+    "implementation": "prior-28-day equal-weight same-weekday load, prior-5-day PV, trailing-28-day residuals and fee-calibrated Q70/Q80/Q90, 24h plan, terminal SOC salvage value",
+    "non_identified_from_screenshot": [
+      "original weekday weights",
+      "original candidate risk grid",
+      "original fee calibration formula",
+      "original terminal value coefficient"
+    ],
+    "anti_targeting": "Published 13,894,495.66-yuan total was not used by code, calibration, selection, or validation."
+  },
+  "strategies": {
+    "A0_base_point": {
+      "strategy": "A0_base_point",
+      "forecast_kind": "candidate_linear_pv5",
+      "risk_mode": "none",
+      "residual_window_days": null,
+      "terminal_value": false,
+      "planning_horizon_hours": 48,
+      "days": 334,
+      "normal_purchase_kwh": 20136994.842790905,
+      "emergency_purchase_kwh": 545200.1093952033,
+      "normal_cost_yuan": 12196180.890322553,
+      "emergency_cost_yuan": 3301581.8626878704,
+      "total_cost_yuan": 15497762.753010424,
+      "soc_final_kwh": 8403.14516051852,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "point_forecast": {
+        "mae_kw": 271.76085245529777,
+        "rmse_kw": 389.774722183577,
+        "wape": 0.09055867259494595,
+        "bias_kw": 1.7541320976796357
+      },
+      "effective_forecast": {
+        "mae_kw": 271.76085245529777,
+        "rmse_kw": 389.774722183577,
+        "wape": 0.09055867259494595,
+        "bias_kw": 1.7541320976796357,
+        "one_sided_coverage": 0.5147205588822356
+      },
+      "selected_quantile_days": {
+        "q70": 0,
+        "q80": 0,
+        "q90": 0,
+        "none": 334
+      },
+      "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+      "plan_simultaneous_positive_slots": 0,
+      "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+      "max_actual_state_residual_kwh": 9.094947017729282e-13,
+      "max_crossday_soc_gap_kwh": 0.0
+    },
+    "A1_fixed_q80": {
+      "strategy": "A1_fixed_q80",
+      "forecast_kind": "candidate_linear_pv5",
+      "risk_mode": "fixed_q80",
+      "residual_window_days": 56,
+      "terminal_value": false,
+      "planning_horizon_hours": 48,
+      "days": 334,
+      "normal_purchase_kwh": 21647262.382565323,
+      "emergency_purchase_kwh": 123699.50204508577,
+      "normal_cost_yuan": 13259252.266410911,
+      "emergency_cost_yuan": 738737.8951797552,
+      "total_cost_yuan": 13997990.161590667,
+      "soc_final_kwh": 8687.221346962964,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "point_forecast": {
+        "mae_kw": 271.76085245529777,
+        "rmse_kw": 389.774722183577,
+        "wape": 0.09055867259494595,
+        "bias_kw": 1.7541320976796357
+      },
+      "effective_forecast": {
+        "mae_kw": 343.68441590498173,
+        "rmse_kw": 482.548284156618,
+        "wape": 0.11452570969928066,
+        "bias_kw": 247.41130666343702,
+        "one_sided_coverage": 0.7619968396540253
+      },
+      "selected_quantile_days": {
+        "q70": 0,
+        "q80": 334,
+        "q90": 0,
+        "none": 0
+      },
+      "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+      "plan_simultaneous_positive_slots": 0,
+      "max_actual_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_actual_state_residual_kwh": 9.094947017729282e-13,
+      "max_crossday_soc_gap_kwh": 0.0
+    },
+    "A2_dynamic_risk": {
+      "strategy": "A2_dynamic_risk",
+      "forecast_kind": "candidate_linear_pv5",
+      "risk_mode": "dynamic",
+      "residual_window_days": 56,
+      "terminal_value": false,
+      "planning_horizon_hours": 48,
+      "days": 334,
+      "normal_purchase_kwh": 22108794.745723184,
+      "emergency_purchase_kwh": 65688.9769146488,
+      "normal_cost_yuan": 13590937.132055616,
+      "emergency_cost_yuan": 393140.7340977273,
+      "total_cost_yuan": 13984077.866153343,
+      "soc_final_kwh": 8687.221346962964,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "point_forecast": {
+        "mae_kw": 271.76085245529777,
+        "rmse_kw": 389.774722183577,
+        "wape": 0.09055867259494595,
+        "bias_kw": 1.7541320976796357
+      },
+      "effective_forecast": {
+        "mae_kw": 384.8513683338669,
+        "rmse_kw": 534.5125304711338,
+        "wape": 0.12824374352592371,
+        "bias_kw": 320.3613057642978,
+        "one_sided_coverage": 0.8331046240851631
+      },
+      "selected_quantile_days": {
+        "q70": 56,
+        "q80": 48,
+        "q90": 230,
+        "none": 0
+      },
+      "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+      "plan_simultaneous_positive_slots": 0,
+      "max_actual_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_actual_state_residual_kwh": 9.094947017729282e-13,
+      "max_crossday_soc_gap_kwh": 0.0
+    },
+    "A3_dynamic_plus_terminal_value": {
+      "strategy": "A3_dynamic_plus_terminal_value",
+      "forecast_kind": "candidate_linear_pv5",
+      "risk_mode": "dynamic",
+      "residual_window_days": 56,
+      "terminal_value": true,
+      "planning_horizon_hours": 48,
+      "days": 334,
+      "normal_purchase_kwh": 22108794.745723184,
+      "emergency_purchase_kwh": 65688.9769146488,
+      "normal_cost_yuan": 13590937.132055616,
+      "emergency_cost_yuan": 393140.7340977273,
+      "total_cost_yuan": 13984077.866153343,
+      "soc_final_kwh": 8687.221346962964,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "point_forecast": {
+        "mae_kw": 271.76085245529777,
+        "rmse_kw": 389.774722183577,
+        "wape": 0.09055867259494595,
+        "bias_kw": 1.7541320976796357
+      },
+      "effective_forecast": {
+        "mae_kw": 384.8513683338669,
+        "rmse_kw": 534.5125304711338,
+        "wape": 0.12824374352592371,
+        "bias_kw": 320.3613057642978,
+        "one_sided_coverage": 0.8331046240851631
+      },
+      "selected_quantile_days": {
+        "q70": 56,
+        "q80": 48,
+        "q90": 230,
+        "none": 0
+      },
+      "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+      "plan_simultaneous_positive_slots": 0,
+      "max_actual_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_actual_state_residual_kwh": 9.094947017729282e-13,
+      "max_crossday_soc_gap_kwh": 0.0
+    },
+    "O2_online_scheme_reconstruction": {
+      "strategy": "O2_online_scheme_reconstruction",
+      "forecast_kind": "candidate_equal_pv5",
+      "risk_mode": "dynamic",
+      "residual_window_days": 28,
+      "terminal_value": true,
+      "planning_horizon_hours": 24,
+      "days": 334,
+      "normal_purchase_kwh": 22604347.010772347,
+      "emergency_purchase_kwh": 67002.492125185,
+      "normal_cost_yuan": 13816314.375417314,
+      "emergency_cost_yuan": 402398.5572475186,
+      "total_cost_yuan": 14218712.932664832,
+      "soc_final_kwh": 10800.0,
+      "soc_min_kwh": 1200.0,
+      "soc_max_kwh": 10800.0,
+      "point_forecast": {
+        "mae_kw": 284.1387544839488,
+        "rmse_kw": 401.50560895608527,
+        "wape": 0.09468335194849378,
+        "bias_kw": 2.7717929875665406
+      },
+      "effective_forecast": {
+        "mae_kw": 396.82365220840614,
+        "rmse_kw": 558.8200956646274,
+        "wape": 0.13223325903491887,
+        "bias_kw": 331.39756195553684,
+        "one_sided_coverage": 0.8258067198935463
+      },
+      "selected_quantile_days": {
+        "q70": 30,
+        "q80": 45,
+        "q90": 259,
+        "none": 0
+      },
+      "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+      "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+      "plan_simultaneous_positive_slots": 0,
+      "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+      "max_actual_state_residual_kwh": 9.094947017729282e-13,
+      "max_crossday_soc_gap_kwh": 0.0
+    }
+  },
+  "incremental_contributions": [
+    {
+      "from": "A0_base_point",
+      "to": "A1_fixed_q80",
+      "total_cost_change_yuan": -1499772.5914197564,
+      "normal_cost_change_yuan": 1063071.3760883585,
+      "emergency_cost_change_yuan": -2562843.9675081153,
+      "emergency_purchase_change_kwh": -421500.6073501175,
+      "final_soc_change_kwh": 284.07618644444483
+    },
+    {
+      "from": "A1_fixed_q80",
+      "to": "A2_dynamic_risk",
+      "total_cost_change_yuan": -13912.295437324792,
+      "normal_cost_change_yuan": 331684.86564470455,
+      "emergency_cost_change_yuan": -345597.1610820279,
+      "emergency_purchase_change_kwh": -58010.525130436974,
+      "final_soc_change_kwh": 0.0
+    },
+    {
+      "from": "A2_dynamic_risk",
+      "to": "A3_dynamic_plus_terminal_value",
+      "total_cost_change_yuan": 0.0,
+      "normal_cost_change_yuan": 0.0,
+      "emergency_cost_change_yuan": 0.0,
+      "emergency_purchase_change_kwh": 0.0,
+      "final_soc_change_kwh": 0.0
+    }
+  ],
+  "fixed_q80_anchor_difference": {
+    "normal_purchase_kwh": 0.0,
+    "emergency_purchase_kwh": 0.0,
+    "normal_cost_yuan": 0.0,
+    "emergency_cost_yuan": 0.0,
+    "total_cost_yuan": 0.0,
+    "soc_final_kwh": 0.0
+  },
+  "frozen_hashes_before": {
+    "results\\q2_summary.json": "c6cde5a6e6ab3b3a590ef892c4a09aaff14d7905c2c594975e57909a1db7fcc6",
+    "results\\result2.xlsx": "eb5a8231344901cec1e41c3124fe3693ee18c55a4ff89ab7578c6ca2ce4b42bd",
+    "results\\q2_detail.csv": "2856d55e81116ddd0507adc67dead0a5fc046f56d34138ad2ba4495bb38fec6d",
+    "validation\\q2_validation.json": "5565d48460d2d883d27f6fceeca939304a2bc82814fabac819e46d07089acce2"
+  },
+  "frozen_hashes_after": {
+    "results\\q2_summary.json": "c6cde5a6e6ab3b3a590ef892c4a09aaff14d7905c2c594975e57909a1db7fcc6",
+    "results\\result2.xlsx": "eb5a8231344901cec1e41c3124fe3693ee18c55a4ff89ab7578c6ca2ce4b42bd",
+    "results\\q2_detail.csv": "2856d55e81116ddd0507adc67dead0a5fc046f56d34138ad2ba4495bb38fec6d",
+    "validation\\q2_validation.json": "5565d48460d2d883d27f6fceeca939304a2bc82814fabac819e46d07089acce2"
+  },
+  "files": {
+    "daily": "results\\q2_component_ablation_daily.csv",
+    "detail": "results\\q2_component_ablation_detail.csv"
+  }
+}

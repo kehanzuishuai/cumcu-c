@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "question": "Q3",
+  "sensitivity_id": "A08",
+  "status": "PASS",
+  "checks": {
+    "q3_detail_rows": 48096,
+    "all_reported_main_totals_reconcile": true,
+    "max_reported_main_total_gap_yuan": 1.862645149230957e-09,
+    "detail_reported_total_gap_yuan": 3.725290298461914e-08,
+    "detail_main_formula_gap_yuan": 0.0,
+    "detail_alternative_formula_gap_yuan": 3.725290298461914e-09,
+    "alternative_minus_main_identity_gap_yuan": 3.725290298461914e-09,
+    "trajectory_reoptimization_performed": false,
+    "online_reference_values_used": false
+  },
+  "independence": "The main strategy is independently re-settled from all 48,096 ten-minute detail rows; other fixed strategies are mechanically re-settled from their frozen cost components in q3_summary.json."
+}

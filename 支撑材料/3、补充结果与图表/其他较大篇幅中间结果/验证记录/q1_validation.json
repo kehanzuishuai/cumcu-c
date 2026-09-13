@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "question": "Q1",
+  "status": "PASS",
+  "tolerances": {
+    "solver_balance_state_kwh": 1e-06,
+    "positive_flow_kwh": 1e-07
+  },
+  "scenarios": {
+    "base": {
+      "metrics": {
+        "balance_max_abs_kwh": 2.2737367544323206e-13,
+        "state_max_abs_kwh": 8.313350008393172e-13,
+        "soc_min_kwh": 1200.0,
+        "soc_max_kwh": 10800.0,
+        "soc_open_kwh": 6000.0,
+        "soc_close_kwh": 6000.0,
+        "charge_max_kwh_per_slot": 833.3333333333333,
+        "discharge_max_kwh_per_slot": 715.6530333333333,
+        "simultaneous_positive_slot_count": 0,
+        "simultaneous_max_kwh": 0.0,
+        "independent_cost_yuan": 35126.9485896409,
+        "reported_cost_yuan": 35126.948589640895,
+        "cost_reconciliation_abs_yuan": 7.275957614183426e-12,
+        "secondary_cost_above_primary_yuan": 3.5126868169754744e-07
+      },
+      "pass_flags": {
+        "balance": true,
+        "state": true,
+        "soc_bounds": true,
+        "soc_cycle": true,
+        "power": true,
+        "nonnegative": true,
+        "mutual_exclusion": true,
+        "cost_reconciliation": true
+      },
+      "all_pass": true
+    },
+    "efficiency_round_trip_0.9_symmetric": {
+      "metrics": {
+        "balance_max_abs_kwh": 2.2737367544323206e-13,
+        "state_max_abs_kwh": 9.094947017729282e-13,
+        "soc_min_kwh": 1200.0,
+        "soc_max_kwh": 10800.0,
+        "soc_open_kwh": 6000.0,
+        "soc_close_kwh": 6000.0,
+        "charge_max_kwh_per_slot": 833.3333333333333,
+        "discharge_max_kwh_per_slot": 715.6530333333333,
+        "simultaneous_positive_slot_count": 0,
+        "simultaneous_max_kwh": 0.0,
+        "independent_cost_yuan": 33801.49554256002,
+        "reported_cost_yuan": 33801.49554256002,
+        "cost_reconciliation_abs_yuan": 0.0,
+        "secondary_cost_above_primary_yuan": 3.3801188692450523e-07
+      },
+      "pass_flags": {
+        "balance": true,
+        "state": true,
+        "soc_bounds": true,
+        "soc_cycle": true,
+        "power": true,
+        "nonnegative": true,
+        "mutual_exclusion": true,
+        "cost_reconciliation": true
+      },
+      "all_pass": true
+    },
+    "trapezoidal_power_integration": {
+      "metrics": {
+        "balance_max_abs_kwh": 1.1368683772161603e-13,
+        "state_max_abs_kwh": 1.0231815394945443e-12,
+        "soc_min_kwh": 1200.0,
+        "soc_max_kwh": 10800.0,
+        "soc_open_kwh": 6000.0,
+        "soc_close_kwh": 6000.0,
+        "charge_max_kwh_per_slot": 833.3333333333333,
+        "discharge_max_kwh_per_slot": 715.4399416666666,
+        "simultaneous_positive_slot_count": 0,
+        "simultaneous_max_kwh": 0.0,
+        "independent_cost_yuan": 35042.53998464501,
+        "reported_cost_yuan": 35042.539984645,
+        "cost_reconciliation_abs_yuan": 7.275957614183426e-12,
+        "secondary_cost_above_primary_yuan": 3.5042467061430216e-07
+      },
+      "pass_flags": {
+        "balance": true,
+        "state": true,
+        "soc_bounds": true,
+        "soc_cycle": true,
+        "power": true,
+        "nonnegative": true,
+        "mutual_exclusion": true,
+        "cost_reconciliation": true
+      },
+      "all_pass": true
+    }
+  },
+  "independent_recalculation": {
+    "detail_rows_expected": 144,
+    "detail_rows_written": 144,
+    "daily_purchase_from_detail_kwh": 59482.698997522966,
+    "daily_cost_from_detail_yuan": 35126.9485896409,
+    "four_hour_charge_sum_kwh": 20740.66612731386,
+    "four_hour_discharge_sum_kwh": 16799.939563124222
+  },
+  "environment": {
+    "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:09:58) [MSC v.1929 64 bit (AMD64)]",
+    "python_executable": "D:\\anaconda\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.3.5",
+    "scipy": "1.16.3",
+    "solver": "scipy.optimize.linprog(method='highs')"
+  }
+}

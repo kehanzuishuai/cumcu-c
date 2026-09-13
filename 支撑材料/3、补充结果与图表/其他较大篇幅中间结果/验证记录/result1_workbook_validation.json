@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "question": "Q1",
+  "workbook": "results/result1.xlsx",
+  "source_template": "source_materials/C题/附件/附件5/result1.xlsx",
+  "status": "PASS",
+  "checks": {
+    "sheet_names_exact": true,
+    "purchase_rows": 144,
+    "corrected_natural_day_labels_exact": true,
+    "first_label": "00:00-00:10",
+    "last_label": "23:50-24:00",
+    "max_purchase_difference_kwh": 0,
+    "max_charge_difference_kwh": 0,
+    "max_discharge_difference_kwh": 0,
+    "soc_endpoint_difference_kwh": 0,
+    "a01_disclosure_visible": true
+  },
+  "inspections": {
+    "plan_head": "{\"kind\":\"table\",\"sheet\":\"计划购电量\",\"address\":\"A1:D8\",\"rows\":8,\"cols\":4,\"values\":[[\"时间段\",\"购电量\",null,\"A01 时间标签说明\"],[\"00:00-00:10\",1406.6410999999998,null,\"本文件将原模板整体后移10分钟的标签纠正为自然日0:00-24:00。\"],[\"00:10-00:20\",1406.3298666666665,null,\"输入0:10…24:00按对应10分钟槽的右端点离散值使用；这是用户确认的工作口径，不是官方勘误。\"],[\"00:20-00:30\",1407.38385,null,null],[\"00:30-00:40\",1409.07395,null,null],[\"00:40-00:50\",1409.8045499999998,null,null],[\"00:50-01:00\",576.6400166666666,null,null],[\"01:00-01:10\",577.8597,null,null]]}",
+    "plan_tail": "{\"kind\":\"table\",\"sheet\":\"计划购电量\",\"address\":\"A140:D145\",\"rows\":6,\"cols\":4,\"values\":[[\"23:00-23:10\",567.83015,null,null],[\"23:10-23:20\",569.3586333333333,null,null],[\"23:20-23:30\",1403.6635166666665,null,null],[\"23:30-23:40\",904.9487166666667,null,null],[\"23:40-23:50\",573.1768333333333,null,null],[\"23:50-24:00\",574.1209833333332,null,null]]}",
+    "storage": "{\"kind\":\"table\",\"sheet\":\"充放电量\",\"address\":\"A1:E7\",\"rows\":7,\"cols\":5,\"values\":[[\"时间段\",\"充电量\",\"放电量\",\"时刻\",\"储电量\"],[\"0:00-4:00\",4499.999999999999,0,\"0:00\",6000],[\"4:00-8:00\",833.3333333333333,6365.841196457557,\"24:00\",6000],[\"8:00-12:00\",4787.964283692462,1702.9969833333334,null,null],[\"12:00-16:00\",5286.0351769547315,91.1013833333335,null,null],[\"16:00-20:00\",0,5780.1318833333335,null,null],[\"20:00-24:00\",5333.333333333332,2859.8681166666665,null,null]]}",
+    "formula_errors": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}"
+  },
+  "previews": [
+    "previews/result1_plan_full.png",
+    "previews/result1_plan_head.png",
+    "previews/result1_plan_tail.png",
+    "previews/result1_storage.png"
+  ]
+}

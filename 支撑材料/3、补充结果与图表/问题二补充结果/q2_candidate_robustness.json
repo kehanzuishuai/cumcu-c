@@ -1,0 +1,629 @@
+{
+  "schema_version": 1,
+  "status": "PASS_STABLE_UPGRADE",
+  "question": "Q2",
+  "preregistered_matrix": {
+    "weight_kinds": [
+      "equal",
+      "linear",
+      "exp2w"
+    ],
+    "pv_windows_days": [
+      3,
+      5
+    ],
+    "main_quantile": 0.8,
+    "risk_quantile": 0.9
+  },
+  "selection_rule": "All six variants must improve causal point-net WAPE and Q80 realized total cost versus the old main; if so select minimum point-net WAPE, never reference-value proximity.",
+  "old_main_controls": {
+    "forecast_kind": "weekday_mean_28d",
+    "point_net_wape": 0.12329663006279043,
+    "q80_total_cost_yuan": 14590195.651654495,
+    "load": {
+      "mae_kw": 188.8801444901863,
+      "rmse_kw": 262.06136128453306,
+      "wape": 0.04091169439562877,
+      "bias_kw": 4.918329404732213
+    },
+    "pv": {
+      "mae_kw": 251.73014000124752,
+      "rmse_kw": 446.64901462581514,
+      "wape": 0.10581994037696674,
+      "bias_kw": 7.049548687001011
+    }
+  },
+  "variants": {
+    "candidate_equal_pv3": {
+      "weight_kind": "equal",
+      "pv_window_days": 3,
+      "forecast": {
+        "load": {
+          "mae_kw": 188.8801444901863,
+          "rmse_kw": 262.06136128453306,
+          "wape": 0.04091169439562877,
+          "bias_kw": 4.918329404732213
+        },
+        "pv": {
+          "mae_kw": 154.4585335682801,
+          "rmse_kw": 313.4795891650515,
+          "wape": 0.06492982053252787,
+          "bias_kw": 1.5020113723941022
+        },
+        "net_point": {
+          "mae_kw": 287.210689151558,
+          "rmse_kw": 408.0926750355921,
+          "wape": 0.09570701051919556,
+          "bias_kw": 3.416318032338113
+        },
+        "net_q80": {
+          "mae_kw": 357.8688232489535,
+          "rmse_kw": 504.39382584144573,
+          "wape": 0.11925236951437446,
+          "bias_kw": 256.3813753730386,
+          "one_sided_coverage": 0.7500207917498337,
+          "mean_uplift_kw": 252.96505734070053
+        },
+        "net_q90": {
+          "mae_kw": 448.23908392151463,
+          "rmse_kw": 616.5495871860232,
+          "wape": 0.1493663862118771,
+          "bias_kw": 396.5241483818994,
+          "one_sided_coverage": 0.8550399201596807,
+          "mean_uplift_kw": 393.10783034956137
+        }
+      },
+      "runs": {
+        "q80": {
+          "strategy": "candidate_equal_pv3_q80",
+          "forecast_kind": "candidate_equal_pv3",
+          "risk_quantile": 0.8,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 21707663.330570325,
+          "emergency_purchase_kwh": 130594.63944435725,
+          "normal_cost_yuan": 13301896.592176156,
+          "emergency_cost_yuan": 771834.3838282621,
+          "total_cost_yuan": 14073730.976004418,
+          "charge_kwh": 6350240.931495859,
+          "discharge_kwh": 5141289.165876425,
+          "surplus_discard_kwh": 2690116.709428579,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8673.320705802467,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        },
+        "q90": {
+          "strategy": "candidate_equal_pv3_q90",
+          "forecast_kind": "candidate_equal_pv3",
+          "risk_quantile": 0.9,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 22591549.42759044,
+          "emergency_purchase_kwh": 54395.27715164168,
+          "normal_cost_yuan": 13919074.643392324,
+          "emergency_cost_yuan": 323081.9935282011,
+          "total_cost_yuan": 14242156.636920527,
+          "charge_kwh": 6176762.52300401,
+          "discharge_kwh": 5000579.995645249,
+          "surplus_discard_kwh": 3530572.682416653,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8886.275542222222,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        }
+      },
+      "gate_point_wape_better": true,
+      "gate_q80_cost_better": true
+    },
+    "candidate_equal_pv5": {
+      "weight_kind": "equal",
+      "pv_window_days": 5,
+      "forecast": {
+        "load": {
+          "mae_kw": 188.8801444901863,
+          "rmse_kw": 262.06136128453306,
+          "wape": 0.04091169439562877,
+          "bias_kw": 4.918329404732213
+        },
+        "pv": {
+          "mae_kw": 151.51520487940786,
+          "rmse_kw": 304.47172157242915,
+          "wape": 0.06369253179799361,
+          "bias_kw": 2.14653641716567
+        },
+        "net_point": {
+          "mae_kw": 284.1387544839488,
+          "rmse_kw": 401.50560895608527,
+          "wape": 0.09468335194849378,
+          "bias_kw": 2.7717929875665406
+        },
+        "net_q80": {
+          "mae_kw": 350.3538196731606,
+          "rmse_kw": 491.6096064541157,
+          "wape": 0.11674815030023278,
+          "bias_kw": 249.85193760166473,
+          "one_sided_coverage": 0.7500831669993346,
+          "mean_uplift_kw": 247.0801446140982
+        },
+        "net_q90": {
+          "mae_kw": 438.17906547506374,
+          "rmse_kw": 600.2701467437463,
+          "wape": 0.1460140935304243,
+          "bias_kw": 387.0619917989507,
+          "one_sided_coverage": 0.8554141716566867,
+          "mean_uplift_kw": 384.29019881138413
+        }
+      },
+      "runs": {
+        "q80": {
+          "strategy": "candidate_equal_pv5_q80",
+          "forecast_kind": "candidate_equal_pv5",
+          "risk_quantile": 0.8,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 21660347.831328936,
+          "emergency_purchase_kwh": 134255.2617171739,
+          "normal_cost_yuan": 13271202.389786838,
+          "emergency_cost_yuan": 802192.3313298867,
+          "total_cost_yuan": 14073394.721116725,
+          "charge_kwh": 6354144.14713626,
+          "discharge_kwh": 5144450.770140705,
+          "surplus_discard_kwh": 2645720.221083889,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8673.321155185184,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        },
+        "q90": {
+          "strategy": "candidate_equal_pv5_q90",
+          "forecast_kind": "candidate_equal_pv5",
+          "risk_quantile": 0.9,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 22526086.97546259,
+          "emergency_purchase_kwh": 55784.10944854567,
+          "normal_cost_yuan": 13879309.710494481,
+          "emergency_cost_yuan": 333006.43039320945,
+          "total_cost_yuan": 14212316.14088769,
+          "charge_kwh": 6178186.169037666,
+          "discharge_kwh": 5001733.14893251,
+          "surplus_discard_kwh": 3466228.569839313,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8886.275542222222,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        }
+      },
+      "gate_point_wape_better": true,
+      "gate_q80_cost_better": true
+    },
+    "candidate_linear_pv3": {
+      "weight_kind": "linear",
+      "pv_window_days": 3,
+      "forecast": {
+        "load": {
+          "mae_kw": 173.89075074538422,
+          "rmse_kw": 243.4876886125736,
+          "wape": 0.03766497146602536,
+          "bias_kw": 3.900668514845308
+        },
+        "pv": {
+          "mae_kw": 154.4585335682801,
+          "rmse_kw": 313.4795891650515,
+          "wape": 0.06492982053252787,
+          "bias_kw": 1.5020113723941022
+        },
+        "net_point": {
+          "mae_kw": 275.0548861012004,
+          "rmse_kw": 396.686877950777,
+          "wape": 0.09165634104778209,
+          "bias_kw": 2.3986571424512055
+        },
+        "net_q80": {
+          "mae_kw": 351.15859422157075,
+          "rmse_kw": 495.3326805544374,
+          "wape": 0.1170163247417823,
+          "bias_kw": 253.94467114209078,
+          "one_sided_coverage": 0.762890884896873,
+          "mean_uplift_kw": 251.5460139996396
+        },
+        "net_q90": {
+          "mae_kw": 446.9803753193751,
+          "rmse_kw": 610.9107245709598,
+          "wape": 0.14894694765343958,
+          "bias_kw": 397.1475773556498,
+          "one_sided_coverage": 0.86541500332668,
+          "mean_uplift_kw": 394.7489202131986
+        }
+      },
+      "runs": {
+        "q80": {
+          "strategy": "candidate_linear_pv3_q80",
+          "forecast_kind": "candidate_linear_pv3",
+          "risk_quantile": 0.8,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 21694137.845709685,
+          "emergency_purchase_kwh": 119684.40881356764,
+          "normal_cost_yuan": 13288514.451982945,
+          "emergency_cost_yuan": 707137.6525875814,
+          "total_cost_yuan": 13995652.104570527,
+          "charge_kwh": 6348652.700634692,
+          "discharge_kwh": 5139990.188275168,
+          "surplus_discard_kwh": 2665970.2471970613,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8687.221376592594,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        },
+        "q90": {
+          "strategy": "candidate_linear_pv3_q90",
+          "forecast_kind": "candidate_linear_pv3",
+          "risk_quantile": 0.9,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 22589460.023209598,
+          "emergency_purchase_kwh": 53444.44607040568,
+          "normal_cost_yuan": 13919605.73411081,
+          "emergency_cost_yuan": 315744.5533651173,
+          "total_cost_yuan": 14235350.287475929,
+          "charge_kwh": 6167371.323456077,
+          "discharge_kwh": 4992959.0651290305,
+          "surplus_discard_kwh": 3529302.715986291,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8901.896522657407,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        }
+      },
+      "gate_point_wape_better": true,
+      "gate_q80_cost_better": true
+    },
+    "candidate_linear_pv5": {
+      "weight_kind": "linear",
+      "pv_window_days": 5,
+      "forecast": {
+        "load": {
+          "mae_kw": 173.89075074538422,
+          "rmse_kw": 243.4876886125736,
+          "wape": 0.03766497146602536,
+          "bias_kw": 3.900668514845308
+        },
+        "pv": {
+          "mae_kw": 151.51520487940786,
+          "rmse_kw": 304.47172157242915,
+          "wape": 0.06369253179799361,
+          "bias_kw": 2.14653641716567
+        },
+        "net_point": {
+          "mae_kw": 271.76085245529777,
+          "rmse_kw": 389.774722183577,
+          "wape": 0.09055867259494595,
+          "bias_kw": 1.7541320976796357
+        },
+        "net_q80": {
+          "mae_kw": 343.68441590498173,
+          "rmse_kw": 482.548284156618,
+          "wape": 0.11452570969928066,
+          "bias_kw": 247.41130666343702,
+          "one_sided_coverage": 0.7619968396540253,
+          "mean_uplift_kw": 245.65717456575737
+        },
+        "net_q90": {
+          "mae_kw": 436.4502768609863,
+          "rmse_kw": 593.7992556255967,
+          "wape": 0.1454380105491058,
+          "bias_kw": 387.06132904321913,
+          "one_sided_coverage": 0.8651862940785097,
+          "mean_uplift_kw": 385.30719694553943
+        }
+      },
+      "runs": {
+        "q80": {
+          "strategy": "candidate_linear_pv5_q80",
+          "forecast_kind": "candidate_linear_pv5",
+          "risk_quantile": 0.8,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 21647262.382565323,
+          "emergency_purchase_kwh": 123699.50204508577,
+          "normal_cost_yuan": 13259252.266410911,
+          "emergency_cost_yuan": 738737.8951797552,
+          "total_cost_yuan": 13997990.161590667,
+          "charge_kwh": 6350708.562767702,
+          "discharge_kwh": 5141655.436629572,
+          "surplus_discard_kwh": 2622719.2635056116,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8687.221346962964,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        },
+        "q90": {
+          "strategy": "candidate_linear_pv5_q90",
+          "forecast_kind": "candidate_linear_pv5",
+          "risk_quantile": 0.9,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 22519491.812199734,
+          "emergency_purchase_kwh": 54289.15179544133,
+          "normal_cost_yuan": 13876905.955845768,
+          "emergency_cost_yuan": 323864.4643684455,
+          "total_cost_yuan": 14200770.420214213,
+          "charge_kwh": 6168815.475567032,
+          "discharge_kwh": 4994128.828352238,
+          "surplus_discard_kwh": 3459904.8218137166,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8901.896507842592,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        }
+      },
+      "gate_point_wape_better": true,
+      "gate_q80_cost_better": true
+    },
+    "candidate_exp2w_pv3": {
+      "weight_kind": "exp2w",
+      "pv_window_days": 3,
+      "forecast": {
+        "load": {
+          "mae_kw": 175.2836942451332,
+          "rmse_kw": 245.01422852790319,
+          "wape": 0.03796668490936228,
+          "bias_kw": 4.068795582762816
+        },
+        "pv": {
+          "mae_kw": 154.4585335682801,
+          "rmse_kw": 313.4795891650515,
+          "wape": 0.06492982053252787,
+          "bias_kw": 1.5020113723941022
+        },
+        "net_point": {
+          "mae_kw": 276.18295891923776,
+          "rmse_kw": 397.608303525009,
+          "wape": 0.09203224793822984,
+          "bias_kw": 2.5667842103687115
+        },
+        "net_q80": {
+          "mae_kw": 350.85396186650297,
+          "rmse_kw": 495.4268914848312,
+          "wape": 0.11691481232211196,
+          "bias_kw": 253.13672100858892,
+          "one_sided_coverage": 0.760146373918829,
+          "mean_uplift_kw": 250.5699367982202
+        },
+        "net_q90": {
+          "mae_kw": 445.701854614004,
+          "rmse_kw": 610.1682397626695,
+          "wape": 0.14852090712215074,
+          "bias_kw": 395.64912520907075,
+          "one_sided_coverage": 0.8635853293413174,
+          "mean_uplift_kw": 393.082340998702
+        }
+      },
+      "runs": {
+        "q80": {
+          "strategy": "candidate_exp2w_pv3_q80",
+          "forecast_kind": "candidate_exp2w_pv3",
+          "risk_quantile": 0.8,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 21688972.32463956,
+          "emergency_purchase_kwh": 120658.08625785947,
+          "normal_cost_yuan": 13284427.721127234,
+          "emergency_cost_yuan": 713446.7453368523,
+          "total_cost_yuan": 13997874.466464087,
+          "charge_kwh": 6350579.980894418,
+          "discharge_kwh": 5141549.3260888755,
+          "surplus_discard_kwh": 2661410.2611252093,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8689.398261782117,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        },
+        "q90": {
+          "strategy": "candidate_exp2w_pv3_q90",
+          "forecast_kind": "candidate_exp2w_pv3",
+          "risk_quantile": 0.9,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 22580155.37469927,
+          "emergency_purchase_kwh": 53596.396932540876,
+          "normal_cost_yuan": 13911965.627772957,
+          "emergency_cost_yuan": 317000.45436470845,
+          "total_cost_yuan": 14228966.082137667,
+          "charge_kwh": 6170122.462009112,
+          "discharge_kwh": 4995192.260279987,
+          "surplus_discard_kwh": 3519632.0749360155,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8896.593274882696,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        }
+      },
+      "gate_point_wape_better": true,
+      "gate_q80_cost_better": true
+    },
+    "candidate_exp2w_pv5": {
+      "weight_kind": "exp2w",
+      "pv_window_days": 5,
+      "forecast": {
+        "load": {
+          "mae_kw": 175.2836942451332,
+          "rmse_kw": 245.01422852790319,
+          "wape": 0.03796668490936228,
+          "bias_kw": 4.068795582762816
+        },
+        "pv": {
+          "mae_kw": 151.51520487940786,
+          "rmse_kw": 304.47172157242915,
+          "wape": 0.06369253179799361,
+          "bias_kw": 2.14653641716567
+        },
+        "net_point": {
+          "mae_kw": 272.9012873323086,
+          "rmse_kw": 390.7218155317531,
+          "wape": 0.09093869888537744,
+          "bias_kw": 1.922259165597144
+        },
+        "net_q80": {
+          "mae_kw": 343.3042222531856,
+          "rmse_kw": 482.47809411943086,
+          "wape": 0.11439901804327277,
+          "bias_kw": 246.54170060289508,
+          "one_sided_coverage": 0.758586992681304,
+          "mean_uplift_kw": 244.6194414372979
+        },
+        "net_q90": {
+          "mae_kw": 435.22252897913734,
+          "rmse_kw": 593.0824414629682,
+          "wape": 0.14502888900913052,
+          "bias_kw": 385.6163466286987,
+          "one_sided_coverage": 0.8631279108449768,
+          "mean_uplift_kw": 383.69408746310165
+        }
+      },
+      "runs": {
+        "q80": {
+          "strategy": "candidate_exp2w_pv5_q80",
+          "forecast_kind": "candidate_exp2w_pv5",
+          "risk_quantile": 0.8,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 21641668.28540203,
+          "emergency_purchase_kwh": 124655.87267959253,
+          "normal_cost_yuan": 13254758.04319979,
+          "emergency_cost_yuan": 745224.6378242468,
+          "total_cost_yuan": 13999982.68102404,
+          "charge_kwh": 6352830.919574334,
+          "discharge_kwh": 5143372.586446274,
+          "surplus_discard_kwh": 2617676.3299868945,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8689.398232152485,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        },
+        "q90": {
+          "strategy": "candidate_exp2w_pv5_q90",
+          "forecast_kind": "candidate_exp2w_pv5",
+          "risk_quantile": 0.9,
+          "residual_window_days": 56,
+          "terminal_mode": "fixed_6000_at_48h",
+          "days": 334,
+          "normal_purchase_kwh": 22510707.56161161,
+          "emergency_purchase_kwh": 54482.6364216739,
+          "normal_cost_yuan": 13869550.498430064,
+          "emergency_cost_yuan": 325087.9398266639,
+          "total_cost_yuan": 14194638.438256728,
+          "charge_kwh": 6171768.47253464,
+          "discharge_kwh": 4996525.528805665,
+          "surplus_discard_kwh": 3450757.759337645,
+          "soc_initial_kwh": 6000.0,
+          "soc_final_kwh": 8896.593274882696,
+          "soc_min_kwh": 1200.0,
+          "soc_max_kwh": 10800.0,
+          "max_plan_balance_residual_kwh": 1.1368683772161603e-13,
+          "max_plan_state_residual_kwh": 1.0231815394945443e-12,
+          "plan_simultaneous_positive_slots": 0,
+          "plan_secondary_days": 0,
+          "max_actual_balance_residual_kwh": 2.2737367544323206e-13,
+          "max_actual_state_residual_kwh": 9.094947017729282e-13,
+          "max_crossday_soc_gap_kwh": 0.0
+        }
+      },
+      "gate_point_wape_better": true,
+      "gate_q80_cost_better": true
+    }
+  },
+  "stable_upgrade_gate": true,
+  "selected_kind_if_gate_passes": "candidate_linear_pv5",
+  "anti_targeting": "The online reported cost and emergency quantity are absent from this script and were not used by any gate or selector."
+}

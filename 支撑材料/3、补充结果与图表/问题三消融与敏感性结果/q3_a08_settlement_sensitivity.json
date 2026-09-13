@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "question": "Q3",
+  "sensitivity_id": "A08",
+  "status": "PASS",
+  "scope": "Fixed-trajectory settlement-only sensitivity; no forecast, information, normal-purchase adjustment, storage execution, or emergency-purchase trajectory was changed.",
+  "main_interpretation": {
+    "label": "cancelled original purchase refunded; cancelled quantity pays 50% penalty",
+    "formula": "base_plan_cost - 0.5*p*downward + 1.5*p*upward + 5*p*emergency",
+    "evidence_level": "user-approved frozen recommended interpretation A08"
+  },
+  "alternative_interpretation": {
+    "label": "original plan remains fully paid; downward quantity additionally pays 50% penalty",
+    "formula": "base_plan_cost + 0.5*p*downward + 1.5*p*upward + 5*p*emergency",
+    "evidence_level": "alternative interpretation retained by A08 sensitivity"
+  },
+  "strategies": {
+    "q3_0only": {
+      "update_hours": [],
+      "interpolation": "linear",
+      "trajectory_invariants": {
+        "original_purchase_kwh": 21952785.931043815,
+        "effective_purchase_kwh": 21952785.931043815,
+        "upward_adjustment_kwh": 0.0,
+        "downward_adjustment_kwh": 0.0,
+        "emergency_purchase_kwh": 119903.90747417159,
+        "charge_kwh": 6327851.065975472,
+        "discharge_kwh": 5123140.864184533,
+        "soc_initial_kwh": 6000.0,
+        "soc_final_kwh": 8687.221395111112
+      },
+      "cost_components_yuan": {
+        "original_plan_cost": 13481151.233860055,
+        "cancelled_original_cost_refund_under_main": 0.0,
+        "downward_50pct_penalty": 0.0,
+        "upward_150pct_incremental_cost": 0.0,
+        "emergency_5x_cost": 724692.086889754
+      },
+      "main_refund_plus_penalty_total_yuan": 14205843.320749808,
+      "alternative_full_plan_plus_penalty_total_yuan": 14205843.320749808,
+      "alternative_minus_main_yuan": 0.0,
+      "alternative_minus_main_percent": 0.0
+    },
+    "q3_0_6": {
+      "update_hours": [
+        6
+      ],
+      "interpolation": "linear",
+      "trajectory_invariants": {
+        "original_purchase_kwh": 21947588.47434718,
+        "effective_purchase_kwh": 21600588.482239157,
+        "upward_adjustment_kwh": 388082.57483353734,
+        "downward_adjustment_kwh": 735082.566941562,
+        "emergency_purchase_kwh": 88768.75345030909,
+        "charge_kwh": 6415497.687344748,
+        "discharge_kwh": 5194134.627493646,
+        "soc_initial_kwh": 6000.0,
+        "soc_final_kwh": 8687.221395111112
+      },
+      "cost_components_yuan": {
+        "original_plan_cost": 13478959.571227053,
+        "cancelled_original_cost_refund_under_main": 480384.71217570844,
+        "downward_50pct_penalty": 240192.35608785422,
+        "upward_150pct_incremental_cost": 385926.93356861663,
+        "emergency_5x_cost": 546127.8518756549
+      },
+      "main_refund_plus_penalty_total_yuan": 14170822.000583472,
+      "alternative_full_plan_plus_penalty_total_yuan": 14651206.71275918,
+      "alternative_minus_main_yuan": 480384.71217570826,
+      "alternative_minus_main_percent": 3.389956575249684
+    },
+    "q3_0_6_12": {
+      "update_hours": [
+        6,
+        12
+      ],
+      "interpolation": "linear",
+      "trajectory_invariants": {
+        "original_purchase_kwh": 21946104.190539893,
+        "effective_purchase_kwh": 21151437.01876336,
+        "upward_adjustment_kwh": 256934.78036838278,
+        "downward_adjustment_kwh": 1051601.9521449138,
+        "emergency_purchase_kwh": 68598.51026489346,
+        "charge_kwh": 6440641.639155068,
+        "discharge_kwh": 5214501.2284600055,
+        "soc_initial_kwh": 6000.0,
+        "soc_final_kwh": 8687.221395111112
+      },
+      "cost_components_yuan": {
+        "original_plan_cost": 13478350.233079229,
+        "cancelled_original_cost_refund_under_main": 654460.754391581,
+        "downward_50pct_penalty": 327230.3771957905,
+        "upward_150pct_incremental_cost": 261524.2479549604,
+        "emergency_5x_cost": 408711.7786324577
+      },
+      "main_refund_plus_penalty_total_yuan": 13821355.882470857,
+      "alternative_full_plan_plus_penalty_total_yuan": 14475816.636862438,
+      "alternative_minus_main_yuan": 654460.7543915808,
+      "alternative_minus_main_percent": 4.735141472057821
+    },
+    "q3_all_main": {
+      "update_hours": [
+        6,
+        12,
+        18
+      ],
+      "interpolation": "linear",
+      "trajectory_invariants": {
+        "original_purchase_kwh": 21938236.252248593,
+        "effective_purchase_kwh": 21173106.199250367,
+        "upward_adjustment_kwh": 285812.634043143,
+        "downward_adjustment_kwh": 1050942.6870413707,
+        "emergency_purchase_kwh": 45747.04205267706,
+        "charge_kwh": 6433813.090128377,
+        "discharge_kwh": 5208970.103748386,
+        "soc_initial_kwh": 6000.0,
+        "soc_final_kwh": 8687.221395111112
+      },
+      "cost_components_yuan": {
+        "original_plan_cost": 13475035.441214519,
+        "cancelled_original_cost_refund_under_main": 653734.444327529,
+        "downward_50pct_penalty": 326867.2221637645,
+        "upward_150pct_incremental_cost": 317934.9195901409,
+        "emergency_5x_cost": 254050.34011125652
+      },
+      "main_refund_plus_penalty_total_yuan": 13720153.478752151,
+      "alternative_full_plan_plus_penalty_total_yuan": 14373887.92307968,
+      "alternative_minus_main_yuan": 653734.4443275295,
+      "alternative_minus_main_percent": 4.764775010279161
+    },
+    "q3_all_step_hold": {
+      "update_hours": [
+        6,
+        12,
+        18
+      ],
+      "interpolation": "step_hold",
+      "trajectory_invariants": {
+        "original_purchase_kwh": 22081358.440261453,
+        "effective_purchase_kwh": 21273823.976208743,
+        "upward_adjustment_kwh": 288508.4705674248,
+        "downward_adjustment_kwh": 1096042.934620136,
+        "emergency_purchase_kwh": 50311.97250284978,
+        "charge_kwh": 6394797.660307723,
+        "discharge_kwh": 5177367.605593656,
+        "soc_initial_kwh": 6000.0,
+        "soc_final_kwh": 8687.221395111112
+      },
+      "cost_components_yuan": {
+        "original_plan_cost": 13590011.965339186,
+        "cancelled_original_cost_refund_under_main": 695804.7030320135,
+        "downward_50pct_penalty": 347902.35151600675,
+        "upward_150pct_incremental_cost": 325179.8965265085,
+        "emergency_5x_cost": 276554.2803471815
+      },
+      "main_refund_plus_penalty_total_yuan": 13843843.790696869,
+      "alternative_full_plan_plus_penalty_total_yuan": 14539648.493728882,
+      "alternative_minus_main_yuan": 695804.703032013,
+      "alternative_minus_main_percent": 5.026094728832445
+    }
+  },
+  "incremental_update_value": [
+    {
+      "from": "q3_0only",
+      "to": "q3_0_6",
+      "main_cost_change_yuan": -35021.32016633637,
+      "main_cost_saving_yuan": 35021.32016633637,
+      "alternative_cost_change_yuan": 445363.3920093719,
+      "alternative_cost_saving_yuan": -445363.3920093719
+    },
+    {
+      "from": "q3_0_6",
+      "to": "q3_0_6_12",
+      "main_cost_change_yuan": -349466.1181126144,
+      "main_cost_saving_yuan": 349466.1181126144,
+      "alternative_cost_change_yuan": -175390.07589674182,
+      "alternative_cost_saving_yuan": 175390.07589674182
+    },
+    {
+      "from": "q3_0_6_12",
+      "to": "q3_all_main",
+      "main_cost_change_yuan": -101202.40371870622,
+      "main_cost_saving_yuan": 101202.40371870622,
+      "alternative_cost_change_yuan": -101928.71378275752,
+      "alternative_cost_saving_yuan": 101928.71378275752
+    }
+  ],
+  "cumulative_update_value": {
+    "main_all_updates_vs_0only_cost_change_yuan": -485689.841997657,
+    "main_all_updates_vs_0only_saving_yuan": 485689.841997657,
+    "alternative_all_updates_vs_0only_cost_change_yuan": 168044.60232987255,
+    "alternative_all_updates_vs_0only_saving_yuan": -168044.60232987255
+  },
+  "main_strategy_conclusion": {
+    "current_total_yuan": 13720153.478752151,
+    "alternative_total_yuan": 14373887.92307968,
+    "alternative_minus_current_yuan": 653734.4443275295,
+    "alternative_minus_current_percent": 4.764775010279161,
+    "warning": "The alternative is a fixed-trajectory re-settlement, not a re-optimized policy under the alternative objective."
+  },
+  "no_reference_targeting": true
+}

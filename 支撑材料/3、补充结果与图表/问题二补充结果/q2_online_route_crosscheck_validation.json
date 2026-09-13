@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "pass_flags": {
+    "all_days": true,
+    "all_balance": true,
+    "all_state": true,
+    "all_soc": true,
+    "all_causal": true,
+    "reference_not_in_model": true
+  },
+  "comparison_file": "results\\q2_online_route_crosscheck.json"
+}

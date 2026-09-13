@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "pass_flags": {
+    "variant_count": true,
+    "q80_q90_each": true,
+    "all_causal": true,
+    "all_constraints": true,
+    "selection_not_reference_targeted": true
+  },
+  "stable_upgrade_gate": true,
+  "selected_kind": "candidate_linear_pv5"
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "question": "Q2",
+  "status": "PASS",
+  "pass_flags": {
+    "row_counts": true,
+    "date_axis": true,
+    "source_values": true,
+    "balance": true,
+    "state": true,
+    "soc_bounds": true,
+    "crossday_soc": true,
+    "daily_recompute": true,
+    "storage_recompute": true,
+    "events": true,
+    "mutual_exclusion": true,
+    "emergency_not_charging": true,
+    "information_cutoff": true,
+    "summary": true
+  },
+  "metrics": {
+    "detail_rows": 48096,
+    "daily_rows": 334,
+    "storage_rows": 2004,
+    "event_rows": 211,
+    "date_axis_exact": true,
+    "max_source_load_difference_kw": 0.0,
+    "max_source_pv_difference_kw": 0.0,
+    "max_load_energy_difference_kwh": 2.2737367544323206e-13,
+    "max_pv_energy_difference_kwh": 2.2737367544323206e-13,
+    "max_balance_residual_kwh": 6.963318810448982e-13,
+    "max_state_residual_kwh": 4.547473508864641e-12,
+    "soc_min_kwh": 1200.0,
+    "soc_max_kwh": 10800.0,
+    "max_crossday_soc_gap_kwh": 0.0,
+    "max_daily_recompute_difference": 2.9103830456733704e-11,
+    "max_storage_recompute_difference_kwh": 3.637978807091713e-12,
+    "event_keys_exact": true,
+    "max_event_amount_difference_kwh": 4.547473508864641e-13,
+    "simultaneous_actual_slots": 0,
+    "emergency_charge_overlap_slots": 0,
+    "information_cutoff_violations": 0,
+    "summary_differences": {
+      "normal_purchase_kwh": 3.725290298461914e-09,
+      "emergency_purchase_kwh": 0.0,
+      "total_cost_yuan": 1.862645149230957e-09,
+      "final_soc_kwh": 0.0
+    }
+  },
+  "independence": "Reads attachment2 and frozen CSV/JSON outputs directly; does not import common_data, dispatch_core, or q2_solve."
+}
