@@ -1,0 +1,27 @@
+{
+  "question": "Q4",
+  "status": "PASS",
+  "q4_2_preserved_hashes": {
+    "results/q4_2_detail.csv": "42040cf1c0592a1190147eb099c07d3013ff5ef01e7591f8062dd5fde316d8df",
+    "results/q4_2_daily.csv": "b916c91d380b5592a3c909c938f55836d4e865480f43c92f385d4bfd9fec334b",
+    "results/q4_2_storage_4h.csv": "47808c151fd897519a2bda686c8b91054e5426eb76b8e31c22f023f07ba73866",
+    "results/q4_2_emergency_events.csv": "9b94af20c9f0cb9c25c693d48195c6c701717399ab34e87631bb6c97d666ed17",
+    "results/result4-2.xlsx": "b001610c34bda6cebe7d956d5e75c544119eac2391b10d489f6428e185b16ab9",
+    "validation/q4_2_validation.json": "e6ca7d6d7bbdbcb4413a86568760cd6814eab40184e3ca616a623b6ebbf69879",
+    "validation/result4-2_workbook_validation.json": "1db4917d7d679fa248073282ad4ed0dd85feafbba3ae1dfd01dc9389d18bede5"
+  },
+  "promoted_q4_3_model": "alpha_0_5_load_feedback__weekday_mean_28d_price__no_ar1",
+  "outputs_sha256": {
+    "results/q4_3_detail.csv": "5836663923260008dc35a3efa1bb1d98b4f0ed6f6c7a410d86451478c402c938",
+    "results/q4_3_daily.csv": "5aa03979398614fcdac89b90ccbc60433335f62e70528ab01f3cae9e4b057517",
+    "results/q4_3_storage_4h.csv": "24b7ae102d35e8580b843ff105c25aacf7c6cdb37299864900285c21149349c5",
+    "results/q4_3_emergency_events.csv": "f1f871eb01d90235a7fbfe111bbd941e6ca75690e2312f01b693c42ad081d5a2",
+    "results/q4_3_plan_versions.csv": "840ea74fad384aab9b29e3aed2d54d32371cac418a02bf3b756da7c8db823908",
+    "results/q4_summary.json": "05a34c08d8fc78f71f9c5fb251c06781670bcac090d1129a251a999883248310",
+    "validation/q4_3_validation.json": "af17fa6d8f5cd29e09d25a66dc9ddc79d2d3cee5a26160342551030b18b8aa99",
+    "intermediate/q4_3_workbook_payload.json": "22b017759958dad60d7e7b3c6fafd5bc5717c04567fb91360047ad1217b80be1",
+    "validation/q4_independent_recompute.json": "6bef5e77c49f7f596b2f105e1b87983bd3f007dc8b83db664fe4d7f039598146",
+    "results/result4-3.xlsx": "7a05cc73042ef27c47c4047e4d16c35956bf09d43b142ea21d6a996aaedc8beb",
+    "validation/result4-3_workbook_validation.json": "e4b14ebde44d4fc340022c74a3f73c52463084bec93f8fccb483157bae6bdc39"
+  }
+}

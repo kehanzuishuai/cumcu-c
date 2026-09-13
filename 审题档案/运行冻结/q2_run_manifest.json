@@ -1,0 +1,22 @@
+{
+  "question": "Q2",
+  "status": "PASS",
+  "input_sha256": {
+    "attachment1": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377",
+    "attachment2": "2e95fd446bfafa0d8c59577b5c2e2ea8b3f1def20dde54a3062556f4da9b4c72"
+  },
+  "code_sha256": {
+    "common_data.py": "e2e18cf7c37d1140ac4b3f2cb39ba4785450e5509654c60a98081d59f3166bb0",
+    "dispatch_core.py": "dbf07559036f92733b8652d3310a22dfe729579baa4c314b2600ea793e9a9d66",
+    "q2_solve.py": "930a76f4dae170dcab8a9f83ae894a8e5d294e26ee51307e19df15875f1e6851"
+  },
+  "outputs_sha256": {
+    "results\\q2_detail.csv": "2856d55e81116ddd0507adc67dead0a5fc046f56d34138ad2ba4495bb38fec6d",
+    "results\\q2_daily.csv": "ceb5e7471fd9846ec17dab2f8fea8083f1f048a2d6c897d2f0a6d295081af579",
+    "results\\q2_storage_4h.csv": "151eafe68d92043de58ba9c0f3f5322c4e684ca61783aeacd3a1b7b9d59be5bf",
+    "results\\q2_emergency_events.csv": "e1553539ec34eb897468cf4f7b74d6a6c61155ebdae843309b1d4d8b262d59c4",
+    "results\\q2_summary.json": "c6cde5a6e6ab3b3a590ef892c4a09aaff14d7905c2c594975e57909a1db7fcc6",
+    "validation\\q2_validation.json": "5565d48460d2d883d27f6fceeca939304a2bc82814fabac819e46d07089acce2",
+    "intermediate\\q2_workbook_payload.json": "e4103e4fa3e252fca240193c95e08f34995ea98c275d6beeb204bf9b591ed800"
+  }
+}

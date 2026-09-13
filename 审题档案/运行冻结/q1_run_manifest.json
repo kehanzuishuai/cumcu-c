@@ -1,0 +1,16 @@
+{
+  "question": "Q1",
+  "status": "SOLVED_AND_VALIDATED",
+  "input_sha256": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377",
+  "code_sha256": {
+    "common_data.py": "013db02300a492eddef6cfcb1f95f69a7ca0615da542c0748b6cfa47cf8a452d",
+    "q1_solve.py": "fa4c4209146c532390ae2470552045d4390e46fee63b46e66b0af354eb3a5f14"
+  },
+  "outputs_sha256": {
+    "results\\q1_detail.csv": "96d79225ea9599a5fff812be036fcad7c2bec872491ff522ce999daf273a2e72",
+    "results\\q1_storage_4h.csv": "f2b4a7abe6fd2479647e524763f641f8eaf95e732f3d4d6bb5acfbc8c331ceef",
+    "intermediate\\q1_workbook_payload.json": "d730fd6279ee9461040288e744b29febee7d022032efb13d68a34864ecd0f6d3",
+    "results\\q1_summary.json": "155dc40f2ffa3d1e6e7cef4ce5b80166d4421e9cbb8a2d76c7c4d3cc24abcc2f",
+    "validation\\q1_validation.json": "7aa1c241fa7cf4266a02ad12576df1e4ac0df81c56151e4ebe7c35d0d0b8b5e2"
+  }
+}
